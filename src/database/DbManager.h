@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSqlDatabase>
 #include <QSqlError>
+#include <QStringList>
 
 class DbManager : public QObject
 {
@@ -21,6 +22,7 @@ public:
     QSqlDatabase *getDb() const;
 
     int getPages();
+    QStringList getPage(const int page);
 
 private:
     QSqlDatabase *db;

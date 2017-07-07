@@ -35,8 +35,10 @@
 #include <sailfishapp.h>
 #include <QQuickView>
 #include <QQmlEngine>
+#include <QQmlContext>
 #include <QGuiApplication>
 #include "core/Controller.h"
+#include "model/PageModel.h"
 #include "GlobalConstants.h"
 
 int main(int argc, char *argv[])
@@ -52,14 +54,19 @@ int main(int argc, char *argv[])
     //   - SailfishApp::pathTo(QString) to get a QUrl to a resource file
     //
     // To display the view, call "show()" (will show fullscreen on device).
+
+    qmlRegisterType<PageModel>("QuranQuick",1,0,"PageModel");
+    qRegisterMetaType<PageModel*>("PageModel");
     QGuiApplication *app = SailfishApp::application(argc, argv);
+
+//    qRegisterMetaType<PageModel*>("PageModel");
 
     Controller *c = new Controller;
     c->init();
 
     QQuickView *view = SailfishApp::createView();
-    /*view->rootContext()->setContextProperty("Base64", new Base64);
-    view->rootContext()->setContextProperty("FileUtils", new FileUtils);
+    view->rootContext()->setContextProperty("Controller", c);
+    /*view->rootContext()->setContextProperty("FileUtils", new FileUtils);
     view->rootContext()->setContextProperty("ImageUtils", new ImageUtils);*/
     view->setSource(SailfishApp::pathTo("qml/sailquran.qml"));
     view->show();

@@ -37,5 +37,7 @@ ApplicationWindow
     initialPage: Component { MainPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: defaultAllowedOrientations
+
+    FontLoader { id: lateef; source: "qrc:/fonts/LateefRegOT.ttf" }
 }
 

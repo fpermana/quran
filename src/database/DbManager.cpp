@@ -80,10 +80,10 @@ int DbManager::getPages()
         qDebug() << "Query error:" + query->lastError().text();
     }
     else if (!query->first()) {
-        qDebug() << "No Unchecked invoice in the database";
+        qDebug() << "No data in the database";
     }
     else {
-        qDebug() << query->value(0);
+        pages = query->value(0).toInt();
         /*do {
             tmp.append(query.value(0).toString());
         } while(query.next());*/
@@ -92,4 +92,30 @@ int DbManager::getPages()
     query->clear();
     delete query;
     return pages;
+}
+
+QStringList DbManager::getPage(const int page)
+{
+    QStringList dataList;
+    QSqlQuery *query = new QSqlQuery(*db);
+    query->prepare("SELECT * from pages WHERE id = :first OR id = :second");
+    query->bindValue(":first",page);
+    query->bindValue(":second",page+1);
+
+    if (!query->exec()) {
+        qDebug() << "Query error:" + query->lastError().text();
+    }
+    else if (!query->first()) {
+        qDebug() << "No data in the database";
+    }
+    else {
+        do {
+            dataList.append(query->value("sura").toString());
+            dataList.append(query->value("aya").toString());
+        } while(query->next());
+    }
+
+    query->clear();
+    delete query;
+    return dataList;
 }
