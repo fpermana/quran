@@ -1,19 +1,19 @@
 TEMPLATE = subdirs
-CONFIG += sailfishapp
+#CONFIG += sailfishapp
 
 equals(QT_MAJOR_VERSION, 5) {
     sailfishapp {
-        SUBDIRS += \
-            sailquran
+        #SUBDIRS += \
+            #sailquran
     }
     else:android {
         SUBDIRS += \
             Quran-Android
     }
-#    else {
-#        SUBDIRS += \
-#            Quran
-#    }
+    else {
+        SUBDIRS += \
+            quran
+    }
 }
 
 #equals(QT_MAJOR_VERSION, 4) {
