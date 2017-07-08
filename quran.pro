@@ -3,8 +3,8 @@ TEMPLATE = subdirs
 
 equals(QT_MAJOR_VERSION, 5) {
     sailfishapp {
-        #SUBDIRS += \
-            #sailquran
+        SUBDIRS += \
+            sailquran
     }
     else:android {
         SUBDIRS += \

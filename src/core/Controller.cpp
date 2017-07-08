@@ -42,7 +42,9 @@ void Controller::checkDatabase(const bool reset)
         QDir dbDir = fileInfo.absoluteDir();
         if(!dbDir.exists())
             dbDir.mkpath(fileInfo.absolutePath());
-        dbSrc.copy(filepath);
+        if(!dbSrc.copy(filepath)) {
+            qDebug() << dbSrc.errorString();
+        }
     }
 
     manager->init(filepath);

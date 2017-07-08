@@ -8,6 +8,8 @@ ApplicationWindow {
     height: 480
     title: qsTr("Hello World")
 
+    FontLoader { id: lateef; source: "qrc:/fonts/LateefRegOT.ttf" }
+
     /*SwipeView {
         id: swipeView
         anchors.fill: parent
@@ -38,93 +40,56 @@ ApplicationWindow {
 
     ListView {
         id: mainView
-        property int xposition: -1
         objectName: "mainView"
-//        focus: true
+        property bool loaded: false
         anchors.fill: parent
         model: Controller.pages
         layoutDirection: Qt.RightToLeft
         snapMode: ListView.SnapOneItem
         orientation: ListView.Horizontal
         Component.onCompleted: {
-            currentIndex = Controller.currentPage-1
-            positionViewAtIndex(Controller.currentPage-1, ListView.Beginning)
+            positionViewAtIndex(Controller.currentPage-1, ListView.Beginning);
+            loaded = true
         }
-        /*delegate: Rectangle {
-            color: "blue"
-            height: mainView.height
-            width: mainView.width
-            Text {
-                text: model.modelData
-                anchors.centerIn: parent
-            }
-//            Component.onCompleted: console.log("Component.onCompleted")
-//            Component.onDestruction: console.log("Component.onDestruction")
-        }*/
-        /*delegate: Item {
-            property int delegateIndex: index
-            height: mainView.height
-            width: mainView.width
-            Rectangle {
-                height: 200
-                width: 200
-                anchors.centerIn: parent
-                color:"gray"
-
-                Text {
-                    text: qsTr("TEXT ") + delegateIndex
-                    anchors.centerIn: parent
-                }
-            }
-        }*/
-
-        /*onFlickStarted: {
-            xposition = contentX
+        visibleArea.onXPositionChanged: {
+            if(loaded)
+                Controller.currentPage = Math.round(Controller.pages - Controller.pages * visibleArea.xPosition)
         }
-        onFlickEnded: {
-            if(xposition < contentX) {
-                Controller.previosPage();
-                currentIndex--
-            }
-            else if(xposition > contentX) {
-                Controller.nextPage();
-                currentIndex++
-            }
-        }*/
 
         delegate: ListView {
-            property int delegateIndex: index
-            property string color: ListView.isCurrentItem ? "blue" : "red"
             id: pageView
+            property int delegatePage: (index+1)
+            property string color: "red"
             height: mainView.height
             width: mainView.width
             focus: true
-            model: Controller.getPageModel(index+1);
-            /*model: {
-                if(delegateIndex == mainView.currentIndex || delegateIndex == mainView.currentIndex-1 || delegateIndex == mainView.currentIndex+1) {
-                    if(delegateIndex % 3 == 0)
+//            model: Controller.getPageModel(delegateIndex+1);
+            model: {
+                    if(delegatePage == Controller.currentPage-1)
                         Controller.firstPage
-                    else if(delegateIndex % 3 == 1)
+                    else if(delegatePage == Controller.currentPage)
                         Controller.midPage
-                    else if(delegateIndex % 3 == 2)
+                    else if(delegatePage == Controller.currentPage+1)
                         Controller.lastPage
-                }
-            }*/
+            }
             delegate: Rectangle {
                     color: pageView.color
                     height: 80
                     width: pageView.width
-                Text {
+                Label {
                     text: model.text
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.fill: parent
-                    font { family: lateef.name; pixelSize: 16; bold: true }
+                    font { family: lateef.name; pixelSize: Theme.fontSizeMedium; }
+                    color: Theme.primaryColor
                     wrapMode: Text.WordWrap
                 }
-            }
-            Component.onCompleted: {
 
+                /*MouseArea {
+                    anchors.fill: parent
+                    onClicked: console.log(model.text)
+                }*/
             }
         }
     }

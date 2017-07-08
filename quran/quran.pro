@@ -46,9 +46,9 @@ SOURCES += main.cpp
 #        build.h \
 #        SingleApplication.h
 
-RESOURCES += qml.qrc
-#    ../images.qrc \
-#    ../fonts.qrc \
+RESOURCES += qml.qrc \
+    ../db.qrc \
+    ../fonts.qrc
 #    ../scripts.qrc \
 #    ../apks.qrc \
 #    resources.qrc \
