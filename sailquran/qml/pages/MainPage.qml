@@ -7,6 +7,11 @@ Page {
     allowedOrientations: Orientation.Portrait
     backNavigation: false
 
+    Component.onCompleted: {
+        console.log("Theme.fontSizeMedium " + Theme.fontSizeMedium)
+        console.log("lateef.name " + lateef.name)
+    }
+
     SilicaListView {
         id: mainView
         objectName: "mainView"
@@ -45,14 +50,20 @@ Page {
                     color: pageView.color
                     height: 80
                     width: pageView.width
-                Text {
+                Label {
                     text: model.text
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.fill: parent
-                    font { family: lateef.name; pixelSize: 16; bold: true }
+                    font { family: lateef.name; pixelSize: Theme.fontSizeMedium; }
+                    color: Theme.primaryColor
                     wrapMode: Text.WordWrap
                 }
+
+                /*MouseArea {
+                    anchors.fill: parent
+                    onClicked: console.log(model.text)
+                }*/
             }
         }
     }

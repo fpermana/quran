@@ -14,9 +14,13 @@ public:
     void saveSettings();
 
     int getCurrentPage() const;
+    int getFontSize() const;
+    QString getFontName() const;
 
 public slots:
-    void setCurrentPage(int value);
+    void setCurrentPage(const int &value);
+    void setFontSize(const int &value);
+    void setFontName(const QString &value);
 
 signals:
     void currentPageChanged();
@@ -24,8 +28,8 @@ signals:
 private:
     int currentPage;
     QString translation;
-    QString fontFamily;
-    QString fontSize;
+    QString fontName;
+    int fontSize;
     QString theme;
 };
 
