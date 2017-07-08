@@ -34,14 +34,12 @@ Page {
             focus: true
 //            model: Controller.getPageModel(delegateIndex+1);
             model: {
-                if(delegatePage == Controller.currentPage-1 || delegatePage == Controller.currentPage || delegatePage == Controller.currentPage+1) {
                     if(delegatePage == Controller.currentPage-1)
                         Controller.firstPage
                     else if(delegatePage == Controller.currentPage)
                         Controller.midPage
                     else if(delegatePage == Controller.currentPage+1)
                         Controller.lastPage
-                }
             }
             delegate: Rectangle {
                     color: pageView.color

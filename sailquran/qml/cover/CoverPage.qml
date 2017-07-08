@@ -32,13 +32,32 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
+    id: cover
     Label {
         id: label
         anchors.centerIn: parent
         text: qsTr("My Cover")
     }
 
-    CoverActionList {
+    /*SilicaListView {
+        id: pageView
+        height: cover.height
+        width: cover.width
+        interactive: false
+        model: Controller.midPage
+        delegate: Text {
+            height: 80
+            width: pageView.width
+            text: model.text
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            anchors.fill: parent
+            font { family: lateef.name; pixelSize: 16; bold: true }
+            wrapMode: Text.WordWrap
+        }
+    }*/
+
+    /*CoverActionList {
         id: coverAction
 
         CoverAction {
@@ -48,6 +67,6 @@ CoverBackground {
         CoverAction {
             iconSource: "image://theme/icon-cover-pause"
         }
-    }
+    }*/
 }
 

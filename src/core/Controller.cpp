@@ -14,16 +14,19 @@ Controller::Controller(QObject *parent) : QObject(parent)
 
 void Controller::init()
 {
+    settings = new Settings(this);
+    settings->restoreSettings();
+    connect(this, SIGNAL(currentPageChanged(int)), settings, SLOT(setCurrentPage(int)));
+
     manager = new DbManager(this);
     checkDatabase(true);
     firstPage = new PageModel(manager->getDb(), this);
     midPage = new PageModel(manager->getDb(), this);
     lastPage = new PageModel(manager->getDb(), this);
 
-    currentPage = 10;
+    currentPage = settings->getCurrentPage();
     pages = manager->getPages();
     adjustPage();
-    emit initialized();
 }
 
 void Controller::checkDatabase(const bool reset)
@@ -75,6 +78,11 @@ void Controller::adjustPage()
     }
 }
 
+Settings *Controller::getSettings() const
+{
+    return settings;
+}
+
 PageModel *Controller::getLastPage() const
 {
     return lastPage;
@@ -100,9 +108,12 @@ int Controller::getCurrentPage() const
     return currentPage;
 }
 
-int Controller::setCurrentPage(const int page)
+void Controller::setCurrentPage(const int page)
 {
+    if(currentPage == page)
+        return;
+
     currentPage = page;
     adjustPage();
-    emit currentPageChanged();
+    emit currentPageChanged(currentPage);
 }
