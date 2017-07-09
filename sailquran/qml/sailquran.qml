@@ -39,5 +39,7 @@ ApplicationWindow
     allowedOrientations: defaultAllowedOrientations
 
     FontLoader { id: lateef; source: "qrc:/fonts/LateefRegOT.ttf" }
+    FontLoader { id: pdms; source: "qrc:/fonts/PDMS_Saleem_QuranFont-signed.ttf" }
+    FontLoader { id: scheherazadeRegular; source: "qrc:/fonts/Scheherazade-Regular.ttf" }
 }
 

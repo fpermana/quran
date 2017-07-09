@@ -58,7 +58,7 @@ void Controller::adjustPage()
     {
         if(i>=1 && i<=pages)
         {
-            if(i==currentPage-1)
+            /*if(i==currentPage-1)
                 model = firstPage;
             else if(i==currentPage)
                 model = midPage;
@@ -80,6 +80,38 @@ void Controller::adjustPage()
                     model->setPage(i);
                     model->getAyas(pageData.at(0).toInt(), pageData.at(1).toInt());
                 }
+            }*/
+
+            if(!pageModelHash.contains(i)) {
+                model = new PageModel(manager->getDb(), this);
+
+                if(model->getPage() != i) {
+                    pageData = manager->getPage(i);
+                    if(pageData.count() == 4) {
+                        model->setPage(i);
+                        model->setJuz(manager->getJuz(pageData.at(0).toInt(), pageData.at(1).toInt()));
+                        model->setSura(manager->getSura(pageData.at(0).toInt()));
+                        model->getAyas(pageData.at(0).toInt(), pageData.at(1).toInt(), pageData.at(2).toInt(), pageData.at(3).toInt());
+                    }
+                    else if(pageData.count() == 2) {
+                        model->setPage(i);
+                        model->setJuz(manager->getJuz(pageData.at(0).toInt(), pageData.at(1).toInt()));
+                        model->setSura(manager->getSura(pageData.at(0).toInt()));
+                        model->getAyas(pageData.at(0).toInt(), pageData.at(1).toInt());
+                    }
+
+                    pageModelHash.insert(i,model);
+                }
+            }
+
+            if(pageModelHash.contains(i)) {
+                model = pageModelHash.value(i);
+                if(i==currentPage-1)
+                    firstPage = model;
+                else if(i==currentPage)
+                    midPage = model;
+                else if(i==currentPage+1)
+                    lastPage = model;
             }
         }
     }

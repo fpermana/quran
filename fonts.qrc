@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file>fonts/LateefRegOT.ttf</file>
+    <file>fonts/LateefRegOT.ttf</file>
+    <file>fonts/PDMS_Saleem_QuranFont-signed.ttf</file>
+    <file>fonts/Scheherazade-Regular.ttf</file>
     </qresource>
 </RCC>
