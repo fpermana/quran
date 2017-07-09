@@ -26,6 +26,7 @@ public:
     QStringList getPage(const int page);
     QVariantMap getJuz(const int sura, const int aya);
     QVariantMap getSura(const int sura);
+    QVariantMap getQuranText(const int sura, const int aya);
 
 private:
     QSqlDatabase *db;

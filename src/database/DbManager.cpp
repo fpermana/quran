@@ -174,3 +174,30 @@ QVariantMap DbManager::getSura(const int sura)
     delete query;
     return dataMap;
 }
+
+QVariantMap DbManager::getQuranText(const int sura, const int aya)
+{
+    QVariantMap dataMap;
+    QSqlQuery *query = new QSqlQuery(*db);
+    query->prepare("SELECT * FROM quran_text WHERE sura = :first AND aya = :second");
+    query->bindValue(":first",sura);
+    query->bindValue(":second",aya);
+
+    if (!query->exec()) {
+        qDebug() << "Query error:" + query->lastError().text();
+    }
+    else if (!query->first()) {
+        qDebug() << "No data in the database";
+    }
+    else {
+        QStringList keys;
+        keys << "id" << "sura" << "aya" << "text";
+        foreach (QString key, keys) {
+            dataMap.insert(key, query->value(key));
+        }
+    }
+
+    query->clear();
+    delete query;
+    return dataMap;
+}

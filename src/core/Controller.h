@@ -15,6 +15,7 @@ class Controller : public QObject
     Q_PROPERTY(PageModel* firstPage READ getFirstPage CONSTANT)
     Q_PROPERTY(PageModel* midPage READ getMidPage CONSTANT)
     Q_PROPERTY(PageModel* lastPage READ getLastPage CONSTANT)
+    Q_PROPERTY(QString bismillah READ getBismillah CONSTANT)
 public:
     explicit Controller(QObject *parent = 0);
 
@@ -28,6 +29,8 @@ public:
     PageModel *getLastPage() const;
 
     Settings *getSettings() const;
+
+    QString getBismillah() const;
 
 signals:
     void currentPageChanged(int page);
@@ -43,6 +46,8 @@ private:
 
     QHash<int, PageModel*> pageModelHash;
     Settings *settings;
+
+    QString bismillah;
 };
 
 #endif // CONTROLLER_H

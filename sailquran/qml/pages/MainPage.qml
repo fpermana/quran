@@ -43,11 +43,16 @@ Page {
         delegate: SilicaListView {
             id: pageView
             property int delegatePage: (index+1)
-//            property string color: "red"
             height: mainView.height
             width: mainView.width
             focus: true
-//            model: Controller.getPageModel(delegateIndex+1);
+
+            header: Text {
+                color: Theme.primaryColor
+                wrapMode: Text.WordWrap
+                text: (model !== undefined) ? model.suraName : ""
+            }
+
             model: {
                     if(delegatePage == Controller.currentPage-1)
                         Controller.firstPage
@@ -56,50 +61,69 @@ Page {
                     else if(delegatePage == Controller.currentPage+1)
                         Controller.lastPage
             }
-            delegate: /*Rectangle {
-                    color: pageView.color
-                    height: 80
-                    width: pageView.width
+
+            delegate: Item {
+                height: childrenRect.height
+                width: pageView.width
                 Label {
-                    text: model.text
+                    id: bismillahLabel
+                    visible: (model.aya === 1 && model.sura !== 1)
+                    text: (model.aya === 1 && model.sura !== 1 ? Controller.bismillah : "")
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    anchors.fill: parent
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: constant.paddingMedium
+                        rightMargin: constant.paddingMedium
+                    }
+
                     font { family: lateef.name; pixelSize: Theme.fontSizeMedium; }
                     color: Theme.primaryColor
                     wrapMode: Text.WordWrap
+                    height: visible ? (paintedHeight + constant.paddingMedium) : 0
                 }
-            }*/
-            BackgroundItem {
-                id: listItem
-                property bool menuOpen: contextMenu != null && contextMenu.parent === listItem
-                width: ListView.view.width
-                height: menuOpen ? contextMenu.height + textLabel.contentHeight : textLabel.contentHeight
-
-                Label {
-                    id: textLabel
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignRight
+                BackgroundItem {
+                    id: listItem
+                    property bool menuOpen: contextMenu != null && contextMenu.parent === listItem
+                    height: menuOpen ? contextMenu.height + textLabel.contentHeight : textLabel.contentHeight
                     anchors {
+                        top: bismillahLabel.bottom
                         left: parent.left
                         right: parent.right
                     }
-                    color: Theme.primaryColor
-                    height: paintedHeight
-                    wrapMode: Text.WordWrap
-                    text: model.text
-//                  color: highlighted ? constant.colorHighlighted : constant.colorLight
-                }
 
-                onPressAndHold: {
-                    contextMenu.show(listItem)
-                }
+                    Label {
+                        id: textLabel
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignRight
+                        color: Theme.primaryColor
+                        height: paintedHeight + constant.paddingLarge
+                        anchors {
+                            top: parent.top
+                            left: parent.left
+                            right: parent.right
+                            leftMargin: constant.paddingMedium
+                            rightMargin: constant.paddingMedium
+                        }
 
-                ContextMenu {
-                    id: contextMenu
-                    MenuItem {
-                        text: "Bookmark"
-                        onClicked: {
+                        wrapMode: Text.WordWrap
+                        text: model.text
+    //                  color: highlighted ? constant.colorHighlighted : constant.colorLight
+                        lineHeight: 2
+                    }
+
+                    onPressAndHold: {
+                        contextMenu.show(listItem)
+                    }
+
+                    ContextMenu {
+                        id: contextMenu
+                        MenuItem {
+                            text: "Bookmark"
+                            onClicked: {
+                            }
                         }
                     }
                 }

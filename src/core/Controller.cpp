@@ -24,6 +24,9 @@ void Controller::init()
     midPage = new PageModel(manager->getDb(), this);
     lastPage = new PageModel(manager->getDb(), this);
 
+    QVariantMap bismillahMap = manager->getQuranText(1,1);
+    bismillah = bismillahMap.value("text").toString();
+
     currentPage = settings->getCurrentPage();
     pages = manager->getPages();
     adjustPage();
@@ -115,6 +118,11 @@ void Controller::adjustPage()
             }
         }
     }
+}
+
+QString Controller::getBismillah() const
+{
+    return bismillah;
 }
 
 Settings *Controller::getSettings() const

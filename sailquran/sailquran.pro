@@ -46,3 +46,6 @@ CONFIG += sailfishapp_i18n
 # following TRANSLATIONS line. And also do not forget to
 # modify the localized app name in the the .desktop file.
 TRANSLATIONS += translations/sailquran-de.ts
+
+DISTFILES += \
+    qml/components/Constant.qml
