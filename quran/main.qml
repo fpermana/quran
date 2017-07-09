@@ -59,7 +59,7 @@ ApplicationWindow {
 //                Controller.currentPage = Math.round(Controller.pages - Controller.pages * visibleArea.xPosition)
 //                console.log(Math.round(Controller.pages - Controller.pages * visibleArea.xPosition));
                 var p = Math.round(Controller.pages - Controller.pages * visibleArea.xPosition);
-                if(p == Controller.currentPage -1 || p == Controller.currentPage +1)
+                if(p == Controller.currentPage-1 || p == Controller.currentPage+1)
                     Controller.currentPage = p
             }
         }
