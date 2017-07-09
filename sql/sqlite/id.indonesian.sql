@@ -3,25 +3,25 @@
 -- http://www.phpmyadmin.net
 
 
-#=====================================================================
-#
-#  Quran Translation
-#  Name: Bahasa Indonesia
-#  Translator: Indonesian Ministry of Religious Affairs
-#  Language: Indonesian
-#  ID: id.indonesian
-#  Last Update: June 4, 2010
-#  Source: Tanzil.net
-#
-#=====================================================================
+--=====================================================================
+--
+--  Quran Translation
+--  Name: Bahasa Indonesia
+--  Translator: Indonesian Ministry of Religious Affairs
+--  Language: Indonesian
+--  ID: id.indonesian
+--  Last Update: June 4, 2010
+--  Source: Tanzil.net
+--
+--=====================================================================
 
 
 --
 -- Database: `quran`
 --
 
-# CREATE DATABASE IF NOT EXISTS `quran` CHARACTER SET utf8 COLLATE utf8_general_ci;
-# USE `quran`;
+-- CREATE DATABASE IF NOT EXISTS `quran` CHARACTER SET utf8 COLLATE utf8_general_ci;
+-- USE `quran`;
 
 
 -- --------------------------------------------------------
@@ -32,12 +32,11 @@
 
 DROP TABLE IF EXISTS `id_indonesian`;
 CREATE TABLE `id_indonesian` (
-  `index` int(4) NOT NULL auto_increment,
+  `id` int(4) NOT NULL PRIMARY KEY,
   `sura` int(3) NOT NULL default '0',
   `aya` int(3) NOT NULL default '0',
-  `text` text NOT NULL,
-  PRIMARY KEY  (`index`)
-) ENGINE=MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+  `text` text NOT NULL
+);
 
 
 --
@@ -45,7 +44,7 @@ CREATE TABLE `id_indonesian` (
 --
 
 -- Sura 1 (الفاتحة)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (1, 1, 1, 'Dengan menyebut nama Allah Yang Maha Pemurah lagi Maha Penyayang.'),
 (2, 1, 2, 'Segala puji bagi Allah, Tuhan semesta alam.'),
 (3, 1, 3, 'Maha Pemurah lagi Maha Penyayang.'),
@@ -55,7 +54,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (7, 1, 7, '(yaitu) Jalan orang-orang yang telah Engkau beri nikmat kepada mereka; bukan (jalan) mereka yang dimurkai dan bukan (pula jalan) mereka yang sesat.');
 
 -- Sura 2 (البقرة)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (8, 2, 1, 'Alif laam miim.'),
 (9, 2, 2, 'Kitab (Al Quran) ini tidak ada keraguan padanya; petunjuk bagi mereka yang bertakwa,'),
 (10, 2, 3, '(yaitu) mereka yang beriman kepada yang ghaib, yang mendirikan shalat, dan menafkahkan sebahagian rezeki yang Kami anugerahkan kepada mereka.'),
@@ -344,7 +343,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (293, 2, 286, 'Allah tidak membebani seseorang melainkan sesuai dengan kesanggupannya. Ia mendapat pahala (dari kebajikan) yang diusahakannya dan ia mendapat siksa (dari kejahatan) yang dikerjakannya. (Mereka berdoa): "Ya Tuhan kami, janganlah Engkau hukum kami jika kami lupa atau kami tersalah. Ya Tuhan kami, janganlah Engkau bebankan kepada kami beban yang berat sebagaimana Engkau bebankan kepada orang-orang sebelum kami. Ya Tuhan kami, janganlah Engkau pikulkan kepada kami apa yang tak sanggup kami memikulnya. Beri maaflah kami; ampunilah kami; dan rahmatilah kami. Engkaulah Penolong kami, maka tolonglah kami terhadap kaum yang kafir".');
 
 -- Sura 3 (آل عمران)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (294, 3, 1, 'Alif laam miim.'),
 (295, 3, 2, 'Allah, tidak ada Tuhan (yang berhak disembah) melainkan Dia. Yang hidup kekal lagi terus menerus mengurus makhluk-Nya.'),
 (296, 3, 3, 'Dia menurunkan Al Kitab (Al Quran) kepadamu dengan sebenarnya; membenarkan kitab yang telah diturunkan sebelumnya dan menurunkan Taurat dan Injil,'),
@@ -547,7 +546,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (493, 3, 200, 'Hai orang-orang yang beriman, bersabarlah kamu dan kuatkanlah kesabaranmu dan tetaplah bersiap siaga (di perbatasan negerimu) dan bertakwalah kepada Allah, supaya kamu beruntung.');
 
 -- Sura 4 (النساء)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (494, 4, 1, 'Hai sekalian manusia, bertakwalah kepada Tuhan-mu yang telah menciptakan kamu dari seorang diri, dan dari padanya Allah menciptakan isterinya; dan dari pada keduanya Allah memperkembang biakkan laki-laki dan perempuan yang banyak. Dan bertakwalah kepada Allah yang dengan (mempergunakan) nama-Nya kamu saling meminta satu sama lain, dan (peliharalah) hubungan silaturrahim. Sesungguhnya Allah selalu menjaga dan mengawasi kamu.'),
 (495, 4, 2, 'Dan berikanlah kepada anak-anak yatim (yang sudah balig) harta mereka, jangan kamu menukar yang baik dengan yang buruk dan jangan kamu makan harta mereka bersama hartamu. Sesungguhnya tindakan-tindakan (menukar dan memakan) itu, adalah dosa yang besar.'),
 (496, 4, 3, 'Dan jika kamu takut tidak akan dapat berlaku adil terhadap (hak-hak) perempuan yang yatim (bilamana kamu mengawininya), maka kawinilah wanita-wanita (lain) yang kamu senangi: dua, tiga atau empat. Kemudian jika kamu takut tidak akan dapat berlaku adil, maka (kawinilah) seorang saja, atau budak-budak yang kamu miliki. Yang demikian itu adalah lebih dekat kepada tidak berbuat aniaya.'),
@@ -726,7 +725,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (669, 4, 176, 'Mereka meminta fatwa kepadamu (tentang kalalah). Katakanlah: "Allah memberi fatwa kepadamu tentang kalalah (yaitu): jika seorang meninggal dunia, dan ia tidak mempunyai anak dan mempunyai saudara perempuan, maka bagi saudaranya yang perempuan itu seperdua dari harta yang ditinggalkannya, dan saudaranya yang laki-laki mempusakai (seluruh harta saudara perempuan), jika ia tidak mempunyai anak; tetapi jika saudara perempuan itu dua orang, maka bagi keduanya dua pertiga dari harta yang ditinggalkan oleh yang meninggal. Dan jika mereka (ahli waris itu terdiri dari) saudara-saudara laki dan perempuan, maka bahagian seorang saudara laki-laki sebanyak bahagian dua orang saudara perempuan. Allah menerangkan (hukum ini) kepadamu, supaya kamu tidak sesat. Dan Allah Maha Mengetahui segala sesuatu.');
 
 -- Sura 5 (المائدة)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (670, 5, 1, 'Hai orang-orang yang beriman, penuhilah aqad-aqad itu. Dihalalkan bagimu binatang ternak, kecuali yang akan dibacakan kepadamu. (Yang demikian itu) dengan tidak menghalalkan berburu ketika kamu sedang mengerjakan haji. Sesungguhnya Allah menetapkan hukum-hukum menurut yang dikehendaki-Nya.'),
 (671, 5, 2, 'Hai orang-orang yang beriman, janganlah kamu melanggar syi\'ar-syi\'ar Allah, dan jangan melanggar kehormatan bulan-bulan haram, jangan (mengganggu) binatang-binatang had-ya, dan binatang-binatang qalaa-id, dan jangan (pula) mengganggu orang-orang yang mengunjungi Baitullah sedang mereka mencari kurnia dan keridhaan dari Tuhannya dan apabila kamu telah menyelesaikan ibadah haji, maka bolehlah berburu. Dan janganlah sekali-kali kebencian(mu) kepada sesuatu kaum karena mereka menghalang-halangi kamu dari Masjidilharam, mendorongmu berbuat aniaya (kepada mereka). Dan tolong-menolonglah kamu dalam (mengerjakan) kebajikan dan takwa, dan jangan tolong-menolong dalam berbuat dosa dan pelanggaran. Dan bertakwalah kamu kepada Allah, sesungguhnya Allah amat berat siksa-Nya.'),
 (672, 5, 3, 'Diharamkan bagimu (memakan) bangkai, darah, daging babi, (daging hewan) yang disembelih atas nama selain Allah, yang tercekik, yang terpukul, yang jatuh, yang ditanduk, dan diterkam binatang buas, kecuali yang sempat kamu menyembelihnya, dan (diharamkan bagimu) yang disembelih untuk berhala. Dan (diharamkan juga) mengundi nasib dengan anak panah, (mengundi nasib dengan anak panah itu) adalah kefasikan. Pada hari ini orang-orang kafir telah putus asa untuk (mengalahkan) agamamu, sebab itu janganlah kamu takut kepada mereka dan takutlah kepada-Ku. Pada hari ini telah Kusempurnakan untuk kamu agamamu, dan telah Ku-cukupkan kepadamu nikmat-Ku, dan telah Ku-ridhai Islam itu jadi agama bagimu. Maka barang siapa terpaksa karena kelaparan tanpa sengaja berbuat dosa, sesungguhnya Allah Maha Pengampun lagi Maha Penyayang.'),
@@ -849,7 +848,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (789, 5, 120, 'Kepunyaan Allah-lah kerajaan langit dan bumi dan apa yang ada di dalamnya; dan Dia Maha Kuasa atas segala sesuatu.');
 
 -- Sura 6 (الأنعام)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (790, 6, 1, 'Segala puji bagi Allah Yang telah menciptakan langit dan bumi dan mengadakan gelap dan terang, namun orang-orang yang kafir mempersekutukan (sesuatu) dengan Tuhan mereka.'),
 (791, 6, 2, 'Dialah Yang menciptakan kamu dari tanah, sesudah itu ditentukannya ajal (kematianmu), dan ada lagi suatu ajal yang ada pada sisi-Nya (yang Dia sendirilah mengetahuinya), kemudian kamu masih ragu-ragu (tentang berbangkit itu).'),
 (792, 6, 3, 'Dan Dialah Allah (yang disembah), baik di langit maupun di bumi; Dia mengetahui apa yang kamu rahasiakan dan apa yang kamu lahirkan dan mengetahui (pula) apa yang kamu usahakan.'),
@@ -1017,7 +1016,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (954, 6, 165, 'Dan Dialah yang menjadikan kamu penguasa-penguasa di bumi dan Dia meninggikan sebahagian kamu atas sebahagian (yang lain) beberapa derajat, untuk mengujimu tentang apa yang diberikan-Nya kepadamu. Sesungguhnya Tuhanmu amat cepat siksaan-Nya dan sesungguhnya Dia Maha Pengampun lagi Maha Penyayang.');
 
 -- Sura 7 (الأعراف)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (955, 7, 1, 'Alif laam mim shaad.'),
 (956, 7, 2, 'Ini adalah sebuah kitab yang diturunkan kepadamu, maka janganlah ada kesempitan di dalam dadamu karenanya, supaya kamu memberi peringatan dengan kitab itu (kepada orang kafir), dan menjadi pelajaran bagi orang-orang yang beriman.'),
 (957, 7, 3, 'Ikutilah apa yang diturunkan kepadamu dari Tuhanmu dan janganlah kamu mengikuti pemimpin-pemimpin selain-Nya. Amat sedikitlah kamu mengambil pelajaran (daripadanya).'),
@@ -1226,7 +1225,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (1160, 7, 206, 'Sesungguhnya malaikat-malaikat yang ada di sisi Tuhanmu tidaklah merasa enggan menyembah Allah dan mereka mentasbihkan-Nya dan hanya kepada-Nya-lah mereka bersujud.');
 
 -- Sura 8 (الأنفال)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (1161, 8, 1, 'Mereka menanyakan kepadamu tentang (pembagian) harta rampasan perang. Katakanlah: "Harta rampasan perang kepunyaan Allah dan Rasul, oleh sebab itu bertakwalah kepada Allah dan perbaikilah perhubungan di antara sesamamu; dan taatlah kepada Allah dan Rasul-Nya jika kamu adalah orang-orang yang beriman".'),
 (1162, 8, 2, 'Sesungguhnya orang-orang yang beriman ialah mereka yang bila disebut nama Allah gemetarlah hati mereka, dan apabila dibacakan ayat-ayat-Nya bertambahlah iman mereka (karenanya), dan hanya kepada Tuhanlah mereka bertawakkal.'),
 (1163, 8, 3, '(yaitu) orang-orang yang mendirikan shalat dan yang menafkahkan sebagian dari rezeki yang Kami berikan kepada mereka.'),
@@ -1304,7 +1303,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (1235, 8, 75, 'Dan orang-orang yang beriman sesudah itu kemudian berhijrah serta berjihad bersamamu maka orang-orang itu termasuk golonganmu (juga). Orang-orang yang mempunyai hubungan kerabat itu sebagiannya lebih berhak terhadap sesamanya (daripada yang bukan kerabat) di dalam kitab Allah. Sesungguhnya Allah Maha Mengetahui segala sesuatu.');
 
 -- Sura 9 (التوبة)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (1236, 9, 1, '(Inilah pernyataan) pemutusan hubungan dari Allah dan Rasul-Nya (yang dihadapkan) kepada orang-orang musyrikin yang kamu (kaum muslimin) telah mengadakan perjanjian (dengan mereka).'),
 (1237, 9, 2, 'Maka berjalanlah kamu (kaum musyrikin) di muka bumi selama empat bulan dan ketahuilah bahwa sesungguhnya kamu tidak akan dapat melemahkan Allah, dan sesungguhnya Allah menghinakan orang-orang kafir.'),
 (1238, 9, 3, 'Dan (inilah) suatu permakluman daripada Allah dan Rasul-Nya kepada umat manusia pada hari haji akbar bahwa sesungguhnya Allah dan Rasul-Nya berlepas diri dari orang-orang musyrikin. Kemudian jika kamu (kaum musyrikin) bertobat, maka bertaubat itu lebih baik bagimu; dan jika kamu berpaling, maka ketahuilah bahwa sesungguhnya kamu tidak dapat melemahkan Allah. Dan beritakanlah kepada orang-orang kafir (bahwa mereka akan mendapat) siksa yang pedih.'),
@@ -1436,7 +1435,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (1364, 9, 129, 'Jika mereka berpaling (dari keimanan), maka katakanlah: "Cukuplah Allah bagiku; tidak ada Tuhan selain Dia. Hanya kepada-Nya aku bertawakkal dan Dia adalah Tuhan yang memiliki \'Arsy yang agung".');
 
 -- Sura 10 (يونس)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (1365, 10, 1, 'Alif laam raa. Inilah ayat-ayat Al Quran yang mengandung hikmah.'),
 (1366, 10, 2, 'Patutkah menjadi keheranan bagi manusia bahwa Kami mewahyukan kepada seorang laki-laki di antara mereka: "Berilah peringatan kepada manusia dan gembirakanlah orang-orang beriman bahwa mereka mempunyai kedudukan yang tinggi di sisi Tuhan mereka". Orang-orang kafir berkata: "Sesungguhnya orang ini (Muhammad) benar-benar adalah tukang sihir yang nyata".'),
 (1367, 10, 3, 'Sesungguhnya Tuhan kamu ialah Allah Yang menciptakan langit dan bumi dalam enam masa, kemudian Dia bersemayam di atas \'Arsy untuk mengatur segala urusan. Tiada seorangpun yang akan memberi syafa\'at kecuali sesudah ada izin-Nya. (Dzat) yang demikian itulah Allah, Tuhan kamu, maka sembahlah Dia. Maka apakah kamu tidak mengambil pelajaran?'),
@@ -1548,7 +1547,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (1473, 10, 109, 'Dan ikutilah apa yang diwahyukan kepadamu, dan bersabarlah hingga Allah memberi keputusan dan Dia adalah Hakim yang sebaik-baiknya.');
 
 -- Sura 11 (هود)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (1474, 11, 1, 'Alif laam raa, (inilah) suatu kitab yang ayat-ayatnya disusun dengan rapi serta dijelaskan secara terperinci, yang diturunkan dari sisi (Allah) Yang Maha Bijaksana lagi Maha Tahu,'),
 (1475, 11, 2, 'agar kamu tidak menyembah selain Allah. Sesungguhnya aku (Muhammad) adalah pemberi peringatan dan pembawa khabar gembira kepadamu daripada-Nya,'),
 (1476, 11, 3, 'dan hendaklah kamu meminta ampun kepada Tuhanmu dan bertaubat kepada-Nya. (Jika kamu mengerjakan yang demikian), niscaya Dia akan memberi kenikmatan yang baik (terus menerus) kepadamu sampai kepada waktu yang telah ditentukan dan Dia akan memberikan kepada tiap-tiap orang yang mempunyai keutamaan (balasan) keutamaannya. Jika kamu berpaling, maka sesungguhnya aku takut kamu akan ditimpa siksa hari kiamat.'),
@@ -1674,7 +1673,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (1596, 11, 123, 'Dan kepunyaan Allah-lah apa yang ghaib di langit dan di bumi dan kepada-Nya-lah dikembalikan urusan-urusan semuanya, maka sembahlah Dia, dan bertawakkallah kepada-Nya. Dan sekali-kali Tuhanmu tidak lalai dari apa yang kamu kerjakan.');
 
 -- Sura 12 (يوسف)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (1597, 12, 1, 'Alif, laam, raa. Ini adalah ayat-ayat Kitab (Al Quran) yang nyata (dari Allah).'),
 (1598, 12, 2, 'Sesungguhnya Kami menurunkannya berupa Al Quran dengan berbahasa Arab, agar kamu memahaminya.'),
 (1599, 12, 3, 'Kami menceritakan kepadamu kisah yang paling baik dengan mewahyukan Al Quran ini kepadamu, dan sesungguhnya kamu sebelum (Kami mewahyukan)nya adalah termasuk orang-orang yang belum mengetahui.'),
@@ -1788,7 +1787,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (1707, 12, 111, 'Sesungguhnya pada kisah-kisah mereka itu terdapat pengajaran bagi orang-orang yang mempunyai akal. Al Quran itu bukanlah cerita yang dibuat-buat, akan tetapi membenarkan (kitab-kitab) yang sebelumnya dan menjelaskan segala sesuatu, dan sebagai petunjuk dan rahmat bagi kaum yang beriman.');
 
 -- Sura 13 (الرعد)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (1708, 13, 1, 'Alif laam miim raa. Ini adalah ayat-ayat Al Kitab (Al Quran). Dan Kitab yang diturunkan kepadamu daripada Tuhanmu itu adalah benar: akan tetapi kebanyakan manusia tidak beriman (kepadanya).'),
 (1709, 13, 2, 'Allah-lah Yang meninggikan langit tanpa tiang (sebagaimana) yang kamu lihat, kemudian Dia bersemayam di atas \'Arasy, dan menundukkan matahari dan bulan. Masing-masing beredar hingga waktu yang ditentukan. Allah mengatur urusan (makhluk-Nya), menjelaskan tanda-tanda (kebesaran-Nya), supaya kamu meyakini pertemuan(mu) dengan Tuhanmu.'),
 (1710, 13, 3, 'Dan Dialah Tuhan yang membentangkan bumi dan menjadikan gunung-gunung dan sungai-sungai padanya. Dan menjadikan padanya semua buah-buahan berpasang-pasangan, Allah menutupkan malam kepada siang. Sesungguhnya pada yang demikian itu terdapat tanda-tanda (kebesaran Allah) bagi kaum yang memikirkan.'),
@@ -1834,7 +1833,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (1750, 13, 43, 'Berkatalah orang-orang kafir: "Kamu bukan seorang yang dijadikan Rasul". Katakanlah: "Cukuplah Allah menjadi saksi antaraku dan kamu, dan antara orang yang mempunyai ilmu Al Kitab".');
 
 -- Sura 14 (ابراهيم)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (1751, 14, 1, 'Alif, laam raa. (Ini adalah) Kitab yang Kami turunkan kepadamu supaya kamu mengeluarkan manusia dari gelap gulita kepada cahaya terang benderang dengan izin Tuhan mereka, (yaitu) menuju jalan Tuhan Yang Maha Perkasa lagi Maha Terpuji.'),
 (1752, 14, 2, 'Allah-lah yang memiliki segala apa yang di langit dan di bumi. Dan kecelakaanlah bagi orang-orang kafir karena siksaan yang sangat pedih,'),
 (1753, 14, 3, '(yaitu) orang-orang yang lebih menyukai kehidupan dunia dari pada kehidupan akhirat, dan menghalang-halangi (manusia) dari jalan Allah dan menginginkan agar jalan Allah itu bengkok. Mereka itu berada dalam kesesatan yang jauh.'),
@@ -1889,7 +1888,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (1802, 14, 52, '(Al Quran) ini adalah penjelasan yang sempurna bagi manusia, dan supaya mereka diberi peringatan dengan-Nya, dan supaya mereka mengetahui bahwasanya Dia adalah Tuhan Yang Maha Esa dan agar orang-orang yang berakal mengambil pelajaran.');
 
 -- Sura 15 (الحجر)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (1803, 15, 1, 'Alif, laam, raa. (Surat) ini adalah (sebagian dari) ayat-ayat Al-Kitab (yang sempurna), yaitu (ayat-ayat) Al Quran yang memberi penjelasan.'),
 (1804, 15, 2, 'Orang-orang yang kafir itu seringkali (nanti di akhirat) menginginkan, kiranya mereka dahulu (di dunia) menjadi orang-orang muslim.'),
 (1805, 15, 3, 'Biarkanlah mereka (di dunia ini) makan dan bersenang-senang dan dilalaikan oleh angan-angan (kosong), maka kelak mereka akan mengetahui (akibat perbuatan mereka).'),
@@ -1991,7 +1990,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (1901, 15, 99, 'dan sembahlah Tuhanmu sampai datang kepadamu yang diyakini (ajal).');
 
 -- Sura 16 (النحل)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (1902, 16, 1, 'Telah pasti datangnya ketetapan Allah maka janganlah kamu meminta agar disegerakan (datang)nya. Maha Suci Allah dan Maha Tinggi dari apa yang mereka persekutukan.'),
 (1903, 16, 2, 'Dia menurunkan para malaikat dengan (membawa) wahyu dengan perintah-Nya kepada siapa yang Dia kehendaki di antara hamba-hamba-Nya, yaitu: "Peringatkanlah olehmu sekalian, bahwasanya tidak ada Tuhan (yang hak) melainkan Aku, maka hendaklah kamu bertakwa kepada-Ku".'),
 (1904, 16, 3, 'Dia menciptakan langit dan bumi dengan hak. Maha Tinggi Allah daripada apa yang mereka persekutukan.'),
@@ -2122,7 +2121,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (2029, 16, 128, 'Sesungguhnya Allah beserta orang-orang yang bertakwa dan orang-orang yang berbuat kebaikan.');
 
 -- Sura 17 (الإسراء)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (2030, 17, 1, 'Maha Suci Allah, yang telah memperjalankan hamba-Nya pada suatu malam dari Al Masjidil Haram ke Al Masjidil Aqsha yang telah Kami berkahi sekelilingnya agar Kami perlihatkan kepadanya sebagian dari tanda-tanda (kebesaran) Kami. Sesungguhnya Dia adalah Maha Mendengar lagi Maha Mengetahui.'),
 (2031, 17, 2, 'Dan Kami berikan kepada Musa kitab (Taurat) dan Kami jadikan kitab Taurat itu petunjuk bagi Bani Israil (dengan firman): "Janganlah kamu mengambil penolong selain Aku,'),
 (2032, 17, 3, '(yaitu) anak cucu dari orang-orang yang Kami bawa bersama-sama Nuh. Sesungguhnya dia adalah hamba (Allah) yang banyak bersyukur.'),
@@ -2236,7 +2235,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (2140, 17, 111, 'Dan katakanlah: "Segala puji bagi Allah Yang tidak mempunyai anak dan tidak mempunyai sekutu dalam kerajaan-Nya dan Dia bukan pula hina yang memerlukan penolong dan agungkanlah Dia dengan pengagungan yang sebesar-besarnya.');
 
 -- Sura 18 (الكهف)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (2141, 18, 1, 'Segala puji bagi Allah yang telah menurunkan kepada hamba-Nya Al Kitab (Al-Quran) dan Dia tidak mengadakan kebengkokan di dalamnya;'),
 (2142, 18, 2, 'sebagai bimbingan yang lurus, untuk memperingatkan siksaan yang sangat pedih dari sisi Allah dan memberi berita gembira kepada orang-orang yang beriman, yang mengerjakan amal saleh, bahwa mereka akan mendapat pembalasan yang baik,'),
 (2143, 18, 3, 'mereka kekal di dalamnya untuk selama-lamanya.'),
@@ -2349,7 +2348,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (2250, 18, 110, 'Katakanlah: Sesungguhnya aku ini manusia biasa seperti kamu, yang diwahyukan kepadaku: "Bahwa sesungguhnya Tuhan kamu itu adalah Tuhan yang Esa". Barangsiapa mengharap perjumpaan dengan Tuhannya, maka hendaklah ia mengerjakan amal yang saleh dan janganlah ia mempersekutukan seorangpun dalam beribadat kepada Tuhannya".');
 
 -- Sura 19 (مريم)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (2251, 19, 1, 'Kaaf Haa Yaa \'Ain Shaad.'),
 (2252, 19, 2, '(Yang dibacakan ini adalah) penjelasan tentang rahmat Tuhan kamu kepada hamba-Nya, Zakaria,'),
 (2253, 19, 3, 'yaitu tatkala ia berdoa kepada Tuhannya dengan suara yang lembut.'),
@@ -2450,7 +2449,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (2348, 19, 98, 'Dan berapa banyak telah Kami binasakan umat-umat sebelum mereka. Adakah kamu melihat seorangpun dari mereka atau kamu dengar suara mereka yang samar-samar?');
 
 -- Sura 20 (طه)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (2349, 20, 1, 'Thaahaa.'),
 (2350, 20, 2, 'Kami tidak menurunkan Al Quran ini kepadamu agar kamu menjadi susah;'),
 (2351, 20, 3, 'tetapi sebagai peringatan bagi orang yang takut (kepada Allah),'),
@@ -2588,7 +2587,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (2483, 20, 135, 'Katakanlah: "Masing-masing (kita) menanti, maka nantikanlah oleh kamu sekalian! Maka kamu kelak akan mengetahui, siapa yang menempuh jalan yang lurus dan siapa yang telah mendapat petunjuk".');
 
 -- Sura 21 (الأنبياء)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (2484, 21, 1, 'Telah dekat kepada manusia hari menghisab segala amalan mereka, sedang mereka berada dalam kelalaian lagi berpaling (daripadanya).'),
 (2485, 21, 2, 'Tidak datang kepada mereka suatu ayat Al Quran pun yang baru (di-turunkan) dari Tuhan mereka, melainkan mereka mendengarnya, sedang mereka bermain-main,'),
 (2486, 21, 3, '(lagi) hati mereka dalam keadaan lalai. Dan mereka yang zalim itu merahasiakan pembicaraan mereka: "Orang ini tidak lain hanyalah seorang manusia (jua) seperti kamu, maka apakah kamu menerima sihir itu, padahal kamu menyaksikannya?"'),
@@ -2703,7 +2702,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (2595, 21, 112, '(Muhammad) berkata: "Ya Tuhanku, berilah keputusan dengan adil. Dan Tuhan kami ialah Tuhan Yang Maha Pemurah lagi Yang dimohonkan pertolongan-Nya terhadap apa yang kamu katakan".');
 
 -- Sura 22 (الحج)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (2596, 22, 1, 'Hai manusia, bertakwalah kepada Tuhanmu; sesungguhnya kegoncangan hari kiamat itu adalah suatu kejadian yang sangat besar (dahsyat).'),
 (2597, 22, 2, '(Ingatlah) pada hari (ketika) kamu melihat kegoncangan itu, lalailah semua wanita yang menyusui anaknya dari anak yang disusuinya dan gugurlah kandungan segala wanita yang hamil, dan kamu lihat manusia dalam keadaan mabuk, padahal sebenarnya mereka tidak mabuk, akan tetapi azab Allah itu sangat kerasnya.'),
 (2598, 22, 3, 'Di antara manusia ada orang yang membantah tentang Allah tanpa ilmu pengetahuan dan mengikuti setiap syaitan yang jahat,'),
@@ -2784,7 +2783,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (2673, 22, 78, 'Dan berjihadlah kamu pada jalan Allah dengan jihad yang sebenar-benarnya. Dia telah memilih kamu dan Dia sekali-kali tidak menjadikan untuk kamu dalam agama suatu kesempitan. (Ikutilah) agama orang tuamu Ibrahim. Dia (Allah) telah menamai kamu sekalian orang-orang muslim dari dahulu, dan (begitu pula) dalam (Al Quran) ini, supaya Rasul itu menjadi saksi atas dirimu dan supaya kamu semua menjadi saksi atas segenap manusia, maka dirikanlah sembahyang, tunaikanlah zakat dan berpeganglah kamu pada tali Allah. Dia adalah Pelindungmu, maka Dialah sebaik-baik Pelindung dan sebaik-baik Penolong.');
 
 -- Sura 23 (المؤمنون)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (2674, 23, 1, 'Sesungguhnya beruntunglah orang-orang yang beriman,'),
 (2675, 23, 2, '(yaitu) orang-orang yang khusyu\' dalam sembahyangnya,'),
 (2676, 23, 3, 'dan orang-orang yang menjauhkan diri dari (perbuatan dan perkataan) yang tiada berguna,'),
@@ -2905,7 +2904,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (2791, 23, 118, 'Dan katakanlah: "Ya Tuhanku berilah ampun dan berilah rahmat, dan Engkau adalah Pemberi rahmat Yang Paling baik".');
 
 -- Sura 24 (النور)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (2792, 24, 1, '(Ini adalah) satu surat yang Kami turunkan dan Kami wajibkan (menjalankan hukum-hukum yang ada di dalam)nya, dan Kami turunkan di dalamnya ayat ayat yang jelas, agar kamu selalu mengingatinya.'),
 (2793, 24, 2, 'Perempuan yang berzina dan laki-laki yang berzina, maka deralah tiap-tiap seorang dari keduanya seratus dali dera, dan janganlah belas kasihan kepada keduanya mencegah kamu untuk (menjalankan) agama Allah, jika kamu beriman kepada Allah, dan hari akhirat, dan hendaklah (pelaksanaan) hukuman mereka disaksikan oleh sekumpulan orang-orang yang beriman.'),
 (2794, 24, 3, 'Laki-laki yang berzina tidak mengawini melainkan perempuan yang berzina, atau perempuan yang musyrik; dan perempuan yang berzina tidak dikawini melainkan oleh laki-laki yang berzina atau laki-laki musyrik, dan yang demikian itu diharamkan atas oran-orang yang mukmin.'),
@@ -2972,7 +2971,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (2855, 24, 64, 'Ketahuilah sesungguhnya kepunyaan Allahlah apa yang di langit dan di bumi. Sesungguhnya Dia mengetahui keadaan yang kamu berada di dalamnya (sekarang). Dan (mengetahui pula) hati (manusia) dikembalikan kepada-Nya, lalu diterangkan-Nya kepada mereka apa yang telah mereka kerjakan. Dan Allah Maha mengehui segala sesuatu.');
 
 -- Sura 25 (الفرقان)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (2856, 25, 1, 'Maha suci Allah yang telah menurunkan Al Furqaan (Al Quran) kepada hamba-Nya, agar dia menjadi pemberi peringatan kepada seluruh alam,'),
 (2857, 25, 2, 'yang kepunyaan-Nya-lah kerajaan langit dan bumi, dan Dia tidak mempunyai anak, dan tidak ada sekutu bagi-Nya dalam kekuasaan(Nya), dan dia telah menciptakan segala sesuatu, dan Dia menetapkan ukuran-ukurannya dengan serapi-rapinya.'),
 (2858, 25, 3, 'Kemudian mereka mengambil tuhan-tuhan selain daripada-Nya (untuk disembah), yang tuhan-tuhan itu tidak menciptakan apapun, bahkan mereka sendiri diciptakan dan tidak kuasa untuk (menolak) sesuatu kemudharatan dari dirinya dan tidak (pula untuk mengambil) suatu kemanfaatanpun dan (juga) tidak kuasa mematikan, menghidupkan dan tidak (pula) membangkitkan.'),
@@ -3052,7 +3051,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (2932, 25, 77, 'Katakanlah (kepada orang-orang musyrik): "Tuhanku tidak mengindahkan kamu, melainkan kalau ada ibadatmu. (Tetapi bagaimana kamu beribadat kepada-Nya), padahal kamu sungguh telah mendustakan-Nya? karena itu kelak (azab) pasti (menimpamu)".');
 
 -- Sura 26 (الشعراء)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (2933, 26, 1, 'Thaa Siim Miim'),
 (2934, 26, 2, 'Inilah ayat-ayat Al Quran yang menerangkan.'),
 (2935, 26, 3, 'Boleh jadi kamu (Muhammad) akan membinasakan dirimu, karena mereka tidak beriman.'),
@@ -3282,7 +3281,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (3159, 26, 227, 'kecuali orang-orang (penyair-penyair) yang beriman dan beramal saleh dan banyak menyebut Allah dan mendapat kemenangan sesudah menderita kezaliman. Dan orang-orang yang zalim itu kelak akan mengetahui ke tempat mana mereka akan kembali.');
 
 -- Sura 27 (النمل)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (3160, 27, 1, 'Thaa Siin (Surat) ini adalah ayat-ayat Al Quran, dan (ayat-ayat) Kitab yang menjelaskan,'),
 (3161, 27, 2, 'untuk menjadi petunjuk dan berita gembira untuk orang-orang yang beriman,'),
 (3162, 27, 3, '(yaitu) orang-orang yang mendirikan sembahyang dan menunaikan zakat dan mereka yakin akan adanya negeri akhirat.'),
@@ -3378,7 +3377,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (3252, 27, 93, 'Dan katakanlah: "Segala puji bagi Allah, Dia akan memperlihatkan kepadamu tanda-tanda kebesaran-Nya, maka kamu akan mengetahuinya. Dan Tuhanmu tiada lalai dari apa yang kamu kerjakan".');
 
 -- Sura 28 (القصص)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (3253, 28, 1, 'Thaa Siin Miim'),
 (3254, 28, 2, 'Ini adalah ayat-ayat Kitab (Al Quran) yang nyata (dari Allah).'),
 (3255, 28, 3, 'Kami membacakan kepadamu sebagian dari kisah Musa dan Fir\'aun dengan benar untuk orang-orang yang beriman.'),
@@ -3469,7 +3468,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (3340, 28, 88, 'Janganlah kamu sembah di samping (menyembah) Allah, tuhan apapun yang lain. Tidak ada Tuhan (yang berhak disembah) melainkan Dia. Tiap-tiap sesuatu pasti binasa, kecuali Allah. Bagi-Nya-lah segala penentuan, dan hanya kepada-Nya-lah kamu dikembalikan.');
 
 -- Sura 29 (العنكبوت)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (3341, 29, 1, 'Alif laam miim'),
 (3342, 29, 2, 'Apakah manusia itu mengira bahwa mereka dibiarkan (saja) mengatakan: "Kami telah beriman", sedang mereka tidak diuji lagi?'),
 (3343, 29, 3, 'Dan sesungguhnya kami telah menguji orang-orang yang sebelum mereka, maka sesungguhnya Allah mengetahui orang-orang yang benar dan sesungguhnya Dia mengetahui orang-orang yang dusta.'),
@@ -3541,7 +3540,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (3409, 29, 69, 'Dan orang-orang yang berjihad untuk (mencari keridhaan) Kami, benar-benar akan Kami tunjukkan kepada mereka jalan-jalan Kami. Dan sesungguhnya Allah benar-benar beserta orang-orang yang berbuat baik.');
 
 -- Sura 30 (الروم)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (3410, 30, 1, 'Alif Laam Miim'),
 (3411, 30, 2, 'Telah dikalahkan bangsa Rumawi,'),
 (3412, 30, 3, 'di negeri yang terdekat dan mereka sesudah dikalahkan itu akan menang'),
@@ -3604,7 +3603,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (3469, 30, 60, 'Dan bersabarlah kamu, sesungguhnya janji Allah adalah benar dan sekali-kali janganlah orang-orang yang tidak meyakini (kebenaran ayat-ayat Allah) itu menggelisahkan kamu.');
 
 -- Sura 31 (لقمان)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (3470, 31, 1, 'Alif Laam Miim'),
 (3471, 31, 2, 'Inilah ayat-ayat Al Quran yang mengandung hikmat,'),
 (3472, 31, 3, 'menjadi petunjuk dan rahmat bagi orang-orang yang berbuat kebaikan,'),
@@ -3641,7 +3640,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (3503, 31, 34, 'Sesungguhnya Allah, hanya pada sisi-Nya sajalah pengetahuan tentang Hari Kiamat; dan Dialah Yang menurunkan hujan, dan mengetahui apa yang ada dalam rahim. Dan tiada seorangpun yang dapat mengetahui (dengan pasti) apa yang akan diusahakannya besok. Dan tiada seorangpun yang dapat mengetahui di bumi mana dia akan mati. Sesungguhnya Allah Maha Mengetahui lagi Maha Mengenal.');
 
 -- Sura 32 (السجدة)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (3504, 32, 1, 'Alif Laam Miim'),
 (3505, 32, 2, 'Turunnya Al-Quran yang tidak ada keraguan di dalamnya, (adalah) dari Tuhan semesta alam.'),
 (3506, 32, 3, 'Tetapi mengapa mereka (orang kafir) mengatakan: "Dia Muhammad mengada-adakannya". Sebenarnya Al-Quran itu adalah kebenaran dari Rabbmu, agar kamu memberi peringatan kepada kaum yang belum datang kepada mereka orang yang memberi peringatan sebelum kamu; mudah-mudahan mereka mendapat petunjuk.'),
@@ -3674,7 +3673,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (3533, 32, 30, 'Maka berpalinglah kamu dari mereka dan tunggulah, sesungguhnya mereka (juga) menunggu.');
 
 -- Sura 33 (الأحزاب)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (3534, 33, 1, 'Hai Nabi, bertakwalah kepada Allah dan janganlah kamu menuruti (keinginan) orang-orang kafir dan orang-orang munafik. Sesungguhnya Allah adalah Maha Mengetahui lagi Maha Bijaksana,'),
 (3535, 33, 2, 'dan ikutilah apa yang diwahyukan Tuhan kepadamu. Sesungguhnya Allah adalah Maha Mengetahui apa yang kamu kerjakan.'),
 (3536, 33, 3, 'dan bertawakkallah kepada Allah. Dan cukuplah Allah sebagai Pemelihara.'),
@@ -3750,7 +3749,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (3606, 33, 73, 'sehingga Allah mengazab orang-orang munafik laki-laki dan perempuan dan orang-orang musyrikin laki-laki dan perempuan; dan sehingga Allah menerima taubat orang-orang mukmin laki-laki dan perempuan. Dan adalah Allah Maha Pengampun lagi Maha Penyayang.');
 
 -- Sura 34 (سبإ)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (3607, 34, 1, 'Segala puji bagi Allah yang memiliki apa yang di langit dan apa yang di bumi dan bagi-Nya (pula) segala puji di akhirat. Dan Dialah Yang Maha Bijaksana lagi Maha Mengetahui.'),
 (3608, 34, 2, 'Dia mengetahui apa yang masuk ke dalam bumi, apa yang ke luar daripadanya, apa yang turun dari langit dan apa yang naik kepadanya. Dan Dialah Yang Maha Penyayang lagi Maha Pengampun.'),
 (3609, 34, 3, 'Dan orang-orang yang kafir berkata: "Hari berbangkit itu tidak akan datang kepada kami". Katakanlah: "Pasti datang, demi Tuhanku Yang Mengetahui yang ghaib, sesungguhnya kiamat itu pasti akan datang kepadamu. Tidak ada tersembunyi daripada-Nya sebesar zarrahpun yang ada di langit dan yang ada di bumi dan tidak ada (pula) yang lebih kecil dari itu dan yang lebih besar, melainkan tersebut dalam Kitab yang nyata (Lauh Mahfuzh)",'),
@@ -3807,7 +3806,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (3660, 34, 54, 'Dan dihalangi antara mereka dengan apa yang mereka ingini sebagaimana yang dilakukan terhadap orang-orang yang serupa dengan mereka pada masa dahulu. Sesungguhnya mereka dahulu (di dunia) dalam keraguan yang mendalam.');
 
 -- Sura 35 (فاطر)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (3661, 35, 1, 'Segala puji bagi Allah Pencipta langit dan bumi, Yang menjadikan malaikat sebagai utusan-utusan (untuk mengurus berbagai macam urusan) yang mempunyai sayap, masing-masing (ada yang) dua, tiga dan empat. Allah menambahkan pada ciptaan-Nya apa yang dikehendaki-Nya. Sesungguhnya Allah Maha Kuasa atas segala sesuatu.'),
 (3662, 35, 2, 'Apa saja yang Allah anugerahkan kepada manusia berupa rahmat, maka tidak ada seorangpun yang dapat menahannya; dan apa saja yang ditahan oleh Allah maka tidak seorangpun yang sanggup melepaskannya sesudah itu. Dan Dialah Yang Maha Perkasa lagi Maha Bijaksana.'),
 (3663, 35, 3, 'Hai manusia, ingatlah akan nikmat Allah kepadamu. Adakah pencipta selain Allah yang dapat memberikan rezeki kepada kamu dari langit dan bumi? Tidak ada Tuhan selain Dia; maka mengapakah kamu berpaling (dari ketauhidan)?'),
@@ -3855,7 +3854,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (3705, 35, 45, 'Dan kalau sekiranya Allah menyiksa manusia disebabkan usahanya, niscaya Dia tidak akan meninggalkan di atas permukaan bumi suatu mahluk yang melatapun akan tetapi Allah menangguhkan (penyiksaan) mereka, sampai waktu yang tertentu; maka apabila datang ajal mereka, maka sesungguhnya Allah adalah Maha Melihat (keadaan) hamba-hamba-Nya.');
 
 -- Sura 36 (يس)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (3706, 36, 1, 'Yaa siin'),
 (3707, 36, 2, 'Demi Al Quran yang penuh hikmah,'),
 (3708, 36, 3, 'Sesungguhnya kamu salah seorang dari rasul-rasul,'),
@@ -3941,7 +3940,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (3788, 36, 83, 'Maka Maha Suci (Allah) yang di tangan-Nya kekuasaaan atas segala sesuatu dan kepada-Nya-lah kamu dikembalikan.');
 
 -- Sura 37 (الصافات)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (3789, 37, 1, 'Demi (rombongan) yang ber shaf-shaf dengan sebenar-benarnya],'),
 (3790, 37, 2, 'dan demi (rombongan) yang melarang dengan sebenar-benarnya (dari perbuatan-perbuatan maksiat),'),
 (3791, 37, 3, 'dan demi (rombongan) yang membacakan pelajaran,'),
@@ -4126,7 +4125,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (3970, 37, 182, 'Dan segala puji bagi Allah Tuhan seru sekalian alam.');
 
 -- Sura 38 (ص)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (3971, 38, 1, 'Shaad, demi Al Quran yang mempunyai keagungan.'),
 (3972, 38, 2, 'Sebenarnya orang-orang kafir itu (berada) dalam kesombongan dan permusuhan yang sengit.'),
 (3973, 38, 3, 'Betapa banyaknya umat sebelum mereka yang telah Kami binasakan, lalu mereka meminta tolong padahal (waktu itu) bukanlah saat untuk lari melepaskan diri.'),
@@ -4217,7 +4216,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4058, 38, 88, 'Dan sesungguhnya kamu akan mengetahui (kebenaran) berita Al Quran setelah beberapa waktu lagi.');
 
 -- Sura 39 (الزمر)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4059, 39, 1, 'Kitab (Al Quran ini) diturunkan oleh Allah Yang Maha Perkasa lagi Maha Bijaksana.'),
 (4060, 39, 2, 'Sesunguhnya Kami menurunkan kepadamu Kitab (Al Quran) dengan (membawa) kebenaran. Maka sembahlah Allah dengan memurnikan ketaatan kepada-Nya.'),
 (4061, 39, 3, 'Ingatlah, hanya kepunyaan Allah-lah agama yang bersih (dari syirik). Dan orang-orang yang mengambil pelindung selain Allah (berkata): "Kami tidak menyembah mereka melainkan supaya mereka mendekatkan kami kepada Allah dengan sedekat-dekatnya". Sesungguhnya Allah akan memutuskan di antara mereka tentang apa yang mereka berselisih padanya. Sesungguhnya Allah tidak menunjuki orang-orang yang pendusta dan sangat ingkar.'),
@@ -4295,7 +4294,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4133, 39, 75, 'Dan kamu (Muhammad) akan melihat malaikat-mmlaikat berlingkar di sekeliling \'Arsy bertasbih sambil memuji Tuhannya; dan diberi putusan di antara hamba-hamba Allah dengan adil dan diucapkan: "Segala puji bagi Allah, Tuhan semesta alam".');
 
 -- Sura 40 (غافر)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4134, 40, 1, 'Haa Miim.'),
 (4135, 40, 2, 'Diturunkan Kitab ini (Al Quran) dari Allah Yang Maha Perkasa lagi Maha Mengetahui,'),
 (4136, 40, 3, 'Yang Mengampuni dosa dan Menerima taubat lagi keras hukuman-Nya. Yang mempunyai karunia. Tiada Tuhan (yang berhak disembah) selain Dia. Hanya kepada-Nya-lah kembali (semua makhluk).'),
@@ -4383,7 +4382,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4218, 40, 85, 'Maka iman mereka tiada berguna bagi mereka tatkala mereka telah melihat siksa Kami. Itulah sunnah Allah yang telah berlaku terhadap hamba-hamba-Nya. Dan di waktu itu binasalah orang-orang kafir.');
 
 -- Sura 41 (فصلت)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4219, 41, 1, 'Haa Miim.'),
 (4220, 41, 2, 'Diturunkan dari Tuhan Yang Maha Pemurah lagi Maha Penyayang.'),
 (4221, 41, 3, 'Kitab yang dijelaskan ayat-ayatnya, yakni bacaan dalam bahasa Arab, untuk kaum yang mengetahui,'),
@@ -4440,7 +4439,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4272, 41, 54, 'Ingatlah bahwa sesungguhnya mereka adalah dalam keraguan tentang pertemuan dengan Tuhan mereka. Ingatlah bahwa sesungguhnya Dia Maha Meliputi segala sesuatu.');
 
 -- Sura 42 (الشورى)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4273, 42, 1, 'Haa Miim.'),
 (4274, 42, 2, '\'Ain Siin Qaaf.'),
 (4275, 42, 3, 'Demikianlah Allah Yang Maha Perkasa lagi Maha Bijaksana, mewahyukan kepada kamu dan kepada orang-orang sebelum kamu.'),
@@ -4496,7 +4495,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4325, 42, 53, '(Yaitu) jalan Allah yang kepunyaan-Nya segala apa yang ada di langit dan apa yang ada di bumi. Ingatlah, bahwa kepada Allah-lah kembali semua urusan.');
 
 -- Sura 43 (الزخرف)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4326, 43, 1, 'Haa Miim.'),
 (4327, 43, 2, 'Demi Kitab (Al Quran) yang menerangkan.'),
 (4328, 43, 3, 'Sesungguhnya Kami menjadikan Al Quran dalam bahasa Arab supaya kamu memahami(nya).'),
@@ -4588,7 +4587,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4414, 43, 89, 'Maka berpalinglah (hai Muhammad) dari mereka dan katakanlah: "Salam (selamat tinggal)". Kelak mereka akan mengetahui (nasib mereka yang buruk).');
 
 -- Sura 44 (الدخان)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4415, 44, 1, 'Haa miim.'),
 (4416, 44, 2, 'Demi Kitab (Al Quran) yang menjelaskan,'),
 (4417, 44, 3, 'sesungguhnya Kami menurunkannya pada suatu malam yang diberkahi dan sesungguhnya Kami-lah yang memberi peringatan.'),
@@ -4650,7 +4649,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4473, 44, 59, 'Maka tunggulah; sesungguhnya mereka itu menunggu (pula).');
 
 -- Sura 45 (الجاثية)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4474, 45, 1, 'Haa Miim'),
 (4475, 45, 2, 'Kitab (ini) diturunkan dari Allah Yang Maha Perkasa lagi Maha Bijaksana.'),
 (4476, 45, 3, 'Sesungguhnya pada langit dan bumi benar-benar terdapat tanda-tanda (kekuasaan Allah) untuk orang-orang yang beriman.'),
@@ -4690,7 +4689,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4510, 45, 37, 'Dan bagi-Nya-lah keagungan di langit dan bumi, Dialah Yang Maha Perkasa lagi Maha Bijaksana.');
 
 -- Sura 46 (الأحقاف)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4511, 46, 1, 'Haa Miim.'),
 (4512, 46, 2, 'Diturunkan Kitab ini dari Allah Yang Maha Perkasa lagi Maha Bijaksana.'),
 (4513, 46, 3, 'Kami tiada menciptakan langit dan bumi dan apa yang ada antara keduanya melainkan dengan (tujuan) yang benar dan dalam waktu yang ditentukan. Dan orang-orang yang kafir berpaling dari apa yang diperingatkan kepada mereka.'),
@@ -4728,7 +4727,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4545, 46, 35, 'Maka bersabarlah kamu seperti orang-orang yang mempunyai keteguhan hati dari rasul-rasul telah bersabar dan janganlah kamu meminta disegerakan (azab) bagi mereka. Pada hari mereka melihat azab yang diancamkan kepada mereka (merasa) seolah-olah tidak tinggal (di dunia) melainkan sesaat pada siang hari. (Inilah) suatu pelajaran yang cukup, maka tidak dibinasakan melainkan kaum yang fasik.');
 
 -- Sura 47 (محمد)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4546, 47, 1, 'Orang-orang yang kafir dan menghalangi (manusia) dari jalan Allah, Allah menyesatkan perbuatan-perbuatan mereka.'),
 (4547, 47, 2, 'Dan orang-orang mukmin dan beramal soleh serta beriman kepada apa yang diturunkan kepada Muhammad dan itulah yang haq dari Tuhan mereka, Allah menghapuskan kesalahan-kesalahan mereka dan memperbaiki keadaan mereka.'),
 (4548, 47, 3, 'Yang demikian adalah karena sesungguhnya orang-orang kafir mengikuti yang bathil dan sesungguhnya orang-orang mukmin mengikuti yang haq dari Tuhan mereka. Demikianlah Allah membuat untuk manusia perbandingan-perbandingan bagi mereka.'),
@@ -4769,7 +4768,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4583, 47, 38, 'Ingatlah, kamu ini orang-orang yang diajak untuk menafkahkan (hartamu) pada jalan Allah. Maka di antara kamu ada yang kikir, dan siapa yang kikir sesungguhnya dia hanyalah kikir terhadap dirinya sendiri. Dan Allah-lah yang Maha Kaya sedangkan kamulah orang-orang yang berkehendak (kepada-Nya); dan jika kamu berpaling niscaya Dia akan mengganti (kamu) dengan kaum yang lain; dan mereka tidak akan seperti kamu ini.');
 
 -- Sura 48 (الفتح)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4584, 48, 1, 'Sesungguhnya Kami telah memberikan kepadamu kemenangan yang nyata,'),
 (4585, 48, 2, 'supaya Allah memberi ampunan kepadamu terhadap dosamu yang telah lalu dan yang akan datang serta menyempurnakan nikmat-Nya atasmu dan memimpin kamu kepada jalan yang lurus,'),
 (4586, 48, 3, 'dan supaya Allah menolongmu dengan pertolongan yang kuat (banyak).'),
@@ -4801,7 +4800,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4612, 48, 29, 'Muhammad itu adalah utusan Allah dan orang-orang yang bersama dengan dia adalah keras terhadap orang-orang kafir, tetapi berkasih sayang sesama mereka. Kamu lihat mereka ruku\' dan sujud mencari karunia Allah dan keridhaan-Nya, tanda-tanda mereka tampak pada muka mereka dari bekas sujud. Demikianlah sifat-sifat mereka dalam Taurat dan sifat-sifat mereka dalam Injil, yaitu seperti tanaman yang mengeluarkan tunasnya maka tunas itu menjadikan tanaman itu kuat lalu menjadi besarlah dia dan tegak lurus di atas pokoknya; tanaman itu menyenangkan hati penanam-penanamnya karena Allah hendak menjengkelkan hati orang-orang kafir (dengan kekuatan orang-orang mukmin). Allah menjanjikan kepada orang-orang yang beriman dan mengerjakan amal yang saleh di antara mereka ampunan dan pahala yang besar.');
 
 -- Sura 49 (الحجرات)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4613, 49, 1, 'Hai orang-orang yang beriman, janganlah kamu mendahului Allah dan Rasulnya dan bertakwalah kepada Allah. Sesungguhnya Allah Maha Mendengar lagi Maha Mengetahui.'),
 (4614, 49, 2, 'Hai orang-orang yang beriman, janganlah kamu meninggikan suaramu melebihi suara Nabi, dan janganlah kamu berkata kepadanya dengan suara yang keras, sebagaimana kerasnya suara sebagian kamu terhadap sebagian yang lain, supaya tidak hapus (pahala) amalanmu, sedangkan kamu tidak menyadari.'),
 (4615, 49, 3, 'Sesungguhnya orang yang merendahkan suaranya di sisi Rasulullah mereka itulah orang-orang yang telah diuji hati mereka oleh Allah untuk bertakwa. Bagi mereka ampunan dan pahala yang besar.'),
@@ -4822,7 +4821,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4630, 49, 18, 'Sesungguhnya Allah mengetahui apa yang ghaib di langit dan bumi. Dan Allah Maha Melihat apa yang kamu kerjakan.');
 
 -- Sura 50 (ق)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4631, 50, 1, 'Qaaf Demi Al Quran yang sangat mulia.'),
 (4632, 50, 2, '(Mereka tidak menerimanya) bahkan mereka tercengang karena telah datang kepada mereka seorang pemberi peringatan dari (kalangan) mereka sendiri, maka berkatalah orang-orang kafir: "Ini adalah suatu yang amat ajaib".'),
 (4633, 50, 3, 'Apakah kami setelah mati dan setelah menjadi tanah (kami akan kembali lagi)?, itu adalah suatu pengembalian yang tidak mungkin.'),
@@ -4870,7 +4869,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4675, 50, 45, 'Kami lebih mengetahui tentang apa yang mereka katakan, dan kamu sekali-kali bukanlah seorang pemaksa terhadap mereka. Maka beri peringatanlah dengan Al Quran orang yang takut dengan ancaman-Ku.');
 
 -- Sura 51 (الذاريات)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4676, 51, 1, 'Demi (angin) yang menerbangkan debu dengan kuat.'),
 (4677, 51, 2, 'dan awan yang mengandung hujan,'),
 (4678, 51, 3, 'dan kapal-kapal yang berlayar dengan mudah.'),
@@ -4933,7 +4932,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4735, 51, 60, 'Maka kecelakaanlah bagi orang-orang yang kafir pada hari yang diancamkan kepada mereka.');
 
 -- Sura 52 (الطور)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4736, 52, 1, 'Demi bukit,'),
 (4737, 52, 2, 'dan Kitab yang ditulis,'),
 (4738, 52, 3, 'pada lembaran yang terbuka,'),
@@ -4985,7 +4984,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4784, 52, 49, 'dan bertasbihlah kepada-Nya pada beberapa saat di malam hari dan di waktu terbenam bintang-bintang (di waktu fajar).');
 
 -- Sura 53 (النجم)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4785, 53, 1, 'Demi bintang ketika terbenam.'),
 (4786, 53, 2, 'kawanmu (Muhammad) tidak sesat dan tidak pula keliru.'),
 (4787, 53, 3, 'dan tiadalah yang diucapkannya itu (Al-Quran) menurut kemauan hawa nafsunya.'),
@@ -5050,7 +5049,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4846, 53, 62, 'Maka bersujudlah kepada Allah dan sembahlah (Dia).');
 
 -- Sura 54 (القمر)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4847, 54, 1, 'Telah dekat datangnya saat itu dan telah terbelah bulan.'),
 (4848, 54, 2, 'Dan jika mereka (orang-orang musyrikin) melihat suatu tanda (mukjizat), mereka berpaling dan berkata: "(Ini adalah) sihir yang terus menerus".'),
 (4849, 54, 3, 'Dan mereka mendutakan (Nabi) dan mengikuti hawa nafsu mereka, sedang tiap-tiap urusan telah ada ketetapannya'),
@@ -5108,7 +5107,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4901, 54, 55, 'di tempat yang disenangi di sisi Tuhan Yang Berkuasa.');
 
 -- Sura 55 (الرحمن)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4902, 55, 1, '(Tuhan) Yang Maha Pemurah,'),
 (4903, 55, 2, 'Yang telah mengajarkan al Quran.'),
 (4904, 55, 3, 'Dia menciptakan manusia.'),
@@ -5189,7 +5188,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (4979, 55, 78, 'Maha Agung nama Tuhanmu Yang Mempunyai Kebesaran dan Karunia.');
 
 -- Sura 56 (الواقعة)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (4980, 56, 1, 'Apabila terjadi hari kiamat,'),
 (4981, 56, 2, 'tidak seorangpun dapat berdusta tentang kejadiannya.'),
 (4982, 56, 3, '(Kejadian itu) merendahkan (satu golongan) dan meninggikan (golongan yang lain),'),
@@ -5288,7 +5287,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5075, 56, 96, 'Maka bertasbihlah dengan (menyebut) nama Rabbmu yang Maha Besar.');
 
 -- Sura 57 (الحديد)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5076, 57, 1, 'Semua yang berada di langit dan yang berada di bumi bertasbih kepada Allah (menyatakan kebesaran Allah). Dan Dialah Yang Maha Perkasa lagi Maha Bijaksana.'),
 (5077, 57, 2, 'Kepunyaan-Nya-lah kerajaan langit dan bumi, Dia menghidupkan dan mematikan, dan Dia Maha Kuasa atas segala sesuatu.'),
 (5078, 57, 3, 'Dialah Yang Awal dan Yang Akhir Yang Zhahir dan Yang Bathin; dan Dia Maha Mengetahui segala sesuatu.'),
@@ -5320,7 +5319,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5104, 57, 29, '(Kami terangkan yang demikian itu) supaya ahli Kitab mengetahui bahwa mereka tiada mendapat sedikitpun akan karunia Allah (jika mereka tidak beriman kepada Muhammad), dan bahwasanya karunia itu adalah di tangan Allah. Dia berikan karunia itu kepada siapa yang dikehendaki-Nya. Dan Allah mempunyai karunia yang besar.');
 
 -- Sura 58 (المجادلة)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5105, 58, 1, 'Sesungguhnya Allah telah mendengar perkataan wanita yang mengajukan gugatan kepada kamu tentang suaminya, dan mengadukan (halnya) kepada Allah. Dan Allah mendengar soal jawab antara kamu berdua. Sesungguhnya Allah Maha Mendengar lagi Maha Melihat.'),
 (5106, 58, 2, 'Orang-orang yang menzhihar isterinya di antara kamu, (menganggap isterinya sebagai ibunya, padahal) tiadalah isteri mereka itu ibu mereka. Ibu-ibu mereka tidak lain hanyalah wanita yang melahirkan mereka. Dan sesungguhnya mereka sungguh-sungguh mengucapkan suatu perkataan mungkar dan dusta. Dan sesungguhnya Allah Maha Pemaaf lagi Maha Pengampun.'),
 (5107, 58, 3, 'Orang-orang yang menzhihar isteri mereka, kemudian mereka hendak menarik kembali apa yang mereka ucapkan, maka (wajib atasnya) memerdekakan seorang budak sebelum kedua suami isteri itu bercampur. Demikianlah yang diajarkan kepada kamu, dan Allah Maha Mengetahui apa yang kamu kerjakan.'),
@@ -5345,7 +5344,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5126, 58, 22, 'Kamu tak akan mendapati kaum yang beriman pada Allah dan hari akhirat, saling berkasih-sayang dengan orang-orang yang menentang Allah dan Rasul-Nya, sekalipun orang-orang itu bapak-bapak, atau anak-anak atau saudara-saudara ataupun keluarga mereka. Mereka itulah orang-orang yang telah menanamkan keimanan dalam hati mereka dan menguatkan mereka dengan pertolongan yang datang daripada-Nya. Dan dimasukan-Nya mereka ke dalam surga yang mengalir di bawahnya sungai-sungai, mereka kekal di dalamnya. Allah ridha terhadap mereka, dan merekapun merasa puas terhadap (limpahan rahmat)-Nya. Mereka itulah golongan Allah. Ketahuilah, bahwa sesungguhnya hizbullah itu adalah golongan yang beruntung.');
 
 -- Sura 59 (الحشر)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5127, 59, 1, 'Telah bertasbih kepada Allah apa yang ada di langit dan bumi; dan Dialah Yang Maha Perkasa lagi Maha Bijaksana.'),
 (5128, 59, 2, 'Dialah yang mengeluarkan orang-orang kafir di antara ahli kitab dari kampung-kampung mereka pada saat pengusiran yang pertama. Kamu tidak menyangka, bahwa mereka akan keluar dan merekapun yakin, bahwa benteng-benteng mereka dapat mempertahankan mereka dari (siksa) Allah; maka Allah mendatangkan kepada mereka (hukuman) dari arah yang tidak mereka sangka-sangka. Dan Allah melemparkan ketakutan dalam hati mereka; mereka memusnahkan rumah-rumah mereka dengan tangan mereka sendiri dan tangan orang-orang mukmin. Maka ambillah (kejadian itu) untuk menjadi pelajaran, hai orang-orang yang mempunyai wawasan.'),
 (5129, 59, 3, 'Dan jika tidaklah karena Allah telah menetapkan pengusiran terhadap mereka, benar-benar Allah mengazab mereka di dunia. Dan bagi mereka di akhirat azab neraka.'),
@@ -5372,7 +5371,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5150, 59, 24, 'Dialah Allah Yang Menciptakan, Yang Mengadakan, Yang Membentuk Rupa, Yang Mempunyai Asmaaul Husna. Bertasbih kepada-Nya apa yang di langit dan bumi. Dan Dialah Yang Maha Perkasa lagi Maha Bijaksana.');
 
 -- Sura 60 (الممتحنة)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5151, 60, 1, 'Hai orang-orang yang beriman, janganlah kamu mengambil musuh-Ku dan musuhmu menjadi teman-teman setia yang kamu sampaikan kepada mereka (berita-berita Muhammad), karena rasa kasih sayang; padahal sesungguhnya mereka telah ingkar kepada kebenaran yang datang kepadamu, mereka mengusir Rasul dan (mengusir) kamu karena kamu beriman kepada Allah, Tuhanmu. Jika kamu benar-benar keluar untuk berjihad di jalan-Ku dan mencari keridhaan-Ku (janganlah kamu berbuat demikian). Kamu memberitahukan secara rahasia (berita-berita Muhammad) kepada mereka, karena rasa kasih sayang. Aku lebih mengetahui apa yang kamu sembunyikan dan apa yang kamu nyatakan. Dan barangsiapa di antara kamu yang melakukannya, maka sesungguhnya dia telah tersesat dari jalan yang lurus.'),
 (5152, 60, 2, 'Jika mereka menangkap kamu, niscaya mereka bertindak sebagai musuh bagimu dan melepaskan tangan dan lidah mereka kepadamu dengan menyakiti(mu); dan mereka ingin supaya kamu (kembali) kafir.'),
 (5153, 60, 3, 'Karib kerabat dan anak-anakmu sekali-sekali tiada bermanfaat bagimu pada Hari Kiamat. Dia akan memisahkan antara kamu. Dan Allah Maha Melihat apa yang kamu kerjakan.'),
@@ -5388,7 +5387,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5163, 60, 13, 'Hai orang-orang yang beriman, janganlah kamu jadikan penolongmu kaum yang dimurkai Allah. Sesungguhnya mereka telah putus asa terhadap negeri akhirat sebagaimana orang-orang kafir yang telah berada dalam kubur berputus asa.');
 
 -- Sura 61 (الصف)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5164, 61, 1, 'Telah bertasbih kepada Allah apa saja yang ada di langit dan apa saja yang ada di bumi; dan Dialah Yang Maha Perkasa lagi Maha Bijaksana.'),
 (5165, 61, 2, 'Wahai orang-orang yang beriman, kenapakah kamu mengatakan sesuatu yang tidak kamu kerjakan?'),
 (5166, 61, 3, 'Amat besar kebencian di sisi Allah bahwa kamu mengatakan apa-apa yang tidak kamu kerjakan.'),
@@ -5405,7 +5404,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5177, 61, 14, 'Hai orang-orang yang beriman, jadilah kamu penolong (agama) Allah sebagaimana Isa ibnu Maryam telah berkata kepada pengikut-pengikutnya yang setia: "Siapakah yang akan menjadi penolong-penolongku (untuk menegakkan agama) Allah?" Pengikut-pengikut yang setia itu berkata: "Kamilah penolong-penolong agama Allah", lalu segolongan dari Bani Israil beriman dan segolongan lain kafir; maka Kami berikan kekuatan kepada orang-orang yang beriman terhadap musuh-musuh mereka, lalu mereka menjadi orang-orang yang menang.');
 
 -- Sura 62 (الجمعة)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5178, 62, 1, 'Senantiasa bertasbih kepada Allah apa yang ada di langit dan apa yang ada di bumi. Raja, Yang Maha Suci, Yang Maha Perkasa lagi Maha Bijaksana.'),
 (5179, 62, 2, 'Dialah yang mengutus kepada kaum yang buta huruf seorang Rasul di antara mereka, yang membacakan ayat-ayat-Nya kepada mereka, mensucikan mereka dan mengajarkan mereka Kitab dan Hikmah (As Sunnah). Dan sesungguhnya mereka sebelumnya benar-benar dalam kesesatan yang nyata,'),
 (5180, 62, 3, 'dan (juga) kepada kaum yang lain dari mereka yang belum berhubungan dengan mereka. Dan Dialah Yang Maha Perkasa lagi Maha Bijaksana.'),
@@ -5419,7 +5418,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5188, 62, 11, 'Dan apabila mereka melihat perniagaan atau permainan, mereka bubar untuk menuju kepadanya dan mereka tinggalkan kamu sedang berdiri (berkhotbah). Katakanlah: "Apa yang di sisi Allah lebih baik daripada permainan dan perniagaan", dan Allah Sebaik-baik Pemberi rezeki.');
 
 -- Sura 63 (المنافقون)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5189, 63, 1, 'Apabila orang-orang munafik datang kepadamu, mereka berkata: "Kami mengakui, bahwa sesungguhnya kamu benar-benar Rasul Allah". Dan Allah mengetahui bahwa sesungguhnya kamu benar-benar Rasul-Nya; dan Allah mengetahui bahwa sesungguhnya orang-orang munafik itu benar-benar orang pendusta.'),
 (5190, 63, 2, 'Mereka itu menjadikan sumpah mereka sebagai perisai, lalu mereka menghalangi (manusia) dari jalan Allah. Sesungguhnya amat buruklah apa yang telah mereka kerjakan.'),
 (5191, 63, 3, 'Yang demikian itu adalah karena bahwa sesungguhnya mereka telah beriman, kemudian menjadi kafir (lagi) lalu hati mereka dikunci mati; karena itu mereka tidak dapat mengerti.'),
@@ -5433,7 +5432,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5199, 63, 11, 'Dan Allah sekali-kali tidak akan menangguhkan (kematian) seseorang apabila telah datang waktu kematiannya. Dan Allah Maha Mengenal apa yang kamu kerjakan.');
 
 -- Sura 64 (التغابن)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5200, 64, 1, 'Bertasbih kepada Allah apa yang ada di langit dan apa yang ada di bumi; hanya Allah lah yang mempunyai semua kerajaan dan semua pujian, dan Dia Maha Kuasa atas segala sesuatu.'),
 (5201, 64, 2, 'Dialah yang menciptakan kamu maka di antara kamu ada yang kafir dan di antaramu ada yang mukmin. Dan Allah Maha Melihat apa yang kamu kerjakan.'),
 (5202, 64, 3, 'Dia menciptakan langit dan bumi dengan haq. Dia membentuk rupamu dan dibaguskan-Nya rupamu itu dan hanya kepada Allah-lah kembali(mu).'),
@@ -5454,7 +5453,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5217, 64, 18, 'Yang mengetahui yang ghaib dan yang nyata. Yang Maha Perkasa lagi Maha Bijaksana.');
 
 -- Sura 65 (الطلاق)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5218, 65, 1, 'Hai Nabi, apabila kamu menceraikan isteri-isterimu maka hendaklah kamu ceraikan mereka pada waktu mereka dapat (menghadapi) iddahnya (yang wajar) dan hitunglah waktu iddah itu serta bertakwalah kepada Allah Tuhanmu. Janganlah kamu keluarkan mereka dari rumah mereka dan janganlah mereka (diizinkan) ke luar kecuali mereka mengerjakan perbuatan keji yang terang. Itulah hukum-hukum Allah dan barangsiapa yang melanggar hukum-hukum Allah, maka sesungguhnya dia telah berbuat zalim terhadap dirinya sendiri. Kamu tidak mengetahui barangkali Allah mengadakan sesudah itu sesuatu hal yang baru.'),
 (5219, 65, 2, 'Apabila mereka telah mendekati akhir iddahnya, maka rujukilah mereka dengan baik atau lepaskanlah mereka dengan baik dan persaksikanlah dengan dua orang saksi yang adil di antara kamu dan hendaklah kamu tegakkan kesaksian itu karena Allah. Demikianlah diberi pengajaran dengan itu orang yang beriman kepada Allah dan hari akhirat. Barangsiapa bertakwa kepada Allah niscaya Dia akan mengadakan baginya jalan keluar.'),
 (5220, 65, 3, 'Dan memberinya rezeki dari arah yang tiada disangka-sangkanya. Dan barangsiapa yang bertawakkal kepada Allah niscaya Allah akan mencukupkan (keperluan)nya. Sesungguhnya Allah melaksanakan urusan yang (dikehendaki)Nya. Sesungguhnya Allah telah mengadakan ketentuan bagi tiap-tiap sesuatu.'),
@@ -5469,7 +5468,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5229, 65, 12, 'Allah-lah yang menciptakan tujuh langit dan seperti itu pula bumi. Perintah Allah berlaku padanya, agar kamu mengetahui bahwasanya Allah Maha Kuasa atas segala sesuatu, dan sesungguhnya Allah ilmu-Nya benar-benar meliputi segala sesuatu.');
 
 -- Sura 66 (التحريم)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5230, 66, 1, 'Hai Nabi, mengapa kamu mengharamkan apa yang Allah halalkan bagimu; kamu mencari kesenangan hati isteri-isterimu? Dan Allah Maha Pengampun lagi Maha Penyayang'),
 (5231, 66, 2, 'Sesungguhnya Allah telah mewajibkan kepadamu sekalian membebaskan diri dari sumpahmu dan Allah adalah Pelindungmu dan Dia Maha Mengetahui lagi Maha Bijaksana.'),
 (5232, 66, 3, 'Dan ingatlah ketika Nabi membicarakan secara rahasia kepada salah seorang isterinya (Hafsah) suatu peristiwa. Maka tatkala (Hafsah) menceritakan peristiwa itu (kepada Aisyah) dan Allah memberitahukan hal itu (pembicaraan Hafsah dan Aisyah) kepada Muhammad lalu Muhammad memberitahukan sebagian (yang diberitakan Allah kepadanya) dan menyembunyikan sebagian yang lain (kepada Hafsah). Maka tatkala (Muhammad) memberitahukan pembicaraan (antara Hafsah dan Aisyah) lalu (Hafsah) bertanya: "Siapakah yang telah memberitahukan hal ini kepadamu?" Nabi menjawab: "Telah diberitahukan kepadaku oleh Allah yang Maha Mengetahui lagi Maha Mengenal".'),
@@ -5484,7 +5483,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5241, 66, 12, 'dan (ingatlah) Maryam binti Imran yang memelihara kehormatannya, maka Kami tiupkan ke dalam rahimnya sebagian dari ruh (ciptaan) Kami, dan dia membenarkan kalimat Rabbnya dan Kitab-Kitab-Nya, dan dia adalah termasuk orang-orang yang taat.');
 
 -- Sura 67 (الملك)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5242, 67, 1, 'Maha Suci Allah Yang di tangan-Nya-lah segala kerajaan, dan Dia Maha Kuasa atas segala sesuatu,'),
 (5243, 67, 2, 'Yang menjadikan mati dan hidup, supaya Dia menguji kamu, siapa di antara kamu yang lebih baik amalnya. Dan Dia Maha Perkasa lagi Maha Pengampun,'),
 (5244, 67, 3, 'Yang telah menciptakan tujuh langit berlapis-lapis. Kamu sekali-kali tidak melihat pada ciptaan Tuhan Yang Maha Pemurah sesuatu yang tidak seimbang. Maka lihatlah berulang-ulang, adakah kamu lihat sesuatu yang tidak seimbang?'),
@@ -5517,7 +5516,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5271, 67, 30, 'Katakanlah: "Terangkanlah kepadaku jika sumber air kamu menjadi kering; maka siapakah yang akan mendatangkan air yang mengalir bagimu?".');
 
 -- Sura 68 (القلم)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5272, 68, 1, 'Nun, demi kalam dan apa yang mereka tulis,'),
 (5273, 68, 2, 'berkat nikmat Tuhanmu kamu (Muhammad) sekali-kali bukan orang gila.'),
 (5274, 68, 3, 'Dan sesungguhnya bagi kamu benar-benar pahala yang besar yang tidak putus-putusnya.'),
@@ -5572,7 +5571,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5323, 68, 52, 'Dan Al Quran itu tidak lain hanyalah peringatan bagi seluruh umat.');
 
 -- Sura 69 (الحاقة)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5324, 69, 1, 'Hari kiamat,'),
 (5325, 69, 2, 'apakah hari kiamat itu?'),
 (5326, 69, 3, 'Dan tahukah kamu apakah hari kiamat itu?'),
@@ -5627,7 +5626,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5375, 69, 52, 'Maka bertasbihlah dengan (menyebut) nama Tuhanmu Yang Maha Besar.');
 
 -- Sura 70 (المعارج)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5376, 70, 1, 'Seseorang telah meminta kedatangan azab yang akan menimpa,'),
 (5377, 70, 2, 'orang-orang kafir, yang tidak seorangpun dapat menolaknya,'),
 (5378, 70, 3, '(yang datang) dari Allah, Yang mempunyai tempat-tempat naik.'),
@@ -5674,7 +5673,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5419, 70, 44, 'dalam keadaan mereka menekurkan pandangannya (serta) diliputi kehinaan. Itulah hari yang dahulunya diancamkan kepada mereka.');
 
 -- Sura 71 (نوح)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5420, 71, 1, 'Sesungguhnya Kami telah mengutus Nuh kepada kaumnya (dengan memerintahkan): "Berilah kaummu peringatan sebelum datang kepadanya azab yang pedih",'),
 (5421, 71, 2, 'Nuh berkata: "Hai kaumku, sesungguhnya aku adalah pemberi peringatan yang menjelaskan kepada kamu,'),
 (5422, 71, 3, '(yaitu) sembahlah olehmu Allah, bertakwalah kepada-Nya dan taatlah kepadaku,'),
@@ -5705,7 +5704,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5447, 71, 28, 'Ya Tuhanku! Ampunilah aku, ibu bapakku, orang yang masuk ke rumahku dengan beriman dan semua orang yang beriman laki-laki dan perempuan. Dan janganlah Engkau tambahkan bagi orang-orang yang zalim itu selain kebinasaan".');
 
 -- Sura 72 (الجن)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5448, 72, 1, 'Katakanlah (hai Muhammad): "Telah diwahyukan kepadamu bahwasanya: telah mendengarkan sekumpulan jin (akan Al Quran), lalu mereka berkata: Sesungguhnya kami telah mendengarkan Al Quran yang menakjubkan,'),
 (5449, 72, 2, '(yang) memberi petunjuk kapada jalan yang benar, lalu kami beriman kepadanya. Dan kami sekali-kali tidak akan mempersekutukan seseorangpun dengan Tuhan kami,'),
 (5450, 72, 3, 'dan bahwasanya Maha Tinggi kebesaran Tuhan kami, Dia tidak beristeri dan tidak (pula) beranak.'),
@@ -5736,7 +5735,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5475, 72, 28, 'Supaya Dia mengetahui, bahwa sesungguhnya rasul-rasul itu telah menyampaikan risalah-risalah Tuhannya, sedang (sebenarnya) ilmu-Nya meliputi apa yang ada pada mereka, dan Dia menghitung segala sesuatu satu persatu.');
 
 -- Sura 73 (المزمل)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5476, 73, 1, 'Hai orang yang berselimut (Muhammad),'),
 (5477, 73, 2, 'bangunlah (untuk sembahyang) di malam hari, kecuali sedikit (daripadanya),'),
 (5478, 73, 3, '(yaitu) seperduanya atau kurangilah dari seperdua itu sedikit.'),
@@ -5759,7 +5758,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5495, 73, 20, 'Sesungguhnya Tuhanmu mengetahui bahwasanya kamu berdiri (sembahyang) kurang dari dua pertiga malam, atau seperdua malam atau sepertiganya dan (demikian pula) segolongan dari orang-orang yang bersama kamu. Dan Allah menetapkan ukuran malam dan siang. Allah mengetahui bahwa kamu sekali-kali tidak dapat menentukan batas-batas waktu-waktu itu, maka Dia memberi keringanan kepadamu, karena itu bacalah apa yang mudah (bagimu) dari Al Quran. Dia mengetahui bahwa akan ada di antara kamu orang-orang yang sakit dan orang-orang yang berjalan di muka bumi mencari sebagian karunia Allah; dan orang-orang yang lain lagi berperang di jalan Allah, maka bacalah apa yang mudah (bagimu) dari Al Quran dan dirikanlah sembahyang, tunaikanlah zakat dan berikanlah pinjaman kepada Allah pinjaman yang baik. Dan kebaikan apa saja yang kamu perbuat untuk dirimu niscaya kamu memperoleh (balasan)nya di sisi Allah sebagai balasan yang paling baik dan yang paling besar pahalanya. Dan mohonlah ampunan kepada Allah; sesungguhnya Allah Maha Pengampun lagi Maha Penyayang.');
 
 -- Sura 74 (المدثر)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5496, 74, 1, 'Hai orang yang berkemul (berselimut),'),
 (5497, 74, 2, 'bangunlah, lalu berilah peringatan!'),
 (5498, 74, 3, 'dan Tuhanmu agungkanlah!'),
@@ -5818,7 +5817,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5551, 74, 56, 'Dan mereka tidak akan mengambil pelajaran daripadanya kecuali (jika) Allah menghendakinya. Dia (Allah) adalah Tuhan Yang patut (kita) bertakwa kepada-Nya dan berhak memberi ampun.');
 
 -- Sura 75 (القيامة)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5552, 75, 1, 'Aku bersumpah demi hari kiamat,'),
 (5553, 75, 2, 'dan aku bersumpah dengan jiwa yang amat menyesali (dirinya sendiri).'),
 (5554, 75, 3, 'Apakah manusia mengira, bahwa Kami tidak akan mengumpulkan (kembali) tulang belulangnya?'),
@@ -5861,7 +5860,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5591, 75, 40, 'Bukankah (Allah yang berbuat) demikian berkuasa (pula) menghidupkan orang mati?');
 
 -- Sura 76 (الانسان)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5592, 76, 1, 'Bukankah telah datang atas manusia satu waktu dari masa, sedang dia ketika itu belum merupakan sesuatu yang dapat disebut?'),
 (5593, 76, 2, 'Sesungguhnya Kami telah menciptakan manusia dari setetes mani yang bercampur yang Kami hendak mengujinya (dengan perintah dan larangan), karena itu Kami jadikan dia mendengar dan melihat.'),
 (5594, 76, 3, 'Sesungguhnya Kami telah menunjukinya jalan yang lurus; ada yang bersyukur dan ada pula yang kafir.'),
@@ -5895,7 +5894,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5622, 76, 31, 'Dan memasukkan siapa yang dikehendaki-Nya ke dalam rahmat-Nya (surga). Dan bagi orang-orang zalim disediakan-Nya azab yang pedih.');
 
 -- Sura 77 (المرسلات)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5623, 77, 1, 'Demi malaikat-malaikat yang diutus untuk membawa kebaikan,'),
 (5624, 77, 2, 'dan (malaikat-malaikat) yang terbang dengan kencangnya,'),
 (5625, 77, 3, 'dan (malaikat-malaikat) yang menyebarkan (rahmat Tuhannya) dengan seluas-luasnya,'),
@@ -5948,7 +5947,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5672, 77, 50, 'Maka kepada perkataan apakah selain Al Quran ini mereka akan beriman?');
 
 -- Sura 78 (النبإ)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5673, 78, 1, 'Tentang apakah mereka saling bertanya-tanya?'),
 (5674, 78, 2, 'Tentang berita yang besar,'),
 (5675, 78, 3, 'yang mereka perselisihkan tentang ini.'),
@@ -5991,7 +5990,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5712, 78, 40, 'Sesungguhnya Kami telah memperingatkan kepadamu (hai orang kafir) siksa yang dekat, pada hari manusia melihat apa yang telah diperbuat oleh kedua tangannya; dan orang kafir berkata: "Alangkah baiknya sekiranya aku dahulu adalah tanah".');
 
 -- Sura 79 (النازعات)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5713, 79, 1, 'Demi (malaikat-malaikat) yang mencabut (nyawa) dengan keras,'),
 (5714, 79, 2, 'dan (malaikat-malaikat) yang mencabut (nyawa) dengan lemah-lembut,'),
 (5715, 79, 3, 'dan (malaikat-malaikat) yang turun dari langit dengan cepat,'),
@@ -6040,7 +6039,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5758, 79, 46, 'Pada hari mereka melihat hari berbangkit itu, mereka merasa seakan-akan tidak tinggal (di dunia) melainkan (sebentar saja) di waktu sore atau pagi hari.');
 
 -- Sura 80 (عبس)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5759, 80, 1, 'Dia (Muhammad) bermuka masam dan berpaling,'),
 (5760, 80, 2, 'karena telah datang seorang buta kepadanya.'),
 (5761, 80, 3, 'Tahukah kamu barangkali ia ingin membersihkan dirinya (dari dosa),'),
@@ -6085,7 +6084,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5800, 80, 42, 'Mereka itulah orang-orang kafir lagi durhaka.');
 
 -- Sura 81 (التكوير)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5801, 81, 1, 'Apabila matahari digulung,'),
 (5802, 81, 2, 'dan apabila bintang-bintang berjatuhan,'),
 (5803, 81, 3, 'dan apabila gunung-gunung dihancurkan,'),
@@ -6117,7 +6116,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5829, 81, 29, 'Dan kamu tidak dapat menghendaki (menempuh jalan itu) kecuali apabila dikehendaki Allah, Tuhan semesta alam.');
 
 -- Sura 82 (الإنفطار)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5830, 82, 1, 'Apabila langit terbelah,'),
 (5831, 82, 2, 'dan apabila bintang-bintang jatuh berserakan,'),
 (5832, 82, 3, 'dan apabila lautan menjadikan meluap,'),
@@ -6139,7 +6138,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5848, 82, 19, '(Yaitu) hari (ketika) seseorang tidak berdaya sedikitpun untuk menolong orang lain. Dan segala urusan pada hari itu dalam kekuasaan Allah.');
 
 -- Sura 83 (المطففين)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5849, 83, 1, 'Kecelakaan besarlah bagi orang-orang yang curang'),
 (5850, 83, 2, '(yaitu) orang-orang yang apabila menerima takaran dari orang lain mereka minta dipenuhi,'),
 (5851, 83, 3, 'dan apabila mereka menakar atau menimbang untuk orang lain, mereka mengurangi.'),
@@ -6178,7 +6177,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5884, 83, 36, 'Sesungguhnya orang-orang kafir telah diberi ganjaran terhadap apa yang dahulu mereka kerjakan.');
 
 -- Sura 84 (الإنشقاق)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5885, 84, 1, 'Apabila langit terbelah,'),
 (5886, 84, 2, 'dan patuh kepada Tuhannya, dan sudah semestinya langit itu patuh,'),
 (5887, 84, 3, 'dan apabila bumi diratakan,'),
@@ -6206,7 +6205,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5909, 84, 25, 'tetapi orang-orang yang beriman dan beramal saleh, bagi mereka pahala yang tidak putus-putusnya.');
 
 -- Sura 85 (البروج)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5910, 85, 1, 'Demi langit yang mempunyai gugusan bintang,'),
 (5911, 85, 2, 'dan hari yang dijanjikan,'),
 (5912, 85, 3, 'dan yang menyaksikan dan yang disaksikan.'),
@@ -6231,7 +6230,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5931, 85, 22, 'yang (tersimpan) dalam Lauh Mahfuzh.');
 
 -- Sura 86 (الطارق)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5932, 86, 1, 'Demi langit dan yang datang pada malam hari,'),
 (5933, 86, 2, 'tahukah kamu apakah yang datang pada malam hari itu?'),
 (5934, 86, 3, '(yaitu) bintang yang cahayanya menembus,'),
@@ -6251,7 +6250,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5948, 86, 17, 'Karena itu beri tangguhlah orang-orang kafir itu yaitu beri tangguhlah mereka itu barang sebentar.');
 
 -- Sura 87 (الأعلى)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5949, 87, 1, 'Sucikanlah nama Tuhanmu Yang Maha Tingi,'),
 (5950, 87, 2, 'yang menciptakan, dan menyempurnakan (penciptaan-Nya),'),
 (5951, 87, 3, 'dan yang menentukan kadar (masing-masing) dan memberi petunjuk,'),
@@ -6273,7 +6272,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5967, 87, 19, '(yaitu) Kitab-kitab Ibrahim dan Musa');
 
 -- Sura 88 (الغاشية)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5968, 88, 1, 'Sudah datangkah kepadamu berita (tentang) hari pembalasan?'),
 (5969, 88, 2, 'Banyak muka pada hari itu tunduk terhina,'),
 (5970, 88, 3, 'bekerja keras lagi kepayahan,'),
@@ -6302,7 +6301,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (5993, 88, 26, 'kemudian sesungguhnya kewajiban Kami-lah menghisab mereka.');
 
 -- Sura 89 (الفجر)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (5994, 89, 1, 'Demi fajar,'),
 (5995, 89, 2, 'dan malam yang sepuluh,'),
 (5996, 89, 3, 'dan yang genap dan yang ganjil,'),
@@ -6335,7 +6334,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6023, 89, 30, 'masuklah ke dalam surga-Ku.');
 
 -- Sura 90 (البلد)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6024, 90, 1, 'Aku benar-benar bersumpah dengan kota ini (Mekah),'),
 (6025, 90, 2, 'dan kamu (Muhammad) bertempat di kota Mekah ini,'),
 (6026, 90, 3, 'dan demi bapak dan anaknya.'),
@@ -6358,7 +6357,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6043, 90, 20, 'Mereka berada dalam neraka yang ditutup rapat.');
 
 -- Sura 91 (الشمس)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6044, 91, 1, 'Demi matahari dan cahayanya di pagi hari,'),
 (6045, 91, 2, 'dan bulan apabila mengiringinya,'),
 (6046, 91, 3, 'dan siang apabila menampakkannya,'),
@@ -6376,7 +6375,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6058, 91, 15, 'dan Allah tidak takut terhadap akibat tindakan-Nya itu.');
 
 -- Sura 92 (الليل)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6059, 92, 1, 'Demi malam apabila menutupi (cahaya siang),'),
 (6060, 92, 2, 'dan siang apabila terang benderang,'),
 (6061, 92, 3, 'dan penciptaan laki-laki dan perempuan,'),
@@ -6400,7 +6399,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6079, 92, 21, 'Dan kelak dia benar-benar mendapat kepuasan.');
 
 -- Sura 93 (الضحى)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6080, 93, 1, 'Demi waktu matahari sepenggalahan naik,'),
 (6081, 93, 2, 'dan demi malam apabila telah sunyi (gelap),'),
 (6082, 93, 3, 'Tuhanmu tiada meninggalkan kamu dan tiada (pula) benci kepadamu.'),
@@ -6414,7 +6413,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6090, 93, 11, 'Dan terhadap nikmat Tuhanmu, maka hendaklah kamu siarkan.');
 
 -- Sura 94 (الشرح)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6091, 94, 1, 'Bukankah Kami telah melapangkan untukmu dadamu?,'),
 (6092, 94, 2, 'dan Kami telah menghilangkan daripadamu bebanmu,'),
 (6093, 94, 3, 'yang memberatkan punggungmu?'),
@@ -6425,7 +6424,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6098, 94, 8, 'dan hanya kepada Tuhanmulah hendaknya kamu berharap.');
 
 -- Sura 95 (التين)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6099, 95, 1, 'Demi (buah) Tin dan (buah) Zaitun,'),
 (6100, 95, 2, 'dan demi bukit Sinai,'),
 (6101, 95, 3, 'dan demi kota (Mekah) ini yang aman,'),
@@ -6436,7 +6435,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6106, 95, 8, 'Bukankah Allah Hakim yang seadil-adilnya?');
 
 -- Sura 96 (العلق)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6107, 96, 1, 'Bacalah dengan (menyebut) nama Tuhanmu Yang menciptakan,'),
 (6108, 96, 2, 'Dia telah menciptakan manusia dari segumpal darah.'),
 (6109, 96, 3, 'Bacalah, dan Tuhanmulah Yang Maha Pemurah,'),
@@ -6458,7 +6457,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6125, 96, 19, 'sekali-kali jangan, janganlah kamu patuh kepadanya; dan sujudlah dan dekatkanlah (dirimu kepada Tuhan).');
 
 -- Sura 97 (القدر)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6126, 97, 1, 'Sesungguhnya Kami telah menurunkannya (Al Quran) pada malam kemuliaan.'),
 (6127, 97, 2, 'Dan tahukah kamu apakah malam kemuliaan itu?'),
 (6128, 97, 3, 'Malam kemuliaan itu lebih baik dari seribu bulan.'),
@@ -6466,7 +6465,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6130, 97, 5, 'Malam itu (penuh) kesejahteraan sampai terbit fajar.');
 
 -- Sura 98 (البينة)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6131, 98, 1, 'Orang-orang kafir yakni ahli Kitab dan orang-orang musyrik (mengatakan bahwa mereka) tidak akan meninggalkan (agamanya) sebelum datang kepada mereka bukti yang nyata,'),
 (6132, 98, 2, '(yaitu) seorang Rasul dari Allah (Muhammad) yang membacakan lembaran-lembaran yang disucikan (Al Quran),'),
 (6133, 98, 3, 'di dalamnya terdapat (isi) Kitab-kitab yang lurus.'),
@@ -6477,7 +6476,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6138, 98, 8, 'Balasan mereka di sisi Tuhan mereka ialah surga \'Adn yang mengalir di bawahnya sungai-sungai; mereka kekal di dalamnya selama-lamanya. Allah ridha terhadap mereka dan merekapun ridha kepada-Nya. Yang demikian itu adalah (balasan) bagi orang yang takut kepada Tuhannya.');
 
 -- Sura 99 (الزلزلة)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6139, 99, 1, 'Apabila bumi digoncangkan dengan goncangan (yang dahsyat),'),
 (6140, 99, 2, 'dan bumi telah mengeluarkan beban-beban berat (yang dikandung)nya,'),
 (6141, 99, 3, 'dan manusia bertanya: "Mengapa bumi (menjadi begini)?",'),
@@ -6488,7 +6487,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6146, 99, 8, 'Dan barangsiapa yang mengerjakan kejahatan sebesar dzarrahpun, niscaya dia akan melihat (balasan)nya pula.');
 
 -- Sura 100 (العاديات)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6147, 100, 1, 'Demi kuda perang yang berlari kencang dengan terengah-engah,'),
 (6148, 100, 2, 'dan kuda yang mencetuskan api dengan pukulan (kuku kakinya),'),
 (6149, 100, 3, 'dan kuda yang menyerang dengan tiba-tiba di waktu pagi,'),
@@ -6502,7 +6501,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6157, 100, 11, 'sesungguhnya Tuhan mereka pada hari itu Maha Mengetahui keadaan mereka.');
 
 -- Sura 101 (القارعة)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6158, 101, 1, 'Hari Kiamat,'),
 (6159, 101, 2, 'apakah hari Kiamat itu?'),
 (6160, 101, 3, 'Tahukah kamu apakah hari Kiamat itu?'),
@@ -6516,7 +6515,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6168, 101, 11, '(Yaitu) api yang sangat panas.');
 
 -- Sura 102 (التكاثر)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6169, 102, 1, 'Bermegah-megahan telah melalaikan kamu,'),
 (6170, 102, 2, 'sampai kamu masuk ke dalam kubur.'),
 (6171, 102, 3, 'Janganlah begitu, kelak kamu akan mengetahui (akibat perbuatanmu itu),'),
@@ -6527,13 +6526,13 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6176, 102, 8, 'kemudian kamu pasti akan ditanyai pada hari itu tentang kenikmatan (yang kamu megah-megahkan di dunia itu).');
 
 -- Sura 103 (العصر)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6177, 103, 1, 'Demi masa.'),
 (6178, 103, 2, 'Sesungguhnya manusia itu benar-benar dalam kerugian,'),
 (6179, 103, 3, 'kecuali orang-orang yang beriman dan mengerjakan amal saleh dan nasehat menasehati supaya mentaati kebenaran dan nasehat menasehati supaya menetapi kesabaran.');
 
 -- Sura 104 (الهمزة)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6180, 104, 1, 'Kecelakaanlah bagi setiap pengumpat lagi pencela,'),
 (6181, 104, 2, 'yang mengumpulkan harta dan menghitung-hitung,'),
 (6182, 104, 3, 'dia mengira bahwa hartanya itu dapat mengkekalkannya,'),
@@ -6545,7 +6544,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6188, 104, 9, '(sedang mereka itu) diikat pada tiang-tiang yang panjang.');
 
 -- Sura 105 (الفيل)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6189, 105, 1, 'Apakah kamu tidak memperhatikan bagaimana Tuhanmu telah bertindak terhadap tentara bergajah?'),
 (6190, 105, 2, 'Bukankah Dia telah menjadikan tipu daya mereka (untuk menghancurkan Ka\'bah) itu sia-sia?'),
 (6191, 105, 3, 'dan Dia mengirimkan kapada mereka burung yang berbondong-bondong,'),
@@ -6553,14 +6552,14 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6193, 105, 5, 'lalu Dia menjadikan mereka seperti daun-daun yang dimakan (ulat).');
 
 -- Sura 106 (قريش)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6194, 106, 1, 'Karena kebiasaan orang-orang Quraisy,'),
 (6195, 106, 2, '(yaitu) kebiasaan mereka bepergian pada musim dingin dan musim panas.'),
 (6196, 106, 3, 'Maka hendaklah mereka menyembah Tuhan Pemilik rumah ini (Ka\'bah).'),
 (6197, 106, 4, 'Yang telah memberi makanan kepada mereka untuk menghilangkan lapar dan mengamankan mereka dari ketakutan.');
 
 -- Sura 107 (الماعون)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6198, 107, 1, 'Tahukah kamu (orang) yang mendustakan agama?'),
 (6199, 107, 2, 'Itulah orang yang menghardik anak yatim,'),
 (6200, 107, 3, 'dan tidak menganjurkan memberi makan orang miskin.'),
@@ -6570,13 +6569,13 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6204, 107, 7, 'dan enggan (menolong dengan) barang berguna.');
 
 -- Sura 108 (الكوثر)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6205, 108, 1, 'Sesungguhnya Kami telah memberikan kepadamu nikmat yang banyak.'),
 (6206, 108, 2, 'Maka dirikanlah shalat karena Tuhanmu; dan berkorbanlah.'),
 (6207, 108, 3, 'Sesungguhnya orang-orang yang membenci kamu dialah yang terputus.');
 
 -- Sura 109 (الكافرون)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6208, 109, 1, 'Katakanlah: "Hai orang-orang kafir,'),
 (6209, 109, 2, 'Aku tidak akan menyembah apa yang kamu sembah.'),
 (6210, 109, 3, 'Dan kamu bukan penyembah Tuhan yang aku sembah.'),
@@ -6585,13 +6584,13 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6213, 109, 6, 'Untukmu agamamu, dan untukkulah, agamaku".');
 
 -- Sura 110 (النصر)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6214, 110, 1, 'Apabila telah datang pertolongan Allah dan kemenangan,'),
 (6215, 110, 2, 'dan kamu lihat manusia masuk agama Allah dengan berbondong-bondong,'),
 (6216, 110, 3, 'maka bertasbihlah dengan memuji Tuhanmu dan mohonlah ampun kepada-Nya. Sesungguhnya Dia adalah Maha Penerima taubat.');
 
 -- Sura 111 (المسد)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6217, 111, 1, 'Binasalah kedua tangan Abu Lahab dan sesungguhnya dia akan binasa.'),
 (6218, 111, 2, 'Tidaklah berfaedah kepadanya harta bendanya dan apa yang ia usahakan.'),
 (6219, 111, 3, 'Kelak dia akan masuk ke dalam api yang bergejolak.'),
@@ -6599,14 +6598,14 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6221, 111, 5, 'Yang di lehernya ada tali dari sabut.');
 
 -- Sura 112 (الإخلاص)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6222, 112, 1, 'Katakanlah: "Dialah Allah, Yang Maha Esa.'),
 (6223, 112, 2, 'Allah adalah Tuhan yang bergantung kepada-Nya segala sesuatu.'),
 (6224, 112, 3, 'Dia tiada beranak dan tidak pula diperanakkan,'),
 (6225, 112, 4, 'dan tidak ada seorangpun yang setara dengan Dia".');
 
 -- Sura 113 (الفلق)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6226, 113, 1, 'Katakanlah: "Aku berlindung kepada Tuhan Yang Menguasai subuh,'),
 (6227, 113, 2, 'dari kejahatan makhluk-Nya,'),
 (6228, 113, 3, 'dan dari kejahatan malam apabila telah gelap gulita,'),
@@ -6614,7 +6613,7 @@ INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
 (6230, 113, 5, 'dan dari kejahatan pendengki bila ia dengki".');
 
 -- Sura 114 (الناس)
-INSERT INTO `id_indonesian` (`index`, `sura`, `aya`, `text`) VALUES
+INSERT INTO `id_indonesian` (`id`, `sura`, `aya`, `text`) VALUES
 (6231, 114, 1, 'Katakanlah: "Aku berlindung kepada Tuhan (yang memelihara dan menguasai) manusia.'),
 (6232, 114, 2, 'Raja manusia.'),
 (6233, 114, 3, 'Sembahan manusia.'),
