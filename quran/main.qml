@@ -10,6 +10,8 @@ ApplicationWindow {
     title: qsTr("Hello World")
 
     FontLoader { id: lateef; source: "qrc:/fonts/LateefRegOT.ttf" }
+    FontLoader { id: pdms; source: "qrc:/fonts/PDMS_Saleem_QuranFont-signed.ttf" }
+    FontLoader { id: scheherazadeRegular; source: "qrc:/fonts/Scheherazade-Regular.ttf" }
 
     /*SwipeView {
         id: swipeView
@@ -89,7 +91,7 @@ ApplicationWindow {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.fill: parent
-                    font { family: lateef.name; pixelSize: 32; }
+                    font { family: scheherazadeRegular.name; pixelSize: 32; }
                     color: "white"
                     wrapMode: Text.WordWrap
                 }

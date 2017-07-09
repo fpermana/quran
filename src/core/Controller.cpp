@@ -87,20 +87,20 @@ void Controller::adjustPage()
 
                 if(model->getPage() != i) {
                     pageData = manager->getPage(i);
-                    if(pageData.count() == 4) {
+                    if(pageData.count() == 2 || pageData.count() == 4) {
                         model->setPage(i);
                         model->setJuz(manager->getJuz(pageData.at(0).toInt(), pageData.at(1).toInt()));
                         model->setSura(manager->getSura(pageData.at(0).toInt()));
-                        model->getAyas(pageData.at(0).toInt(), pageData.at(1).toInt(), pageData.at(2).toInt(), pageData.at(3).toInt());
-                    }
-                    else if(pageData.count() == 2) {
-                        model->setPage(i);
-                        model->setJuz(manager->getJuz(pageData.at(0).toInt(), pageData.at(1).toInt()));
-                        model->setSura(manager->getSura(pageData.at(0).toInt()));
-                        model->getAyas(pageData.at(0).toInt(), pageData.at(1).toInt());
-                    }
 
-                    pageModelHash.insert(i,model);
+                        if(pageData.count() == 4) {
+                            model->getAyas(pageData.at(0).toInt(), pageData.at(1).toInt(), pageData.at(2).toInt(), pageData.at(3).toInt());
+                        }
+                        else if(pageData.count() == 2) {
+                            model->getAyas(pageData.at(0).toInt(), pageData.at(1).toInt());
+                        }
+
+                        pageModelHash.insert(i,model);
+                    }
                 }
             }
 
