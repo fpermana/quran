@@ -87,7 +87,7 @@ Page {
                 BackgroundItem {
                     id: listItem
                     property bool menuOpen: contextMenu != null && contextMenu.parent === listItem
-                    height: menuOpen ? contextMenu.height + textLabel.contentHeight : textLabel.contentHeight
+                    height: (menuOpen ? contextMenu.height : 0) + textLabel.contentHeight + translationLabel.contentHeight + 60
                     anchors {
                         top: bismillahLabel.bottom
                         left: parent.left
@@ -112,6 +112,23 @@ Page {
                         text: model.text
     //                  color: highlighted ? constant.colorHighlighted : constant.colorLight
                         lineHeight: 2
+                    }
+                    Label {
+                        id: translationLabel
+                        verticalAlignment: Text.AlignVCenter
+                        color: Theme.primaryColor
+                        height: paintedHeight + constant.paddingLarge
+                        anchors {
+                            top: textLabel.bottom
+                            left: parent.left
+                            right: parent.right
+                            leftMargin: constant.paddingMedium
+                            rightMargin: constant.paddingMedium
+                        }
+
+                        wrapMode: Text.WordWrap
+                        text: model.translation
+    //                  color: highlighted ? constant.colorHighlighted : constant.colorLight
                     }
 
                     onPressAndHold: {

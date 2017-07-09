@@ -17,6 +17,10 @@ QT += sql
 CONFIG += sailfishapp
 
 SOURCES += src/sailquran.cpp
+
+#DEFINES += QUAZIP_STATIC
+
+#include(../3rdparty/3rdparty.pri)
 include(../src/src.pri)
 
 OTHER_FILES += qml/sailquran.qml \

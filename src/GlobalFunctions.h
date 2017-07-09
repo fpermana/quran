@@ -7,6 +7,7 @@ class GlobalFunctions
 {
 public:
     static const QString databaseLocation();
+    static const QString dataLocation();
 };
 
 #endif // GLOBALFUNCTIONS_H

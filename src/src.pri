@@ -3,7 +3,7 @@ INCLUDEPATH += $$PWD
 #include(config/config.pri)
 include(core/core.pri)
 #include(client/client.pri)
-#include(helper/helper.pri)
+include(helper/helper.pri)
 #include(network/network.pri)
 #include(patcher/patcher.pri)
 #include(utils/utils.pri)
