@@ -3,6 +3,7 @@
 #include <QQmlContext>
 #include "core/Controller.h"
 #include "core/Settings.h"
+#include "model/PageModel.h"
 #include "GlobalConstants.h"
 
 int main(int argc, char *argv[])
@@ -13,6 +14,9 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
+
+    qmlRegisterType<PageModel>("QuranQuick",1,0,"PageModel");
+    qRegisterMetaType<PageModel*>("PageModel");
 
     Controller *c = new Controller;
     c->init();

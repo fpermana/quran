@@ -5,6 +5,7 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QStringList>
+#include <QVariant>
 
 class DbManager : public QObject
 {
@@ -23,6 +24,8 @@ public:
 
     int getPages();
     QStringList getPage(const int page);
+    QVariantMap getJuz(const int sura, const int aya);
+    QVariantMap getSura(const int sura);
 
 private:
     QSqlDatabase *db;

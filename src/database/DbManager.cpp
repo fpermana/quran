@@ -119,3 +119,58 @@ QStringList DbManager::getPage(const int page)
     delete query;
     return dataList;
 }
+
+QVariantMap DbManager::getJuz(const int sura, const int aya)
+{
+    QVariantMap dataMap;
+    QSqlQuery *query = new QSqlQuery(*db);
+//    query->prepare("SELECT MAX(juzs.id), juz_names.name, juz_names.tname FROM juzs JOIN quran_text ON juzs.aya = quran_text.aya and juzs.sura = quran_text.sura JOIN juz_names ON juzs.id = juz_names.id WHERE quran_text.id <= (SELECT id FROM quran_text WHERE sura = :first AND aya = :second)");
+//    query->prepare("SELECT juzs.id, juz_names.name, juz_names.tname FROM juzs JOIN quran_text ON juzs.aya = quran_text.aya and juzs.sura = quran_text.sura JOIN juz_names ON juzs.id = juz_names.id WHERE quran_text.id <= (SELECT id FROM quran_text WHERE sura = :first AND aya = :second) ORDER BY juzs.id DESC LIMIT 1");
+    query->prepare("SELECT juz_names.id, juz_names.name, juz_names.tname FROM (SELECT juzs.id FROM juzs JOIN quran_text ON juzs.aya = quran_text.aya and juzs.sura = quran_text.sura WHERE quran_text.id <= (SELECT id FROM quran_text WHERE sura = :first AND aya = :second) ORDER BY juzs.id DESC LIMIT 1) AS j JOIN juz_names ON j.id = juz_names.id");
+    query->bindValue(":first",sura);
+    query->bindValue(":second",aya);
+
+    if (!query->exec()) {
+        qDebug() << "Query error:" + query->lastError().text();
+    }
+    else if (!query->first()) {
+        qDebug() << "No data in the database";
+    }
+    else {
+        QStringList keys;
+        keys << "id" << "name" << "tname";
+        foreach (QString key, keys) {
+            dataMap.insert(key, query->value(key));
+        }
+    }
+
+    query->clear();
+    delete query;
+    return dataMap;
+}
+
+QVariantMap DbManager::getSura(const int sura)
+{
+    QVariantMap dataMap;
+    QSqlQuery *query = new QSqlQuery(*db);
+    query->prepare("SELECT * FROM suras WHERE id = :first");
+    query->bindValue(":first",sura);
+
+    if (!query->exec()) {
+        qDebug() << "Query error:" + query->lastError().text();
+    }
+    else if (!query->first()) {
+        qDebug() << "No data in the database";
+    }
+    else {
+        QStringList keys;
+        keys << "id" << "ayas" << "start" << "name" << "tname" << "ename" << "type" << "order" << "rukus";
+        foreach (QString key, keys) {
+            dataMap.insert(key, query->value(key));
+        }
+    }
+
+    query->clear();
+    delete query;
+    return dataMap;
+}

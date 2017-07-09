@@ -31,3 +31,18 @@ int PageModel::getPage() const
 {
     return page;
 }
+
+void PageModel::setJuz(const QVariantMap &value)
+{
+    juz = value;
+}
+
+void PageModel::setSura(const QVariantMap &value)
+{
+    sura = value;
+}
+
+QString PageModel::getSuraName() const
+{
+    return sura.value("ename").toString();
+}

@@ -39,7 +39,7 @@
 #include <QGuiApplication>
 #include "core/Controller.h"
 #include "core/Settings.h"
-//#include "model/PageModel.h"
+#include "model/PageModel.h"
 #include "GlobalConstants.h"
 
 int main(int argc, char *argv[])
@@ -56,8 +56,8 @@ int main(int argc, char *argv[])
     //
     // To display the view, call "show()" (will show fullscreen on device).
 
-//    qmlRegisterType<PageModel>("QuranQuick",1,0,"PageModel");
-//    qRegisterMetaType<PageModel*>("PageModel");
+    qmlRegisterType<PageModel>("QuranQuick",1,0,"PageModel");
+    qRegisterMetaType<PageModel*>("PageModel");
     QGuiApplication *app = SailfishApp::application(argc, argv);
 
 //    qRegisterMetaType<PageModel*>("PageModel");

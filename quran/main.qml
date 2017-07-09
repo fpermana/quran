@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
+import QuranQuick 1.0
 
 ApplicationWindow {
     visible: true
@@ -42,6 +43,7 @@ ApplicationWindow {
         id: mainView
         objectName: "mainView"
         property bool loaded: false
+        currentIndex: -1
         anchors.fill: parent
         model: Controller.pages
         layoutDirection: Qt.RightToLeft
@@ -49,17 +51,23 @@ ApplicationWindow {
         orientation: ListView.Horizontal
         Component.onCompleted: {
             positionViewAtIndex(Controller.currentPage-1, ListView.Beginning);
+            console.log(Controller.currentPage-1)
             loaded = true
         }
         visibleArea.onXPositionChanged: {
-            if(loaded)
-                Controller.currentPage = Math.round(Controller.pages - Controller.pages * visibleArea.xPosition)
+            if(loaded) {
+//                Controller.currentPage = Math.round(Controller.pages - Controller.pages * visibleArea.xPosition)
+//                console.log(Math.round(Controller.pages - Controller.pages * visibleArea.xPosition));
+                var p = Math.round(Controller.pages - Controller.pages * visibleArea.xPosition);
+                if(p == Controller.currentPage -1 || p == Controller.currentPage +1)
+                    Controller.currentPage = p
+            }
         }
 
         delegate: ListView {
             id: pageView
             property int delegatePage: (index+1)
-            property string color: "red"
+
             height: mainView.height
             width: mainView.width
             focus: true
@@ -73,7 +81,7 @@ ApplicationWindow {
                         Controller.lastPage
             }
             delegate: Rectangle {
-                    color: pageView.color
+                    color: "black"
                     height: 80
                     width: pageView.width
                 Label {
@@ -81,8 +89,8 @@ ApplicationWindow {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.fill: parent
-                    font { family: lateef.name; pixelSize: Theme.fontSizeMedium; }
-                    color: Theme.primaryColor
+                    font { family: lateef.name; pixelSize: 32; }
+                    color: "white"
                     wrapMode: Text.WordWrap
                 }
 
@@ -91,6 +99,21 @@ ApplicationWindow {
                     onClicked: console.log(model.text)
                 }*/
             }
+
+            /*Rectangle {
+                color: "blue"
+                height: 200
+                width: 200
+                anchors.centerIn: parent
+                Text {
+                    text: {
+                        if(model !== undefined)
+                            model.suraName
+                        else
+                            "asd"
+                    }
+                }
+            }*/
         }
     }
 }

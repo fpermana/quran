@@ -67,11 +67,16 @@ void Controller::adjustPage()
 
             if(model->getPage() != i) {
                 pageData = manager->getPage(i);
+                qDebug() << pageData;
                 if(pageData.count() == 4) {
+                    model->setJuz(manager->getJuz(pageData.at(0).toInt(), pageData.at(1).toInt()));
+                    model->setSura(manager->getSura(pageData.at(0).toInt()));
                     model->setPage(i);
                     model->getAyas(pageData.at(0).toInt(), pageData.at(1).toInt(), pageData.at(2).toInt(), pageData.at(3).toInt());
                 }
                 else if(pageData.count() == 2) {
+                    model->setJuz(manager->getJuz(pageData.at(0).toInt(), pageData.at(1).toInt()));
+                    model->setSura(manager->getSura(pageData.at(0).toInt()));
                     model->setPage(i);
                     model->getAyas(pageData.at(0).toInt(), pageData.at(1).toInt());
                 }
