@@ -9,13 +9,6 @@
     </message>
 </context>
 <context>
-    <name>FirstPage</name>
-    <message>
-        <source>TEXT</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MainPage</name>
     <message>
         <source>Settings</source>

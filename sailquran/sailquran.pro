@@ -26,7 +26,6 @@ include(../src/src.pri)
 OTHER_FILES += qml/sailquran.qml \
     qml/cover/CoverPage.qml \
     qml/pages/MainPage.qml \
-    qml/pages/FirstPage.qml \
     qml/pages/SecondPage.qml \
     qml/pages/ThirdPage.qml \
     rpm/sailquran.changes.in \
@@ -52,4 +51,5 @@ CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/sailquran-de.ts
 
 DISTFILES += \
-    qml/components/Constant.qml
+    qml/components/Constant.qml \
+    qml/pages/SettingsPage.qml

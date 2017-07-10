@@ -24,6 +24,7 @@ QtObject {
     property int fontSizeLarge: Theme.fontSizeMedium
     property int fontSizeXLarge: Theme.fontSizeLarge
     property int fontSizeXXLarge: Theme.fontSizeExtraLarge
+    property int fontSizeHuge: Theme.fontSizeHuge
 
     // graphic size
     property int graphicSizeTiny: 24
@@ -41,5 +42,7 @@ QtObject {
     property int headerHeight: 85
 
     property int charReservedPerMedia: 23
+
+    property string fontName: newmet.name
 
 }

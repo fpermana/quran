@@ -20,9 +20,9 @@ void Controller::init()
 
     manager = new DbManager(this);
     checkDatabase(true);
-    firstPage = new PageModel(manager->getDb(), this);
+    /*firstPage = new PageModel(manager->getDb(), this);
     midPage = new PageModel(manager->getDb(), this);
-    lastPage = new PageModel(manager->getDb(), this);
+    lastPage = new PageModel(manager->getDb(), this);*/
 
     QVariantMap bismillahMap = manager->getQuranText(1,1);
     bismillah = bismillahMap.value("text").toString();

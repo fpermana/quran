@@ -7,12 +7,12 @@ Page {
     allowedOrientations: Orientation.Portrait
     backNavigation: false
 
-    Component.onCompleted: {
+    /*Component.onCompleted: {
         console.log("Theme.fontSizeMedium " + Theme.fontSizeMedium)
         console.log("lateef.name " + lateef.name)
         console.log("pdms.name " + pdms.name)
         console.log("scheherazadeRegular.name " + scheherazadeRegular.name)
-    }
+    }*/
 
     /*Rectangle {
         anchors.fill: mainView
@@ -47,10 +47,22 @@ Page {
             width: mainView.width
             focus: true
 
-            header: Text {
-                color: Theme.primaryColor
-                wrapMode: Text.WordWrap
-                text: (model !== undefined) ? model.suraName : ""
+            header: Item {
+                height: constant.headerHeight
+                width: pageView.width/2
+                Label {
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                        bottom: parent.bottom
+                        margins: constant.paddingMedium
+                    }
+                    verticalAlignment: Text.AlignVCenter
+                    color: constant.colorLight
+                    wrapMode: Text.WordWrap
+                    text: (model !== undefined) ? model.suraName : ""
+                    font { family: constant.fontName; pixelSize: constant.fontSizeXLarge; }
+                }
             }
 
             model: {
@@ -79,15 +91,15 @@ Page {
                         rightMargin: constant.paddingMedium
                     }
 
-                    font { family: lateef.name; pixelSize: Theme.fontSizeMedium; }
-                    color: Theme.primaryColor
+                    font { family: constant.fontName; pixelSize: constant.fontSizeLarge; }
+                    color: constant.colorLight
                     wrapMode: Text.WordWrap
                     height: visible ? (paintedHeight + constant.paddingMedium) : 0
                 }
                 BackgroundItem {
                     id: listItem
                     property bool menuOpen: contextMenu != null && contextMenu.parent === listItem
-                    height: (menuOpen ? contextMenu.height : 0) + textLabel.contentHeight + translationLabel.contentHeight + 60
+                    height: (menuOpen ? contextMenu.height : 0) + textLabel.contentHeight + translationLabel.contentHeight + 40
                     anchors {
                         top: bismillahLabel.bottom
                         left: parent.left
@@ -98,7 +110,7 @@ Page {
                         id: textLabel
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignRight
-                        color: Theme.primaryColor
+                        color: constant.colorLight
                         height: paintedHeight + constant.paddingLarge
                         anchors {
                             top: parent.top
@@ -110,13 +122,31 @@ Page {
 
                         wrapMode: Text.WordWrap
                         text: model.text
+                        font { pixelSize: constant.fontSizeLarge; }
+                        font.family: constant.fontName
+                        /*font.family: {
+                            if(index % 6 == 0)
+                                haramain.name
+                            else if(index % 6 == 1)
+                                besmellah2.name
+                            else if(index % 6 == 2)
+                                besmellah3.name
+                            else if(index % 6 == 3)
+                                newmet.name
+                            else if(index % 6 == 4)
+                                mohammd1.name
+                            else if(index % 6 == 5)
+                                quraan.name
+                        }*/
+
     //                  color: highlighted ? constant.colorHighlighted : constant.colorLight
-                        lineHeight: 2
+
+//                        lineHeight: 1.5
                     }
                     Label {
                         id: translationLabel
                         verticalAlignment: Text.AlignVCenter
-                        color: Theme.primaryColor
+                        color: constant.colorLight
                         height: paintedHeight + constant.paddingLarge
                         anchors {
                             top: textLabel.bottom
@@ -128,6 +158,7 @@ Page {
 
                         wrapMode: Text.WordWrap
                         text: model.translation
+                        font.pixelSize: constant.fontSizeMedium
     //                  color: highlighted ? constant.colorHighlighted : constant.colorLight
                     }
 

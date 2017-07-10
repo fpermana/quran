@@ -8,7 +8,11 @@
 class PageModel : public SqlQueryModel
 {
     Q_OBJECT
+    Q_PROPERTY(QString suraEname READ getSuraEname CONSTANT)
     Q_PROPERTY(QString suraName READ getSuraName CONSTANT)
+    Q_PROPERTY(int suraId READ getSuraId CONSTANT)
+    Q_PROPERTY(QString juzName READ getJuzName CONSTANT)
+    Q_PROPERTY(int juzId READ getJuzId CONSTANT)
 public:
     explicit PageModel(QObject *parent = 0);
     explicit PageModel(QSqlDatabase *db, QObject *parent = 0);
@@ -21,7 +25,12 @@ public:
     void setJuz(const QVariantMap &value);
     void setSura(const QVariantMap &value);
 
+    QString getSuraEname() const;
     QString getSuraName() const;
+    int getSuraId() const;
+
+    QString getJuzName() const;
+    int getJuzId() const;
 
 signals:
 

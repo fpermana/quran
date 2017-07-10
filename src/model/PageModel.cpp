@@ -43,7 +43,27 @@ void PageModel::setSura(const QVariantMap &value)
     sura = value;
 }
 
-QString PageModel::getSuraName() const
+QString PageModel::getSuraEname() const
 {
     return sura.value("ename").toString();
+}
+
+QString PageModel::getSuraName() const
+{
+    return sura.value("name").toString();
+}
+
+int PageModel::getSuraId() const
+{
+    return sura.value("id").toInt();
+}
+
+QString PageModel::getJuzName() const
+{
+    return juz.value("name").toString();
+}
+
+int PageModel::getJuzId() const
+{
+    return juz.value("id").toInt();
 }
