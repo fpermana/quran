@@ -6,6 +6,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QStringList>
+#include "helper/FileExtractorWorker.h"
 
 Controller::Controller(QObject *parent) : QObject(parent)
 {
@@ -50,6 +51,18 @@ void Controller::checkDatabase(const bool reset)
         if(!dbSrc.copy(filepath)) {
             qDebug() << dbSrc.errorString();
         }
+
+        /*dbSrc.setFileName(QString(":/db/a.zip"));
+        dbSrc.copy(GlobalFunctions::dataLocation()+"a.zip");
+
+        QVariantMap fileMap;
+        fileMap.insert(FILEPATH_KEY, GlobalFunctions::dataLocation()+"a.zip");
+//        fileMap.insert(EXTRACT_PATH_KEY, GlobalFunctions::dataLocation());
+        QVariantList fileList;
+        fileList.append(fileMap);
+        FileExtractorWorker *f = new FileExtractorWorker;
+        f->setFileZipList(fileList);
+        f->startExtracting();*/
     }
 
     manager->init(filepath);
