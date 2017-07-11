@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "qrc:/js/utils.js" as Utils
 
 Page {
     id: page
@@ -11,6 +12,7 @@ Page {
         console.log("Theme.fontSizeMedium " + Theme.fontSizeMedium)
         console.log("pdms.name " + pdms.name)
         console.log("almushaf.name " + almushaf.name)
+        console.log(Utils.convertNumber(12345));
     }
 
 //    onStatusChanged: console.log(page.status)
@@ -142,7 +144,7 @@ Page {
                         }
 
                         wrapMode: Text.WordWrap
-                        text: model.text + " " + Number(model.id).toLocaleString(Qt.locale("prs-AF"), 'd', 0)
+                        text: model.text + " " + Number(model.id).toLocaleString(Qt.locale("ar-SA"), 'd', 0)
                         font { pixelSize: constant.fontSizeXLarge; family: constant.fontName; }
                     }
                     Label {
