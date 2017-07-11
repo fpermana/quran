@@ -42,9 +42,9 @@
 #include "model/PageModel.h"
 #include "GlobalConstants.h"
 
-//#include <quazip/JlCompress.h>
-//#include <quazip/quazip.h>
-//#include <quazip/quazipfile.h>
+/*#include <quazip/JlCompress.h>
+#include <quazip/quazip.h>
+#include <quazip/quazipfile.h>*/
 
 int main(int argc, char *argv[])
 {
@@ -59,6 +59,8 @@ int main(int argc, char *argv[])
     //   - SailfishApp::pathTo(QString) to get a QUrl to a resource file
     //
     // To display the view, call "show()" (will show fullscreen on device).
+
+//    QuaZip *q = new QuaZip();
 
     qmlRegisterType<PageModel>("QuranQuick",1,0,"PageModel");
     qRegisterMetaType<PageModel*>("PageModel");
