@@ -13,6 +13,8 @@ Page {
         console.log("almushaf.name " + almushaf.name)
     }
 
+//    onStatusChanged: console.log(page.status)
+
     /*Rectangle {
         anchors.fill: mainView
         color: "blue"
@@ -47,8 +49,26 @@ Page {
             focus: true
 
             header: Item {
+                visible: ((pageView.delegatePage == Controller.currentPage-1) && page.status != PageStatus.Active) ? false : true
                 height: constant.headerHeight
                 width: pageView.width/2
+
+                /*Label {
+                    id: suraId
+                    text: (model !== undefined) ? Number(model.suraId).toLocaleString(Qt.locale("ar_SA"), 'd', 0) : ""
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                        bottom: parent.bottom
+                        margins: constant.paddingMedium
+                    }
+                    font { family: constant.fontName; pixelSize: constant.fontSizeXLarge; }
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignLeft
+                    color: constant.colorLight
+                    wrapMode: Text.WordWrap
+                }*/
+
                 Label {
                     anchors {
                         top: parent.top
@@ -57,6 +77,7 @@ Page {
                         margins: constant.paddingMedium
                     }
                     verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignLeft
                     color: constant.colorLight
                     wrapMode: Text.WordWrap
                     text: (model !== undefined) ? model.suraName : ""
@@ -74,6 +95,7 @@ Page {
             }
 
             delegate: Item {
+                visible: ((pageView.delegatePage == Controller.currentPage-1) && page.status != PageStatus.Active) ? false : true
                 height: childrenRect.height
                 width: pageView.width
                 Label {
@@ -90,7 +112,7 @@ Page {
                         rightMargin: constant.paddingMedium
                     }
 
-                    font { family: constant.fontName; pixelSize: constant.fontSizeLarge; }
+                    font { family: constant.fontName; pixelSize: constant.fontSizeXLarge; }
                     color: constant.colorLight
                     wrapMode: Text.WordWrap
                     height: visible ? (paintedHeight + constant.paddingMedium) : 0
@@ -120,27 +142,8 @@ Page {
                         }
 
                         wrapMode: Text.WordWrap
-                        text: model.text
-                        font { pixelSize: constant.fontSizeLarge; }
-                        font.family: constant.fontName
-                        /*font.family: {
-                            if(index % 6 == 0)
-                                haramain.name
-                            else if(index % 6 == 1)
-                                besmellah2.name
-                            else if(index % 6 == 2)
-                                besmellah3.name
-                            else if(index % 6 == 3)
-                                newmet.name
-                            else if(index % 6 == 4)
-                                mohammd1.name
-                            else if(index % 6 == 5)
-                                quraan.name
-                        }*/
-
-    //                  color: highlighted ? constant.colorHighlighted : constant.colorLight
-
-//                        lineHeight: 1.5
+                        text: model.text + " " + Number(model.id).toLocaleString(Qt.locale("prs-AF"), 'd', 0)
+                        font { pixelSize: constant.fontSizeXLarge; family: constant.fontName; }
                     }
                     Label {
                         id: translationLabel
@@ -181,6 +184,7 @@ Page {
                 MenuItem {
                     text: qsTr("Settings")
                     onClicked: {
+//                        pageStack.push(Qt.resolvedUrl("SettingsPage.qml"), "", PageStackAction.Immediate);
                         pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
                     }
                 }

@@ -13,6 +13,7 @@ class PageModel : public SqlQueryModel
     Q_PROPERTY(int suraId READ getSuraId CONSTANT)
     Q_PROPERTY(QString juzName READ getJuzName CONSTANT)
     Q_PROPERTY(int juzId READ getJuzId CONSTANT)
+    Q_PROPERTY(int page READ getPage CONSTANT)
 public:
     explicit PageModel(QObject *parent = 0);
     explicit PageModel(QSqlDatabase *db, QObject *parent = 0);

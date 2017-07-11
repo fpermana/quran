@@ -14,10 +14,12 @@ TARGET = sailquran
 
 QT += sql
 
+
 CONFIG += sailfishapp
 
 SOURCES += src/sailquran.cpp
 
+LIBS += -lz
 #DEFINES += QUAZIP_STATIC
 
 #include(../3rdparty/3rdparty.pri)
