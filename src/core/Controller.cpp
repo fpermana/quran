@@ -23,6 +23,8 @@ void Controller::init()
     /*firstPage = new PageModel(manager->getDb(), this);
     midPage = new PageModel(manager->getDb(), this);
     lastPage = new PageModel(manager->getDb(), this);*/
+    preview = new PageModel(manager->getDb(), this);
+    preview->getAya(1,1);
 
     QVariantMap bismillahMap = manager->getQuranText(1,1);
     bismillah = bismillahMap.value("text").toString();
@@ -133,6 +135,11 @@ Settings *Controller::getSettings() const
 PageModel *Controller::getLastPage() const
 {
     return lastPage;
+}
+
+PageModel *Controller::getPreview() const
+{
+    return preview;
 }
 
 PageModel *Controller::getMidPage() const

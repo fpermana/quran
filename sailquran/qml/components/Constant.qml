@@ -43,6 +43,5 @@ QtObject {
 
     property int charReservedPerMedia: 23
 
-    property string fontName: newmet.name
-
+    property string fontName: uthmanic.name
 }

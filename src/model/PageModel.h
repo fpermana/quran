@@ -16,6 +16,7 @@ class PageModel : public SqlQueryModel
 public:
     explicit PageModel(QObject *parent = 0);
     explicit PageModel(QSqlDatabase *db, QObject *parent = 0);
+    void getAya(const int sura1, const int aya1);
     void getAyas(const int sura1, const int aya1);
     void getAyas(const int sura1, const int aya1, const int sura2, const int aya2);
 

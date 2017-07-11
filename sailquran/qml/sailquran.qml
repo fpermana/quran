@@ -35,19 +35,10 @@ import "components"
 
 ApplicationWindow
 {
-    /*FontLoader { id: lateef; source: "qrc:/fonts/LateefRegOT.ttf" }
     FontLoader { id: pdms; source: "qrc:/fonts/PDMS_Saleem_QuranFont-signed.ttf" }
-    FontLoader { id: scheherazadeRegular; source: "qrc:/fonts/Scheherazade-Regular.ttf" }
-    FontLoader { id: meQuran; source: "qrc:/fonts/me_quran.ttf" }
-    FontLoader { id: noorehira; source: "qrc:/fonts/noorehira.ttf" }
-    FontLoader { id: noorehidayat; source: "qrc:/fonts/noorehidayat.ttf" }*/
     FontLoader { id: almushaf; source: "qrc:/fonts/Al_Mushaf.ttf" }
-    FontLoader { id: haramain; source: "qrc:/fonts/ae_Haramain.ttf" }
-    FontLoader { id: besmellah2; source: "qrc:/fonts/Besmellah 2_[Takmob.Net].ttf" }
-    FontLoader { id: besmellah3; source: "qrc:/fonts/Besmellah 3_[Takmob.Net].ttf" }
     FontLoader { id: newmet; source: "qrc:/fonts/me_quran_volt_newmet.ttf" }
-    FontLoader { id: mohammd1; source: "qrc:/fonts/My Font Mohammad1_[Takmob.Net].ttf" }
-    FontLoader { id: quraan; source: "qrc:/fonts/My Font Quraan_[Takmob.Net].ttf" }
+    FontLoader { id: uthmanic; source: "qrc:/fonts/UthmanicHafs1 Ver09.otf" }
 
     Constant {
         id: constant

@@ -15,6 +15,7 @@ class Controller : public QObject
     Q_PROPERTY(PageModel* firstPage READ getFirstPage CONSTANT)
     Q_PROPERTY(PageModel* midPage READ getMidPage CONSTANT)
     Q_PROPERTY(PageModel* lastPage READ getLastPage CONSTANT)
+    Q_PROPERTY(PageModel* preview READ getPreview CONSTANT)
     Q_PROPERTY(QString bismillah READ getBismillah CONSTANT)
 public:
     explicit Controller(QObject *parent = 0);
@@ -27,6 +28,7 @@ public:
     PageModel *getFirstPage() const;
     PageModel *getMidPage() const;
     PageModel *getLastPage() const;
+    PageModel *getPreview() const;
 
     Settings *getSettings() const;
 
@@ -42,7 +44,7 @@ private:
     DbManager *manager;
     int pages, currentPage;
 
-    PageModel *firstPage, *midPage, *lastPage;
+    PageModel *firstPage, *midPage, *lastPage, *preview;
 
     QHash<int, PageModel*> pageModelHash;
     Settings *settings;

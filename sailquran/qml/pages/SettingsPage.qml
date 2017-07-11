@@ -4,7 +4,6 @@ import Sailfish.Silica 1.0
 Page {
     id: settingPage
 //    allowedOrientations: Orientation.All
-
     SilicaFlickable {
         anchors.fill: parent
 
@@ -31,12 +30,49 @@ Page {
             }
         }
 
+        SilicaListView {
+            id: preview
+            height: constant.headerHeight
+            focus: true
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: header.bottom
+            }
+            interactive: false
+            model: Controller.preview
+
+            delegate: Item {
+                height: childrenRect.height
+                width: preview.width
+                Label {
+                    id: textLabel
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignRight
+                    color: constant.colorLight
+                    height: paintedHeight + constant.paddingLarge
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: constant.paddingMedium
+                        rightMargin: constant.paddingMedium
+                    }
+
+                    wrapMode: Text.WordWrap
+                    text: model.text
+                    font { pixelSize: constant.fontSizeLarge; }
+                    font.family: constant.fontName
+                }
+            }
+        }
+
         ComboBox {
             id: textStyleCombobox
             anchors {
                 left: parent.left
                 right: parent.right
-                top: header.bottom
+                top: preview.bottom
             }
 
             label: "Text Style"

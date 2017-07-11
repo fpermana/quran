@@ -7,12 +7,11 @@ Page {
     allowedOrientations: Orientation.Portrait
     backNavigation: false
 
-    /*Component.onCompleted: {
+    Component.onCompleted: {
         console.log("Theme.fontSizeMedium " + Theme.fontSizeMedium)
-        console.log("lateef.name " + lateef.name)
         console.log("pdms.name " + pdms.name)
-        console.log("scheherazadeRegular.name " + scheherazadeRegular.name)
-    }*/
+        console.log("almushaf.name " + almushaf.name)
+    }
 
     /*Rectangle {
         anchors.fill: mainView
@@ -61,7 +60,7 @@ Page {
                     color: constant.colorLight
                     wrapMode: Text.WordWrap
                     text: (model !== undefined) ? model.suraName : ""
-                    font { family: constant.fontName; pixelSize: constant.fontSizeXLarge; }
+                    font { family: constant.fontName; pixelSize: constant.fontSizeLarge; }
                 }
             }
 
@@ -158,7 +157,7 @@ Page {
 
                         wrapMode: Text.WordWrap
                         text: model.translation
-                        font.pixelSize: constant.fontSizeMedium
+                        font.pixelSize: constant.fontSizeSmall
     //                  color: highlighted ? constant.colorHighlighted : constant.colorLight
                     }
 
