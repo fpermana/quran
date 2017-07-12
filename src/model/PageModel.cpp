@@ -114,10 +114,10 @@ void PageModel::refresh()
     if(type == SingleLine) {
         getAya(sura1, aya1);
     }
-    else if(type == NormalPage) {
+    else if(type == LastPage) {
         getAyas(sura1, aya1);
     }
-    else if(type == LastPage) {
+    else if(type == NormalPage) {
         getAyas(sura1, aya1, sura2, aya2);
     }
 }

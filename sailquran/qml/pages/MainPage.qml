@@ -13,6 +13,8 @@ Page {
         console.log("pdms.name " + pdms.name)
         console.log("almushaf.name " + almushaf.name)
         console.log(Utils.convertNumber(12345));
+        console.log(Utils.reverseString("12345"));
+        console.log(Utils.reverseString(Number(12345).toLocaleString(Qt.locale("ar-SA"), 'd', 0)));
     }
 
 //    onStatusChanged: console.log(page.status)
@@ -132,7 +134,7 @@ Page {
                     Label {
                         id: textLabel
                         verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignRight
+//                        horizontalAlignment: Text.AlignRight
                         color: constant.colorLight
                         height: paintedHeight + constant.paddingLarge
                         anchors {
@@ -144,8 +146,9 @@ Page {
                         }
 
                         wrapMode: Text.WordWrap
-                        text: model.text + " " + Number(model.aya).toLocaleString(Qt.locale("ar-SA"), 'd', 0)
+                        text: model.text + " " + Utils.reverseString(Number(model.aya).toLocaleString(Qt.locale("ar-SA"), 'd', 0))
                         font { pixelSize: constant.fontSizeXLarge; family: constant.fontName; }
+                        LayoutMirroring.enabled: true
                     }
                     Label {
                         id: translationLabel
