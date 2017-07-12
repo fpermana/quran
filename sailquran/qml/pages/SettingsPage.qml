@@ -94,7 +94,6 @@ Page {
 
             menu: ContextMenu {
                 MenuItem { text: "Simplified" }
-                MenuItem { text: "Minimal" }
                 MenuItem { text: "Enhanced" }
                 MenuItem { text: "Uthmani" }
             }
@@ -102,10 +101,8 @@ Page {
             onCurrentIndexChanged: {
                 var textType = "quran_text";
                 if(currentIndex == 1)
-                    textType = "quran_text_min";
-                else if(currentIndex == 2)
                     textType = "quran_text_enhanced";
-                else if(currentIndex == 3)
+                else if(currentIndex == 2)
                     textType = "quran_text_uthmani";
 
                 settingPage.textType = textType;
@@ -115,12 +112,10 @@ Page {
 
             Component.onCompleted: {
                 var index = 0;
-                if(Settings.textType == "quran_text_min")
+                if(Settings.textType == "quran_text_enhanced")
                     index = 1;
-                else if(Settings.textType == "quran_text_enhanced")
-                    index = 2;
                 else if(Settings.textType == "quran_text_uthmani")
-                    index = 3;
+                    index = 2;
 
                 currentIndex = index;
             }
