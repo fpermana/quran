@@ -5,6 +5,20 @@ Page {
     id: settingPage
 //    onStatusChanged: console.log(settingPage.status)
 //    allowedOrientations: Orientation.All
+    property string textType
+    property string translation
+
+    onStatusChanged: {
+        if(settingPage.status === PageStatus.Deactivating) {
+            if(settingPage.textType !== Settings.textType || settingPage.translation !== Settings.translation) {
+                Settings.textType = settingPage.textType;
+                Settings.translation = settingPage.translation;
+
+                Settings.saveSettings();
+            }
+        }
+    }
+
     SilicaFlickable {
         anchors.fill: parent
 
@@ -82,9 +96,65 @@ Page {
                 MenuItem { text: "Simplified" }
                 MenuItem { text: "Minimal" }
                 MenuItem { text: "Enhanced" }
+                MenuItem { text: "Uthmani" }
             }
 
-            onCurrentIndexChanged: console.log(currentIndex)
+            onCurrentIndexChanged: {
+                var textType = "quran_text";
+                if(currentIndex == 1)
+                    textType = "quran_text_min";
+                else if(currentIndex == 2)
+                    textType = "quran_text_enhanced";
+                else if(currentIndex == 3)
+                    textType = "quran_text_uthmani";
+
+                settingPage.textType = textType;
+                Controller.preview.textType = textType;
+                Controller.preview.refresh()
+            }
+
+            Component.onCompleted: {
+                var index = 0;
+                if(Settings.textType == "quran_text_min")
+                    index = 1;
+                else if(Settings.textType == "quran_text_enhanced")
+                    index = 2;
+                else if(Settings.textType == "quran_text_uthmani")
+                    index = 3;
+
+                currentIndex = index;
+            }
+        }
+
+        ComboBox {
+            id: translationCombobox
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: textStyleCombobox.bottom
+            }
+
+            label: "Translation"
+
+            menu: ContextMenu {
+                MenuItem { text: "Indonesian" }
+                MenuItem { text: "English" }
+            }
+
+            onCurrentIndexChanged:  {
+                var translation = "id_indonesian";
+                if(currentIndex == 1)
+                    translation = "en_sahih";
+                settingPage.translation = translation;
+            }
+
+            Component.onCompleted: {
+                var index = 0;
+                if(Settings.translation == "en_sahih")
+                    index = 1;
+
+                currentIndex = index;
+            }
         }
     }
 }

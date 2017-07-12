@@ -120,13 +120,13 @@ QStringList DbManager::getPage(const int page)
     return dataList;
 }
 
-QVariantMap DbManager::getJuz(const int sura, const int aya)
+QVariantMap DbManager::getJuz(const int sura, const int aya, const QString &textType)
 {
     QVariantMap dataMap;
     QSqlQuery *query = new QSqlQuery(*db);
 //    query->prepare("SELECT MAX(juzs.id), juz_names.name, juz_names.tname FROM juzs JOIN quran_text ON juzs.aya = quran_text.aya and juzs.sura = quran_text.sura JOIN juz_names ON juzs.id = juz_names.id WHERE quran_text.id <= (SELECT id FROM quran_text WHERE sura = :first AND aya = :second)");
 //    query->prepare("SELECT juzs.id, juz_names.name, juz_names.tname FROM juzs JOIN quran_text ON juzs.aya = quran_text.aya and juzs.sura = quran_text.sura JOIN juz_names ON juzs.id = juz_names.id WHERE quran_text.id <= (SELECT id FROM quran_text WHERE sura = :first AND aya = :second) ORDER BY juzs.id DESC LIMIT 1");
-    query->prepare("SELECT juz_names.id, juz_names.name, juz_names.tname FROM (SELECT juzs.id FROM juzs JOIN quran_text ON juzs.aya = quran_text.aya and juzs.sura = quran_text.sura WHERE quran_text.id <= (SELECT id FROM quran_text WHERE sura = :first AND aya = :second) ORDER BY juzs.id DESC LIMIT 1) AS j JOIN juz_names ON j.id = juz_names.id");
+    query->prepare(QString("SELECT juz_names.id, juz_names.name, juz_names.tname FROM (SELECT juzs.id FROM juzs JOIN %1 ON juzs.aya = %1.aya and juzs.sura = %1.sura WHERE %1.id <= (SELECT id FROM %1 WHERE sura = :first AND aya = :second) ORDER BY juzs.id DESC LIMIT 1) AS j JOIN juz_names ON j.id = juz_names.id").arg(textType));
     query->bindValue(":first",sura);
     query->bindValue(":second",aya);
 
@@ -175,11 +175,11 @@ QVariantMap DbManager::getSura(const int sura)
     return dataMap;
 }
 
-QVariantMap DbManager::getQuranText(const int sura, const int aya)
+QVariantMap DbManager::getQuranText(const int sura, const int aya, const QString &textType)
 {
     QVariantMap dataMap;
     QSqlQuery *query = new QSqlQuery(*db);
-    query->prepare("SELECT * FROM quran_text WHERE sura = :first AND aya = :second");
+    query->prepare(QString("SELECT * FROM %1 WHERE sura = :first AND aya = :second").arg(textType));
     query->bindValue(":first",sura);
     query->bindValue(":second",aya);
 

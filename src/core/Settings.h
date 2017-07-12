@@ -7,11 +7,12 @@ class Settings : public QSettings
 {
     Q_OBJECT
     Q_PROPERTY(int currentPage READ getCurrentPage WRITE setCurrentPage NOTIFY currentPageChanged)
+    Q_PROPERTY(QString textType READ getTextType WRITE setTextType NOTIFY settingsChanged)
+    Q_PROPERTY(QString translation READ getTranslation WRITE setTranslation NOTIFY settingsChanged)
 public:
     explicit Settings(QObject *parent = 0);
 
     void restoreSettings();
-    void saveSettings();
 
     int getCurrentPage() const;
     int getFontSize() const;
@@ -26,8 +27,11 @@ public slots:
     void setTranslation(const QString &value);
     void setTextType(const QString &value);
 
+    void saveSettings();
+
 signals:
     void currentPageChanged();
+    void settingsChanged();
 
 private:
     int currentPage;

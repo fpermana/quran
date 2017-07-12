@@ -16,7 +16,7 @@ class Controller : public QObject
     Q_PROPERTY(PageModel* midPage READ getMidPage CONSTANT)
     Q_PROPERTY(PageModel* lastPage READ getLastPage CONSTANT)
     Q_PROPERTY(PageModel* preview READ getPreview CONSTANT)
-    Q_PROPERTY(QString bismillah READ getBismillah CONSTANT)
+    Q_PROPERTY(QString bismillah READ getBismillah  NOTIFY refreshed)
 public:
     explicit Controller(QObject *parent = 0);
 
@@ -34,8 +34,12 @@ public:
 
     QString getBismillah() const;
 
+public slots:
+    void refresh();
+
 signals:
     void currentPageChanged(int page);
+    void refreshed();
 
 private:
     void checkDatabase(const bool reset = false);

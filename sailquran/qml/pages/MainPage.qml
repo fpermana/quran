@@ -144,7 +144,7 @@ Page {
                         }
 
                         wrapMode: Text.WordWrap
-                        text: model.text + " " + Number(model.id).toLocaleString(Qt.locale("ar-SA"), 'd', 0)
+                        text: model.text + " " + Number(model.aya).toLocaleString(Qt.locale("ar-SA"), 'd', 0)
                         font { pixelSize: constant.fontSizeXLarge; family: constant.fontName; }
                     }
                     Label {

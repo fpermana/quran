@@ -102,7 +102,7 @@ bool FileExtractorWorker::startExtracting()
             return false;
         fileZipMap = fileZipList.at(i).toMap();
         fileZip = fileZipMap.value(FILEPATH_KEY).toString();
-        destinationList.append(fileZipMap.value(EXTRACT_PATH_KEY, "").toString());
+        destinationList.append(fileZipMap.value(EXTRACT_DIR_KEY, "").toString());
         QuaZip *archive = new QuaZip(fileZip);
         if (!archive->open(QuaZip::mdUnzip)) {
             qDebug() << __FUNCTION__ << QString("Failed to open zip file %1 %2").arg(fileZip).arg(__LINE__);

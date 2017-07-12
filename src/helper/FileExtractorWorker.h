@@ -7,8 +7,8 @@
 #ifndef FILEPATH_KEY
 #define FILEPATH_KEY    "source"
 #endif
-#ifndef EXTRACT_PATH_KEY
-#define EXTRACT_PATH_KEY    "target"
+#ifndef EXTRACT_DIR_KEY
+#define EXTRACT_DIR_KEY    "target"
 #endif
 
 

@@ -15,9 +15,12 @@ Controller::Controller(QObject *parent) : QObject(parent)
 
 void Controller::init()
 {
+    firstPage = midPage = lastPage = 0;
+
     settings = new Settings(this);
     settings->restoreSettings();
     connect(this, SIGNAL(currentPageChanged(int)), settings, SLOT(setCurrentPage(int)));
+    connect(settings, SIGNAL(settingsChanged()), this, SLOT(refresh()));
 
     manager = new DbManager(this);
     checkDatabase(true);
@@ -25,9 +28,11 @@ void Controller::init()
     midPage = new PageModel(manager->getDb(), this);
     lastPage = new PageModel(manager->getDb(), this);*/
     preview = new PageModel(manager->getDb(), this);
+    preview->setTextType(settings->getTextType());
+    preview->setTranslation(settings->getTranslation());
     preview->getAya(1,1);
 
-    QVariantMap bismillahMap = manager->getQuranText(1,1);
+    QVariantMap bismillahMap = manager->getQuranText(1,1, settings->getTextType());
     bismillah = bismillahMap.value("text").toString();
 
     currentPage = settings->getCurrentPage();
@@ -43,26 +48,29 @@ void Controller::checkDatabase(const bool reset)
         file.remove();
 
     if(!file.exists()) {
-        QFile dbSrc(QString(":/db/%1").arg(DB_NAME));
-        QFileInfo fileInfo(filepath);
+        QFile dbSrc(QString(":/db/%1.zip").arg(DB_NAME));
+        QFileInfo fileInfo(QString("%1.zip").arg(filepath));
         QDir dbDir = fileInfo.absoluteDir();
         if(!dbDir.exists())
             dbDir.mkpath(fileInfo.absolutePath());
-        if(!dbSrc.copy(filepath)) {
+        if(fileInfo.exists())
+            QFile::remove(fileInfo.absoluteFilePath());
+        if(!dbSrc.copy(fileInfo.absoluteFilePath())) {
             qDebug() << dbSrc.errorString();
         }
+        else {
+            QVariantMap fileMap;
+            fileMap.insert(FILEPATH_KEY, fileInfo.absoluteFilePath());
+//            fileMap.insert(EXTRACT_PATH_KEY, GlobalFunctions::dataLocation());
 
-        /*dbSrc.setFileName(QString(":/db/a.zip"));
-        dbSrc.copy(GlobalFunctions::dataLocation()+"a.zip");
-
-        QVariantMap fileMap;
-        fileMap.insert(FILEPATH_KEY, GlobalFunctions::dataLocation()+"a.zip");
-//        fileMap.insert(EXTRACT_PATH_KEY, GlobalFunctions::dataLocation());
-        QVariantList fileList;
-        fileList.append(fileMap);
-        FileExtractorWorker *f = new FileExtractorWorker;
-        f->setFileZipList(fileList);
-        f->startExtracting();*/
+            QVariantList fileList;
+            fileList.append(fileMap);
+            FileExtractorWorker *f = new FileExtractorWorker;
+            f->setFileZipList(fileList);
+            f->startExtracting();
+            f->deleteLater();
+            QFile::remove(fileInfo.absoluteFilePath());
+        }
     }
 
     manager->init(filepath);
@@ -103,9 +111,11 @@ void Controller::adjustPage()
             if(!pageModelHash.contains(i)) {
                 model = new PageModel(manager->getDb(), this);
 
-                if(model->getPage() != i) {
+                if(model->getPage() != i || model->getTextType() != settings->getTextType() || model->getTranslation() != settings->getTranslation()) {
                     pageData = manager->getPage(i);
                     if(pageData.count() == 2 || pageData.count() == 4) {
+                        model->setTextType(settings->getTextType());
+                        model->setTranslation(settings->getTranslation());
                         model->setPage(i);
                         model->setJuz(manager->getJuz(pageData.at(0).toInt(), pageData.at(1).toInt()));
                         model->setSura(manager->getSura(pageData.at(0).toInt()));
@@ -124,6 +134,11 @@ void Controller::adjustPage()
 
             if(pageModelHash.contains(i)) {
                 model = pageModelHash.value(i);
+                if(model->getPage() != i || model->getTextType() != settings->getTextType() || model->getTranslation() != settings->getTranslation()) {
+                    model->setTextType(settings->getTextType());
+                    model->setTranslation(settings->getTranslation());
+                    model->refresh();
+                }
                 if(i==currentPage-1)
                     firstPage = model;
                 else if(i==currentPage)
@@ -138,6 +153,33 @@ void Controller::adjustPage()
 QString Controller::getBismillah() const
 {
     return bismillah;
+}
+
+void Controller::refresh()
+{
+    QVariantMap bismillahMap = manager->getQuranText(1,1, settings->getTextType());
+    bismillah = bismillahMap.value("text").toString();
+
+    PageModel *model;
+    for (int i = 0; i < 3; i++) {
+        if(i==0)
+            model = firstPage;
+        else if(i==1)
+            model = midPage;
+        else if(i==2)
+            model = lastPage;
+
+        if(model == 0)
+            continue;
+
+        if(model->getTextType() != settings->getTextType() || model->getTranslation() != settings->getTranslation()) {
+            model->setTextType(settings->getTextType());
+            model->setTranslation(settings->getTranslation());
+            model->refresh();
+        }
+    }
+
+    emit refreshed();
 }
 
 Settings *Controller::getSettings() const
