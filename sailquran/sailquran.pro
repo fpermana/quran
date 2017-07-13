@@ -55,4 +55,5 @@ TRANSLATIONS += translations/sailquran-de.ts
 
 DISTFILES += \
     qml/components/Constant.qml \
-    qml/pages/SettingsPage.qml
+    qml/pages/SettingsPage.qml \
+    qml/pages/IndexPage.qml

@@ -32,6 +32,7 @@ void Settings::setCurrentPage(const int &value)
 {
     currentPage = value;
     setValue(CURRENT_PAGE_KEY, currentPage);
+    emit fontSizeChanged();
 }
 
 int Settings::getFontSize() const
@@ -42,6 +43,8 @@ int Settings::getFontSize() const
 void Settings::setFontSize(const int &value)
 {
     fontSize = value;
+    setValue(FONT_SIZE_KEY, fontSize);
+    emit fontSizeChanged();
 }
 
 QString Settings::getFontName() const

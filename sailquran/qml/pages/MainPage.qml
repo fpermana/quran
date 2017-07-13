@@ -3,7 +3,7 @@ import Sailfish.Silica 1.0
 import "qrc:/js/utils.js" as Utils
 
 Page {
-    id: page
+    id: mainPage
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.Portrait
     backNavigation: false
@@ -45,17 +45,42 @@ Page {
             }
         }
 
+        /*Item {
+            visible: (mainPage.status == PageStatus.Active)
+            height: constant.headerHeight
+            anchors {
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
+            }
+
+            Label {
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    bottom: parent.bottom
+                    margins: constant.paddingMedium
+                }
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                color: constant.colorLight
+                wrapMode: Text.WordWrap
+                text: Utils.reverseString(Number(Controller.currentPage).toLocaleString(Qt.locale("ar-SA"), 'd', 0))
+                font { family: constant.fontName; pixelSize: constant.fontSizeLarge; }
+            }
+        }*/
+
         delegate: SilicaListView {
             id: pageView
             property int delegatePage: (index+1)
             height: mainView.height
             width: mainView.width
             focus: true
+            visible: ((pageView.delegatePage == Controller.currentPage-1) && mainPage.status != PageStatus.Active) ? false : true
 
             header: Item {
-                visible: ((pageView.delegatePage == Controller.currentPage-1) && page.status != PageStatus.Active) ? false : true
                 height: constant.headerHeight
-                width: pageView.width/2
+                width: pageView.width
 
                 /*Label {
                     id: suraId
@@ -99,7 +124,6 @@ Page {
             }
 
             delegate: Item {
-                visible: ((pageView.delegatePage == Controller.currentPage-1) && page.status != PageStatus.Active) ? false : true
                 height: childrenRect.height
                 width: pageView.width
                 Label {
@@ -147,7 +171,7 @@ Page {
 
                         wrapMode: Text.WordWrap
                         text: model.text + " " + Utils.reverseString(Number(model.aya).toLocaleString(Qt.locale("ar-SA"), 'd', 0))
-                        font { pixelSize: constant.fontSizeXLarge; family: constant.fontName; }
+                        font { pixelSize: Settings.fontSize; family: constant.fontName; }
                         LayoutMirroring.enabled: true
                     }
                     Label {
@@ -182,6 +206,8 @@ Page {
                         }
                     }
                 }
+
+                onYChanged: console.log("index " + index + ", " + y)
             }
 
             PullDownMenu {

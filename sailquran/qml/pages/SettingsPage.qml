@@ -22,6 +22,13 @@ Page {
     SilicaFlickable {
         anchors.fill: parent
 
+        PullDownMenu {
+            MenuItem {
+                text: "Reset"
+                onClicked: console.log("Clicked option 1")
+            }
+        }
+
         Item {
             id: header
             height: constant.headerHeight
@@ -76,7 +83,7 @@ Page {
 
                     wrapMode: Text.WordWrap
                     text: model.text
-                    font { pixelSize: constant.fontSizeLarge; }
+                    font { pixelSize: Settings.fontSize; }
                     font.family: constant.fontName
                 }
             }
@@ -150,6 +157,24 @@ Page {
 
                 currentIndex = index;
             }
+        }
+
+        Slider {
+            id: fontSizeSlider
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: translationCombobox.bottom
+            }
+            label: "Font Size"
+            minimumValue: 15
+            maximumValue: 50
+            value: 32
+            valueText: Math.round(value)
+
+            onValueChanged: Settings.fontSize = Math.round(value)
+
+            Component.onCompleted: value = Settings.fontSize
         }
     }
 }

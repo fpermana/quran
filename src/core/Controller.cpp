@@ -24,6 +24,10 @@ void Controller::init()
 
     manager = new DbManager(this);
     checkDatabase(true);
+
+    indexModel = new SqlQueryModel(this);
+    indexModel->setQuery("SELECT * FROM suras", *manager->getDb());
+
     /*firstPage = new PageModel(manager->getDb(), this);
     midPage = new PageModel(manager->getDb(), this);
     lastPage = new PageModel(manager->getDb(), this);*/
@@ -148,6 +152,11 @@ void Controller::adjustPage()
             }
         }
     }
+}
+
+SqlQueryModel *Controller::getIndexModel() const
+{
+    return indexModel;
 }
 
 QString Controller::getBismillah() const

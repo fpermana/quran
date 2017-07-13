@@ -16,6 +16,7 @@ class Controller : public QObject
     Q_PROPERTY(PageModel* midPage READ getMidPage CONSTANT)
     Q_PROPERTY(PageModel* lastPage READ getLastPage CONSTANT)
     Q_PROPERTY(PageModel* preview READ getPreview CONSTANT)
+    Q_PROPERTY(SqlQueryModel* indexModel READ getIndexModel CONSTANT)
     Q_PROPERTY(QString bismillah READ getBismillah  NOTIFY refreshed)
 public:
     explicit Controller(QObject *parent = 0);
@@ -34,6 +35,8 @@ public:
 
     QString getBismillah() const;
 
+    SqlQueryModel *getIndexModel() const;
+
 public slots:
     void refresh();
 
@@ -49,6 +52,7 @@ private:
     int pages, currentPage;
 
     PageModel *firstPage, *midPage, *lastPage, *preview;
+    SqlQueryModel *indexModel;
 
     QHash<int, PageModel*> pageModelHash;
     Settings *settings;
