@@ -45,7 +45,7 @@ Page {
             }
         }
 
-        /*Item {
+        Item {
             visible: (mainPage.status == PageStatus.Active)
             height: constant.headerHeight
             anchors {
@@ -56,7 +56,7 @@ Page {
 
             Label {
                 anchors {
-                    top: parent.top
+                    right: parent.right
                     left: parent.left
                     bottom: parent.bottom
                     margins: constant.paddingMedium
@@ -68,35 +68,20 @@ Page {
                 text: Utils.reverseString(Number(Controller.currentPage).toLocaleString(Qt.locale("ar-SA"), 'd', 0))
                 font { family: constant.fontName; pixelSize: constant.fontSizeLarge; }
             }
-        }*/
+        }
 
         delegate: SilicaListView {
             id: pageView
             property int delegatePage: (index+1)
-            height: mainView.height
+            height: mainView.height - constant.headerHeight
             width: mainView.width
             focus: true
+            clip: true
             visible: ((pageView.delegatePage == Controller.currentPage-1) && mainPage.status != PageStatus.Active) ? false : true
 
             header: Item {
                 height: constant.headerHeight
                 width: pageView.width
-
-                /*Label {
-                    id: suraId
-                    text: (model !== undefined) ? Number(model.suraId).toLocaleString(Qt.locale("ar_SA"), 'd', 0) : ""
-                    anchors {
-                        top: parent.top
-                        left: parent.left
-                        bottom: parent.bottom
-                        margins: constant.paddingMedium
-                    }
-                    font { family: constant.fontName; pixelSize: constant.fontSizeXLarge; }
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignLeft
-                    color: constant.colorLight
-                    wrapMode: Text.WordWrap
-                }*/
 
                 Label {
                     anchors {
@@ -113,6 +98,10 @@ Page {
                     font { family: constant.fontName; pixelSize: constant.fontSizeLarge; }
                 }
             }
+
+//            visibleArea.onYPositionChanged: {
+//                console.log(pageView.count * visibleArea.yPosition)
+//            }
 
             model: {
                     if(delegatePage == Controller.currentPage-1)
@@ -206,8 +195,6 @@ Page {
                         }
                     }
                 }
-
-                onYChanged: console.log("index " + index + ", " + y)
             }
 
             PullDownMenu {
