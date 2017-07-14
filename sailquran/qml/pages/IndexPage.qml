@@ -1,11 +1,14 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "qrc:/js/utils.js" as Utils
 
 Page {
     id: indexPage
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.Portrait
-    backNavigation: false
+//    backNavigation: false
+
+    property int suraId
 
     Component.onCompleted: {
     }
@@ -16,7 +19,6 @@ Page {
         property bool loaded: false
         anchors.fill: parent
         model: Controller.indexModel
-        snapMode: ListView.SnapOneItem
         Component.onCompleted: {
 //            positionViewAtIndex(Controller.currentPage-1, ListView.Beginning);
 //            loaded = true
@@ -26,18 +28,15 @@ Page {
                 id: textLabel
                 verticalAlignment: Text.AlignVCenter
 //                        horizontalAlignment: Text.AlignRight
-                color: constant.colorLight
+                color: model.id === indexPage.suraId ? constant.colorHighlighted : constant.colorLight
                 height: paintedHeight + constant.paddingLarge
+                width: indexView.width
                 anchors {
-                    top: parent.top
-                    left: parent.left
-                    right: parent.right
-                    leftMargin: constant.paddingMedium
-                    rightMargin: constant.paddingMedium
+                    margins: constant.paddingMedium
                 }
 
                 wrapMode: Text.WordWrap
-                text: model.name + " " + Utils.reverseString(Number(model.id).toLocaleString(Qt.locale("ar-SA"), 'd', 0))
+                text: Utils.reverseString(Number(model.id).toLocaleString(Qt.locale("ar-SA"), 'd', 0)) + " " + model.name
                 font { pixelSize: Settings.fontSize; family: constant.fontName; }
                 LayoutMirroring.enabled: true
             }

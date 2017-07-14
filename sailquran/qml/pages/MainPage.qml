@@ -54,7 +54,7 @@ Page {
                 bottom: parent.bottom
             }
 
-            Label {
+            /*Label {
                 anchors {
                     right: parent.right
                     left: parent.left
@@ -67,6 +67,29 @@ Page {
                 wrapMode: Text.WordWrap
                 text: Utils.reverseString(Number(Controller.currentPage).toLocaleString(Qt.locale("ar-SA"), 'd', 0))
                 font { family: constant.fontName; pixelSize: constant.fontSizeLarge; }
+            }*/
+
+            BackgroundItem {
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    bottom: parent.bottom
+                    margins: constant.paddingMedium
+                }
+                width: parent.height
+
+                Label {
+                    anchors.centerIn: parent
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    color: constant.colorLight
+                    wrapMode: Text.WordWrap
+                    text: Utils.reverseString(Number(Controller.currentPage).toLocaleString(Qt.locale("ar-SA"), 'd', 0))
+                    font { family: constant.fontName; pixelSize: constant.fontSizeLarge; }
+                }
+
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("IndexPage.qml"), {suraId: Controller.midPage.suraId});
+                }
             }
         }
 
