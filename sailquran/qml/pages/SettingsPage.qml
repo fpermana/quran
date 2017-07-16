@@ -167,7 +167,7 @@ Page {
                 top: translationCombobox.bottom
             }
             label: "Font Size"
-            minimumValue: 15
+            minimumValue: 25
             maximumValue: 50
             value: 32
             valueText: Math.round(value)
@@ -176,5 +176,25 @@ Page {
 
             Component.onCompleted: value = Settings.fontSize
         }
+
+        Slider {
+            id: translationFontSizeSlider
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: fontSizeSlider.bottom
+            }
+            label: "Translation Font Size"
+            minimumValue: 25
+            maximumValue: 50
+            value: 32
+            valueText: Math.round(value)
+
+            onValueChanged: Settings.translationFontSize = Math.round(value)
+
+            Component.onCompleted: value = Settings.translationFontSize
+        }
+
     }
 }
+

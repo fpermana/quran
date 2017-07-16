@@ -94,6 +94,30 @@ int DbManager::getPages()
     return pages;
 }
 
+QStringList DbManager::getPage(const int sura, const int aya)
+{
+    QStringList dataList;
+    QSqlQuery *query = new QSqlQuery(*db);
+    query->prepare("SELECT * from pages WHERE id = (SELECT id FROM pages WHERE sura <= :first AND aya <= :second) OR id = (SELECT id FROM pages WHERE sura >= :first AND aya >= :second)");
+    query->bindValue(":first",sura;
+    query->bindValue(":second",aya);
+
+    if (!query->exec()) {
+        qDebug() << "Query error:" + query->lastError().text();
+    }
+    else if (!query->first()) {
+        qDebug() << "No data in the database";
+    }
+    else {
+        do {
+            dataList.append(query->value("sura").toString());
+            dataList.append(query->value("aya").toString());
+        } while(query->next());
+    }
+
+    return dataList;
+}
+
 QStringList DbManager::getPage(const int page)
 {
     QStringList dataList;

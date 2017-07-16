@@ -11,6 +11,7 @@ void Settings::restoreSettings()
 {
     setCurrentPage(value(CURRENT_PAGE_KEY,1).toInt());
     setFontSize(value(FONT_SIZE_KEY,32).toInt()); // Theme.fontSizeMedium
+    setTranslationFontSize(value(TRANSLATION_FONT_SIZE_KEY,32).toInt()); // Theme.fontSizeMedium
     setFontName(value(FONT_NAME_KEY,"Alvi").toString()); // Al_Mushaf.ttf
     setTextType(value(TEXT_TYPE_KEY,DEFAULT_TEXT_TYPE_KEY).toString()); // quran_text
     setTranslation(value(TRANSLATION_KEY,DEFAULT_TRANSLATION_KEY).toString()); // indonesia
@@ -46,6 +47,19 @@ void Settings::setFontSize(const int &value)
     setValue(FONT_SIZE_KEY, fontSize);
     emit fontSizeChanged();
 }
+
+int Settings::getTranslationFontSize() const
+{
+    return translationFontSize;
+}
+
+void Settings::setTranslationFontSize(const int &value)
+{
+    translationFontSize = value;
+    setValue(TRANSLATION_FONT_SIZE_KEY, translationFontSize);
+    emit translationFontSizeChanged();
+}
+
 
 QString Settings::getFontName() const
 {

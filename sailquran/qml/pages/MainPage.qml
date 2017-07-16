@@ -96,7 +96,7 @@ Page {
         delegate: SilicaListView {
             id: pageView
             property int delegatePage: (index+1)
-            height: mainView.height - constant.headerHeight
+            height: mainView.height
             width: mainView.width
             focus: true
             clip: true
@@ -201,7 +201,7 @@ Page {
 
                         wrapMode: Text.WordWrap
                         text: model.translation
-                        font.pixelSize: constant.fontSizeSmall
+                        font.pixelSize: Settings.translationFontSize
     //                  color: highlighted ? constant.colorHighlighted : constant.colorLight
                     }
 
@@ -233,3 +233,4 @@ Page {
         }
     }
 }
+

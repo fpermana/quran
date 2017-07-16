@@ -9,6 +9,7 @@
 
 #define CURRENT_PAGE_KEY            "current_page"
 #define FONT_SIZE_KEY               "font_size"
+#define TRANSLATION_FONT_SIZE_KEY   "translation_font_size"
 #define FONT_NAME_KEY               "font_name"
 #define TEXT_TYPE_KEY               "text_type"
 #define TRANSLATION_KEY             "translation"
