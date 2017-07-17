@@ -169,7 +169,7 @@ Page {
             label: "Font Size"
             minimumValue: 25
             maximumValue: 50
-            value: 32
+//            value: 32
             valueText: Math.round(value)
 
             onValueChanged: Settings.fontSize = Math.round(value)
@@ -185,9 +185,9 @@ Page {
                 top: fontSizeSlider.bottom
             }
             label: "Translation Font Size"
-            minimumValue: 25
-            maximumValue: 50
-            value: 32
+            minimumValue: 15
+            maximumValue: 35
+//            value: 20
             valueText: Math.round(value)
 
             onValueChanged: Settings.translationFontSize = Math.round(value)

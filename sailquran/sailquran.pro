@@ -20,7 +20,7 @@ CONFIG += sailfishapp
 SOURCES += src/sailquran.cpp
 
 LIBS += -lz
-#DEFINES += QUAZIP_STATIC
+DEFINES += QUAZIP_STATIC
 
 include(../3rdparty/3rdparty.pri)
 include(../src/src.pri)
@@ -28,8 +28,8 @@ include(../src/src.pri)
 OTHER_FILES += qml/sailquran.qml \
     qml/cover/CoverPage.qml \
     qml/pages/MainPage.qml \
-    qml/pages/SecondPage.qml \
-    qml/pages/ThirdPage.qml \
+    qml/pages/SettingsPage.qml \
+    qml/pages/AboutPage.qml \
     rpm/sailquran.changes.in \
     rpm/sailquran.spec \
     rpm/sailquran.yaml \

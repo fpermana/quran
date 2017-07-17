@@ -37,6 +37,8 @@ public:
 
     SqlQueryModel *getIndexModel() const;
 
+    Q_INVOKABLE void bookmark(const int quranTextId);
+
 public slots:
     void refresh();
 

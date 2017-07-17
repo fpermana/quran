@@ -99,7 +99,7 @@ QStringList DbManager::getPage(const int sura, const int aya)
     QStringList dataList;
     QSqlQuery *query = new QSqlQuery(*db);
     query->prepare("SELECT * from pages WHERE id = (SELECT id FROM pages WHERE sura <= :first AND aya <= :second) OR id = (SELECT id FROM pages WHERE sura >= :first AND aya >= :second)");
-    query->bindValue(":first",sura;
+    query->bindValue(":first",sura);
     query->bindValue(":second",aya);
 
     if (!query->exec()) {
@@ -224,4 +224,9 @@ QVariantMap DbManager::getQuranText(const int sura, const int aya, const QString
     query->clear();
     delete query;
     return dataMap;
+}
+
+void DbManager::bookmark(const int quranTextId)
+{
+
 }

@@ -96,7 +96,7 @@ Page {
         delegate: SilicaListView {
             id: pageView
             property int delegatePage: (index+1)
-            height: mainView.height
+            height: mainView.height - constant.headerHeight
             width: mainView.width
             focus: true
             clip: true
@@ -223,9 +223,14 @@ Page {
             PullDownMenu {
                 visible: delegatePage == Controller.currentPage
                 MenuItem {
+                    text: qsTr("About")
+                    onClicked: {
+                        pageStack.push(Qt.resolvedUrl("AboutPage.qml"));
+                    }
+                }
+                MenuItem {
                     text: qsTr("Settings")
                     onClicked: {
-//                        pageStack.push(Qt.resolvedUrl("SettingsPage.qml"), "", PageStackAction.Immediate);
                         pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
                     }
                 }

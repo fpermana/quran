@@ -159,6 +159,11 @@ SqlQueryModel *Controller::getIndexModel() const
     return indexModel;
 }
 
+void Controller::bookmark(const int quranTextId)
+{
+
+}
+
 QString Controller::getBismillah() const
 {
     return bismillah;

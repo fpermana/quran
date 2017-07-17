@@ -29,6 +29,7 @@ public:
     QVariantMap getJuz(const int sura, const int aya, const QString &textType = DEFAULT_TEXT_TYPE_KEY);
     QVariantMap getSura(const int sura);
     QVariantMap getQuranText(const int sura, const int aya, const QString &textType = DEFAULT_TEXT_TYPE_KEY);
+    void bookmark(const int quranTextId);
 
 private:
     QSqlDatabase *db;
