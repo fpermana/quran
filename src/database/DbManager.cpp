@@ -226,7 +226,7 @@ QVariantMap DbManager::getQuranText(const int sura, const int aya, const QString
     return dataMap;
 }
 
-void DbManager::bookmark(const int quranTextId)
+void DbManager::addBookmark(const int quranTextId)
 {
 
 }
