@@ -9,9 +9,10 @@ ApplicationWindow {
     height: 480
     title: qsTr("Hello World")
 
-    FontLoader { id: lateef; source: "qrc:/fonts/LateefRegOT.ttf" }
     FontLoader { id: pdms; source: "qrc:/fonts/PDMS_Saleem_QuranFont-signed.ttf" }
-    FontLoader { id: scheherazadeRegular; source: "qrc:/fonts/Scheherazade-Regular.ttf" }
+    FontLoader { id: almushaf; source: "qrc:/fonts/Al_Mushaf.ttf" }
+    FontLoader { id: newmet; source: "qrc:/fonts/me_quran_volt_newmet.ttf" }
+    FontLoader { id: uthmanic; source: "qrc:/fonts/UthmanicHafs1 Ver09.otf" }
 
     /*SwipeView {
         id: swipeView
@@ -91,7 +92,7 @@ ApplicationWindow {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.fill: parent
-                    font { family: scheherazadeRegular.name; pixelSize: 32; }
+                    font { family: uthmanic.name; pixelSize: 32; }
                     color: "white"
                     wrapMode: Text.WordWrap
                 }

@@ -228,5 +228,22 @@ QVariantMap DbManager::getQuranText(const int sura, const int aya, const QString
 
 void DbManager::addBookmark(const int quranTextId)
 {
+//    QVariantMap dataMap;
+    QSqlQuery *query = new QSqlQuery(*db);
+    query->prepare("UPDATE bookmarks SET mark = (~(mark&1))&(mark|1) WHERE id = :first");
+    query->bindValue(":first",quranTextId);
 
+    if (!query->exec()) {
+        qDebug() << "Query error:" + query->lastError().text();
+    }
+    else if (!query->first()) {
+        qDebug() << "No data in the database";
+    }
+    else {
+//        dataMap.insert(key, query->value(key));
+    }
+
+    query->clear();
+    delete query;
+//    return dataMap;
 }

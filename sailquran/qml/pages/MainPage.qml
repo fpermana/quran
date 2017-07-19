@@ -72,10 +72,10 @@ Page {
             BackgroundItem {
                 anchors {
                     horizontalCenter: parent.horizontalCenter
+                    top: parent.top
                     bottom: parent.bottom
-                    margins: constant.paddingMedium
+                    margins: constant.paddingSmall
                 }
-                width: parent.height
 
                 Label {
                     anchors.centerIn: parent
@@ -83,8 +83,9 @@ Page {
                     horizontalAlignment: Text.AlignHCenter
                     color: constant.colorLight
                     wrapMode: Text.WordWrap
-                    text: Utils.reverseString(Number(Controller.currentPage).toLocaleString(Qt.locale("ar-SA"), 'd', 0))
-                    font { family: constant.fontName; pixelSize: constant.fontSizeLarge; }
+                    text: Number(Controller.currentPage).toLocaleString(Qt.locale("ar-SA"), 'd', 0)
+//                    text: Utils.reverseString(Number(Controller.currentPage).toLocaleString(Qt.locale("ar-SA"), 'd', 0))
+                    font { family: constant.largeFontName; pixelSize: constant.fontSizeXXLarge; }
                 }
 
                 onClicked: {
@@ -118,9 +119,10 @@ Page {
                     color: constant.colorLight
                     wrapMode: Text.WordWrap
                     text: (model !== undefined) ? model.suraName : ""
-                    font { family: constant.fontName; pixelSize: constant.fontSizeLarge; }
+                    font { family: constant.largeFontName; pixelSize: constant.fontSizeXLarge; }
                 }
             }
+//            onContentYChanged: console.log("contentY " + contentY)
 
 //            visibleArea.onYPositionChanged: {
 //                console.log(pageView.count * visibleArea.yPosition)
@@ -214,6 +216,7 @@ Page {
                         MenuItem {
                             text: "Bookmark"
                             onClicked: {
+                                Controller.addBookmark(model.id)
                             }
                         }
                     }
@@ -234,6 +237,12 @@ Page {
                         pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
                     }
                 }
+                /*MenuItem {
+                    text: qsTr("Bookmarks")
+                    onClicked: {
+                        pageStack.push(Qt.resolvedUrl("BookmarksPage.qml"));
+                    }
+                }*/
             }
         }
     }

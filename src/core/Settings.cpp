@@ -11,10 +11,15 @@ void Settings::restoreSettings()
 {
     setCurrentPage(value(CURRENT_PAGE_KEY,1).toInt());
     setFontSize(value(FONT_SIZE_KEY,32).toInt()); // Theme.fontSizeMedium
-    setTranslationFontSize(value(TRANSLATION_FONT_SIZE_KEY,32).toInt()); // Theme.fontSizeMedium
+    setTranslationFontSize(value(TRANSLATION_FONT_SIZE_KEY,25).toInt()); // Theme.fontSizeMedium
     setFontName(value(FONT_NAME_KEY,"Alvi").toString()); // Al_Mushaf.ttf
     setTextType(value(TEXT_TYPE_KEY,DEFAULT_TEXT_TYPE_KEY).toString()); // quran_text
     setTranslation(value(TRANSLATION_KEY,DEFAULT_TRANSLATION_KEY).toString()); // indonesia
+}
+
+void Settings::resetSettings()
+{
+
 }
 
 void Settings::saveSettings()

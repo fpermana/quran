@@ -31,9 +31,10 @@ MOC_DIR=generated_files #Intermediate moc files directory
 RCC_DIR=generated_files #Intermediate qrc files directory
 
 # mandatory if we want to include quazip's source code to project
-#DEFINES += QUAZIP_STATIC
+LIBS += -lz
+DEFINES += QUAZIP_STATIC
 
-#include(../3rdparty/3rdparty.pri)
+include(../3rdparty/3rdparty.pri)
 include(../src/src.pri)
 
 #include(gui/gui.pri)

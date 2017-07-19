@@ -57,12 +57,18 @@ void Controller::checkDatabase(const bool reset)
         QDir dbDir = fileInfo.absoluteDir();
         if(!dbDir.exists())
             dbDir.mkpath(fileInfo.absolutePath());
-        if(fileInfo.exists())
-            QFile::remove(fileInfo.absoluteFilePath());
+        if(fileInfo.exists()) {
+            QFile f(fileInfo.absoluteFilePath());
+#ifdef Q_OS_WIN
+            f.setPermissions(QFile::ReadOther|QFile::WriteOther);
+#endif
+            f.remove(fileInfo.absoluteFilePath());
+        }
         if(!dbSrc.copy(fileInfo.absoluteFilePath())) {
             qDebug() << dbSrc.errorString();
         }
         else {
+
             QVariantMap fileMap;
             fileMap.insert(FILEPATH_KEY, fileInfo.absoluteFilePath());
 //            fileMap.insert(EXTRACT_PATH_KEY, GlobalFunctions::dataLocation());
@@ -159,9 +165,10 @@ SqlQueryModel *Controller::getIndexModel() const
     return indexModel;
 }
 
-void Controller::bookmark(const int quranTextId)
+void Controller::addBookmark(const int quranTextId)
 {
-
+    qDebug() << __FUNCTION__ << quranTextId;
+    manager->addBookmark(quranTextId);
 }
 
 QString Controller::getBismillah() const

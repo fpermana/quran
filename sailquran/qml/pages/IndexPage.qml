@@ -36,8 +36,8 @@ Page {
                 }
 
                 wrapMode: Text.WordWrap
-                text: Utils.reverseString(Number(model.id).toLocaleString(Qt.locale("ar-SA"), 'd', 0)) + " " + model.name
-                font { pixelSize: Settings.fontSize; family: constant.fontName; }
+                text: Number(model.id).toLocaleString(Qt.locale("ar-SA"), 'd', 0) + "\t" + model.name
+                font { pixelSize: constant.fontSizeXLarge; family: constant.largeFontName; }
                 LayoutMirroring.enabled: true
             }
         /*visibleArea.onXPositionChanged: {

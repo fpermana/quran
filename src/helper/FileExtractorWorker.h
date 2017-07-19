@@ -5,10 +5,10 @@
 #include <QVariant>
 
 #ifndef FILEPATH_KEY
-#define FILEPATH_KEY    "source"
+#define FILEPATH_KEY        "source"
 #endif
 #ifndef EXTRACT_DIR_KEY
-#define EXTRACT_DIR_KEY    "target"
+#define EXTRACT_DIR_KEY     "target"
 #endif
 
 

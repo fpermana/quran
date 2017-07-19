@@ -44,4 +44,5 @@ QtObject {
     property int charReservedPerMedia: 23
 
     property string fontName: uthmanic.name
+    property string largeFontName: almushaf.name
 }

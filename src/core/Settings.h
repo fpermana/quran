@@ -15,6 +15,7 @@ public:
     explicit Settings(QObject *parent = 0);
 
     void restoreSettings();
+    Q_INVOKABLE void resetSettings();
 
     int getCurrentPage() const;
     int getFontSize() const;
