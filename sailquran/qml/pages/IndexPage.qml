@@ -23,8 +23,30 @@ Page {
 //            positionViewAtIndex(Controller.currentPage-1, ListView.Beginning);
 //            loaded = true
         }
-        delegate:
+        delegate: BackgroundItem {
+            id: listItem
+            height: textLabel.contentHeight + 40
+            width: indexView.width
+
             Label {
+                id: textLabel
+                verticalAlignment: Text.AlignVCenter
+                color: model.id === indexPage.suraId ? constant.colorHighlighted : constant.colorLight
+                height: paintedHeight + constant.paddingLarge
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    right: parent.right
+                    margins: constant.paddingMedium
+                }
+
+                wrapMode: Text.WordWrap
+                text: Number(model.id).toLocaleString(Qt.locale("ar-SA"), 'd', 0) + "\t" + model.name
+                font { pixelSize: constant.fontSizeXLarge; family: constant.largeFontName; }
+                LayoutMirroring.enabled: true
+            }
+        }
+            /*Label {
                 id: textLabel
                 verticalAlignment: Text.AlignVCenter
 //                        horizontalAlignment: Text.AlignRight
@@ -39,7 +61,7 @@ Page {
                 text: Number(model.id).toLocaleString(Qt.locale("ar-SA"), 'd', 0) + "\t" + model.name
                 font { pixelSize: constant.fontSizeXLarge; family: constant.largeFontName; }
                 LayoutMirroring.enabled: true
-            }
+            }*/
         /*visibleArea.onXPositionChanged: {
             if(loaded) {
                 var p = Math.round(Controller.pages - Controller.pages * visibleArea.xPosition)

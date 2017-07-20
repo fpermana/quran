@@ -102,6 +102,7 @@ Page {
             focus: true
             clip: true
             visible: ((pageView.delegatePage == Controller.currentPage-1) && mainPage.status != PageStatus.Active) ? false : true
+//            onVisibleChanged: console.log(delegatePage + " " + )
 
             header: Item {
                 height: constant.headerHeight
@@ -122,7 +123,7 @@ Page {
                     font { family: constant.largeFontName; pixelSize: constant.fontSizeXLarge; }
                 }
             }
-//            onContentYChanged: console.log("contentY " + contentY)
+//            onContentYChanged: console.log("contentY " + contentY + " " + delegatePage)
 
 //            visibleArea.onYPositionChanged: {
 //                console.log(pageView.count * visibleArea.yPosition)
@@ -136,6 +137,7 @@ Page {
                     else if(delegatePage == Controller.currentPage+1)
                         Controller.lastPage
             }
+//            onModelChanged: console.log("model " + model)
 
             delegate: Item {
                 height: childrenRect.height
@@ -207,9 +209,9 @@ Page {
     //                  color: highlighted ? constant.colorHighlighted : constant.colorLight
                     }
 
-                    onPressAndHold: {
+                    /*onPressAndHold: {
                         contextMenu.show(listItem)
-                    }
+                    }*/
 
                     ContextMenu {
                         id: contextMenu
