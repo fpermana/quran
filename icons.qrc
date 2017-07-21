@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+    <file>icons/quran.svg</file>
+    </qresource>
+</RCC>
