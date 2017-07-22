@@ -15,11 +15,9 @@ Controller::Controller(QObject *parent) : QObject(parent)
 
 void Controller::init()
 {
-    firstPage = midPage = lastPage = 0;
-
     settings = new Settings(this);
     settings->restoreSettings();
-    connect(this, SIGNAL(currentPageChanged(int)), settings, SLOT(setCurrentPage(int)));
+//    connect(this, SIGNAL(currentPageChanged(int)), settings, SLOT(setCurrentPage(int)));
     connect(settings, SIGNAL(settingsChanged()), this, SLOT(refresh()));
 
     manager = new DbManager(this);
@@ -28,9 +26,6 @@ void Controller::init()
     indexModel = new SqlQueryModel(this);
     indexModel->setQuery("SELECT * FROM suras", *manager->getDb());
 
-    /*firstPage = new PageModel(manager->getDb(), this);
-    midPage = new PageModel(manager->getDb(), this);
-    lastPage = new PageModel(manager->getDb(), this);*/
     preview = new PageModel(manager->getDb(), this);
     preview->setTextType(settings->getTextType());
     preview->setTranslation(settings->getTranslation());
@@ -39,9 +34,9 @@ void Controller::init()
     QVariantMap bismillahMap = manager->getQuranText(1,1, settings->getTextType());
     bismillah = bismillahMap.value("text").toString();
 
-    currentPage = settings->getCurrentPage();
     pages = manager->getPages();
-    adjustPage();
+
+    changePage(settings->getCurrentPage());
 }
 
 void Controller::checkDatabase(const bool reset)
@@ -86,80 +81,6 @@ void Controller::checkDatabase(const bool reset)
     manager->init(filepath);
 }
 
-void Controller::adjustPage()
-{
-    PageModel *model;
-    QStringList pageData;
-    for(int i=(currentPage-1); i<=(currentPage+1); i++)
-    {
-        if(i>=1 && i<=pages)
-        {
-            /*if(i==currentPage-1)
-                model = firstPage;
-            else if(i==currentPage)
-                model = midPage;
-            else if(i==currentPage+1)
-                model = lastPage;
-
-            if(model->getPage() != i) {
-                pageData = manager->getPage(i);
-                qDebug() << pageData;
-                if(pageData.count() == 4) {
-                    model->setJuz(manager->getJuz(pageData.at(0).toInt(), pageData.at(1).toInt()));
-                    model->setSura(manager->getSura(pageData.at(0).toInt()));
-                    model->setPage(i);
-                    model->getAyas(pageData.at(0).toInt(), pageData.at(1).toInt(), pageData.at(2).toInt(), pageData.at(3).toInt());
-                }
-                else if(pageData.count() == 2) {
-                    model->setJuz(manager->getJuz(pageData.at(0).toInt(), pageData.at(1).toInt()));
-                    model->setSura(manager->getSura(pageData.at(0).toInt()));
-                    model->setPage(i);
-                    model->getAyas(pageData.at(0).toInt(), pageData.at(1).toInt());
-                }
-            }*/
-
-            if(!pageModelHash.contains(i)) {
-                model = new PageModel(manager->getDb(), this);
-
-                if(model->getPage() != i || model->getTextType() != settings->getTextType() || model->getTranslation() != settings->getTranslation()) {
-                    pageData = manager->getPage(i);
-                    if(pageData.count() == 2 || pageData.count() == 4) {
-                        model->setTextType(settings->getTextType());
-                        model->setTranslation(settings->getTranslation());
-                        model->setPage(i);
-                        model->setJuz(manager->getJuz(pageData.at(0).toInt(), pageData.at(1).toInt()));
-                        model->setSura(manager->getSura(pageData.at(0).toInt()));
-
-                        if(pageData.count() == 4) {
-                            model->getAyas(pageData.at(0).toInt(), pageData.at(1).toInt(), pageData.at(2).toInt(), pageData.at(3).toInt());
-                        }
-                        else if(pageData.count() == 2) {
-                            model->getAyas(pageData.at(0).toInt(), pageData.at(1).toInt());
-                        }
-
-                        pageModelHash.insert(i,model);
-                    }
-                }
-            }
-
-            if(pageModelHash.contains(i)) {
-                model = pageModelHash.value(i);
-                if(model->getPage() != i || model->getTextType() != settings->getTextType() || model->getTranslation() != settings->getTranslation()) {
-                    model->setTextType(settings->getTextType());
-                    model->setTranslation(settings->getTranslation());
-                    model->refresh();
-                }
-                if(i==currentPage-1)
-                    firstPage = model;
-                else if(i==currentPage)
-                    midPage = model;
-                else if(i==currentPage+1)
-                    lastPage = model;
-            }
-        }
-    }
-}
-
 SqlQueryModel *Controller::getIndexModel() const
 {
     return indexModel;
@@ -169,6 +90,58 @@ void Controller::addBookmark(const int quranTextId)
 {
     qDebug() << __FUNCTION__ << quranTextId;
     manager->addBookmark(quranTextId);
+}
+
+PageModel *Controller::getPage(const int page) const
+{
+    return pageModelHash.value(page,0);
+}
+
+void Controller::gatherPage(const int page)
+{
+    if(page<1 || page>pages)
+        return;
+
+    PageModel *model;
+    QStringList pageData;
+
+    if(!pageModelHash.contains(page)) {
+        model = new PageModel(manager->getDb(), this);
+
+        pageData = manager->getPage(page);
+        if(pageData.count() == 2 || pageData.count() == 4) {
+            model->setTextType(settings->getTextType());
+            model->setTranslation(settings->getTranslation());
+            model->setPage(page);
+            model->setJuz(manager->getJuz(pageData.at(0).toInt(), pageData.at(1).toInt()));
+            model->setSura(manager->getSura(pageData.at(0).toInt()));
+
+            if(pageData.count() == 4) {
+                model->getAyas(pageData.at(0).toInt(), pageData.at(1).toInt(), pageData.at(2).toInt(), pageData.at(3).toInt());
+            }
+            else if(pageData.count() == 2) {
+                model->getAyas(pageData.at(0).toInt(), pageData.at(1).toInt());
+            }
+
+            pageModelHash.insert(page,model);
+        }
+    }
+
+    if(pageModelHash.contains(page)) {
+        model = pageModelHash.value(page);
+        if(model->getPage() != page || model->getTextType() != settings->getTextType() || model->getTranslation() != settings->getTranslation()) {
+            model->setTextType(settings->getTextType());
+            model->setTranslation(settings->getTranslation());
+            model->refresh();
+        }
+    }
+}
+
+void Controller::changePage(const int page)
+{
+    for (int i = page-1; i <= page+1; i++) {
+        gatherPage(i);
+    }
 }
 
 QString Controller::getBismillah() const
@@ -181,24 +154,7 @@ void Controller::refresh()
     QVariantMap bismillahMap = manager->getQuranText(1,1, settings->getTextType());
     bismillah = bismillahMap.value("text").toString();
 
-    PageModel *model;
-    for (int i = 0; i < 3; i++) {
-        if(i==0)
-            model = firstPage;
-        else if(i==1)
-            model = midPage;
-        else if(i==2)
-            model = lastPage;
-
-        if(model == 0)
-            continue;
-
-        if(model->getTextType() != settings->getTextType() || model->getTranslation() != settings->getTranslation()) {
-            model->setTextType(settings->getTextType());
-            model->setTranslation(settings->getTranslation());
-            model->refresh();
-        }
-    }
+    changePage(settings->getCurrentPage());
 
     emit refreshed();
 }
@@ -208,42 +164,12 @@ Settings *Controller::getSettings() const
     return settings;
 }
 
-PageModel *Controller::getLastPage() const
-{
-    return lastPage;
-}
-
 PageModel *Controller::getPreview() const
 {
     return preview;
 }
 
-PageModel *Controller::getMidPage() const
-{
-    return midPage;
-}
-
-PageModel *Controller::getFirstPage() const
-{
-    return firstPage;
-}
-
 int Controller::getPages() const
 {
     return pages;
-}
-
-int Controller::getCurrentPage() const
-{
-    return currentPage;
-}
-
-void Controller::setCurrentPage(const int page)
-{
-    if(currentPage == page)
-        return;
-
-    currentPage = page;
-    adjustPage();
-    emit currentPageChanged(currentPage);
 }

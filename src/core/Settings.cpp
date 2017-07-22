@@ -38,7 +38,7 @@ void Settings::setCurrentPage(const int &value)
 {
     currentPage = value;
     setValue(CURRENT_PAGE_KEY, currentPage);
-    emit fontSizeChanged();
+    emit currentPageChanged();
 }
 
 int Settings::getFontSize() const

@@ -30,19 +30,23 @@ Page {
         property bool loaded: false
         anchors.fill: parent
         model: Controller.pages
-        layoutDirection: Qt.RightToLeft
-        snapMode: ListView.SnapOneItem
         orientation: ListView.Horizontal
-        Component.onCompleted: {
-            positionViewAtIndex(Controller.currentPage-1, ListView.Beginning);
-            loaded = true
-        }
-        visibleArea.onXPositionChanged: {
+        snapMode: ListView.SnapOneItem
+        highlightRangeMode: ListView.StrictlyEnforceRange
+        highlightFollowsCurrentItem: true
+        highlightMoveDuration: 1
+        LayoutMirroring.enabled: true
+        LayoutMirroring.childrenInherit: false
+        onCurrentIndexChanged: {
             if(loaded) {
-                var p = Math.round(Controller.pages - Controller.pages * visibleArea.xPosition)
-                if(p == Controller.currentPage-1 || p == Controller.currentPage+1)
-                    Controller.currentPage = p
+                Settings.currentPage = currentIndex+1
+                Controller.changePage(currentIndex+1)
             }
+        }
+
+        Component.onCompleted: {
+            currentIndex = Settings.currentPage-1
+            loaded = true
         }
 
         Item {
@@ -83,7 +87,7 @@ Page {
                     horizontalAlignment: Text.AlignHCenter
                     color: constant.colorLight
                     wrapMode: Text.WordWrap
-                    text: Number(Controller.currentPage).toLocaleString(Qt.locale("ar-SA"), 'd', 0)
+                    text: Number(Settings.currentPage).toLocaleString(Qt.locale("ar-SA"), 'd', 0)
 //                    text: Utils.reverseString(Number(Controller.currentPage).toLocaleString(Qt.locale("ar-SA"), 'd', 0))
                     font { family: constant.largeFontName; pixelSize: constant.fontSizeXXLarge; }
                 }
@@ -101,8 +105,8 @@ Page {
             width: mainView.width
             focus: true
             clip: true
-            visible: ((pageView.delegatePage == Controller.currentPage-1) && mainPage.status != PageStatus.Active) ? false : true
-//            onVisibleChanged: console.log(delegatePage + " " + )
+            visible: ((pageView.delegatePage == mainView.currentIndex) && mainPage.status != PageStatus.Active) ? false : true
+            interactive: model !== undefined
 
             header: Item {
                 height: constant.headerHeight
@@ -123,21 +127,19 @@ Page {
                     font { family: constant.largeFontName; pixelSize: constant.fontSizeXLarge; }
                 }
             }
-//            onContentYChanged: console.log("contentY " + contentY + " " + delegatePage)
-
-//            visibleArea.onYPositionChanged: {
-//                console.log(pageView.count * visibleArea.yPosition)
-//            }
-
-            model: {
-                    if(delegatePage == Controller.currentPage-1)
-                        Controller.firstPage
-                    else if(delegatePage == Controller.currentPage)
-                        Controller.midPage
-                    else if(delegatePage == Controller.currentPage+1)
-                        Controller.lastPage
+            Component.onCompleted: {
+                if(pageView.model === undefined) {
+                    Controller.gatherPage(delegatePage)
+                    pageView.model = Controller.getPage(delegatePage)
+                }
             }
-//            onModelChanged: console.log("model " + model)
+
+            /*Connections {
+                target: mainPage
+                onStatusChanged: console.log(mainPage.status)
+            }*/
+
+//            onContentYChanged: console.log("contentY " + contentY + " " + delegatePage)
 
             delegate: Item {
                 height: childrenRect.height
@@ -164,7 +166,7 @@ Page {
                 BackgroundItem {
                     id: listItem
                     property bool menuOpen: contextMenu != null && contextMenu.parent === listItem
-                    height: (menuOpen ? contextMenu.height : 0) + textLabel.contentHeight + translationLabel.contentHeight + 40
+                    height: (menuOpen ? contextMenu.height : 0) + textLabel.height + translationLabel.height + 25
                     anchors {
                         top: bismillahLabel.bottom
                         left: parent.left
@@ -193,8 +195,9 @@ Page {
                     Label {
                         id: translationLabel
                         verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignJustify
                         color: constant.colorLight
-                        height: paintedHeight + constant.paddingLarge
+                        height: paintedHeight + constant.paddingMedium
                         anchors {
                             top: textLabel.bottom
                             left: parent.left
@@ -226,7 +229,7 @@ Page {
             }
 
             PullDownMenu {
-                visible: delegatePage == Controller.currentPage
+                visible: delegatePage == Settings.currentPage
                 MenuItem {
                     text: qsTr("About")
                     onClicked: {
