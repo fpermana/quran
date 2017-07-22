@@ -25,7 +25,7 @@ public:
 
     int getPages();
     QStringList getPage(const int page);
-    QStringList getPage(const int sura, const int aya);
+    int openSura(const int sura);
     QVariantMap getJuz(const int sura, const int aya, const QString &textType = DEFAULT_TEXT_TYPE_KEY);
     QVariantMap getSura(const int sura);
     QVariantMap getQuranText(const int sura, const int aya, const QString &textType = DEFAULT_TEXT_TYPE_KEY);

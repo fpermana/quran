@@ -23,12 +23,12 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: "Reset"
-                onClicked: console.log("Clicked option 1")
-            }
-            MenuItem {
                 text: "Clear Database"
                 onClicked: console.log("Clicked option 2")
+            }
+            MenuItem {
+                text: "Reset Settings"
+                onClicked: console.log("Clicked option 1")
             }
         }
 

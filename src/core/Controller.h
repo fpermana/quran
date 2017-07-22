@@ -33,12 +33,14 @@ public:
     Q_INVOKABLE PageModel *getPage(const int page) const;
     Q_INVOKABLE void gatherPage(const int page);
     Q_INVOKABLE void changePage(const int page);
+    Q_INVOKABLE void openSura(const int suraId);
 
 public slots:
     void refresh();
 
 signals:
     void refreshed();
+    void pageChanged(const int page);
 
 private:
     void checkDatabase(const bool reset = false);

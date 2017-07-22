@@ -39,7 +39,8 @@ OTHER_FILES += qml/sailquran.qml \
 RESOURCES += \
     ../db.qrc \
     ../fonts.qrc \
-    ../js.qrc
+    ../js.qrc \
+    ../icons.qrc
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
 

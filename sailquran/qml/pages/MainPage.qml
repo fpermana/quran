@@ -8,7 +8,7 @@ Page {
     allowedOrientations: Orientation.Portrait
     backNavigation: false
 
-    Component.onCompleted: {
+    /*Component.onCompleted: {
         console.log("Theme.fontSizeMedium " + Theme.fontSizeMedium)
         console.log("pdms.name " + pdms.name)
         console.log("almushaf.name " + almushaf.name)
@@ -16,6 +16,13 @@ Page {
         console.log(Utils.convertNumber(12345));
         console.log(Utils.reverseString("12345"));
         console.log(Utils.reverseString(Number(12345).toLocaleString(Qt.locale("ar-SA"), 'd', 0)));
+    }*/
+
+    Connections {
+        target: Controller
+        onPageChanged: {
+            mainView.currentIndex = page-1
+        }
     }
 
 //    onStatusChanged: console.log(page.status)
@@ -81,9 +88,10 @@ Page {
                     bottom: parent.bottom
                     margins: constant.paddingSmall
                 }
-                width: parent.height
+                width: Math.max(parent.height, pageNumberLabel.width)
 
                 Label {
+                    id: pageNumberLabel
                     anchors.centerIn: parent
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
@@ -95,7 +103,8 @@ Page {
                 }
 
                 onClicked: {
-                    pageStack.push(Qt.resolvedUrl("IndexPage.qml"), {suraId: Controller.currentPage.suraId});
+                    var suraId = Controller.currentPage !== null ? Controller.currentPage.suraId : 1
+                    pageStack.push(Qt.resolvedUrl("IndexPage.qml"), {suraId: suraId});
                 }
             }
         }
@@ -107,8 +116,12 @@ Page {
             width: mainView.width
             focus: true
             clip: true
-            visible: ((pageView.delegatePage == mainView.currentIndex) && mainPage.status != PageStatus.Active) ? false : true
+//            visible: ((pageView.delegatePage <= mainView.currentIndex) && mainPage.status != PageStatus.Active) ? false : true
+            visible: ((pageView.delegatePage !== Settings.currentPage) && mainPage.status != PageStatus.Active) ? false : true
             interactive: model !== undefined
+//            snapMode: ListView.SnapToItem
+//            highlightRangeMode: ListView.StrictlyEnforceRange
+//            highlightFollowsCurrentItem: false
 
             header: Item {
                 height: constant.headerHeight
@@ -149,11 +162,10 @@ Page {
                         top: parent.top
                         left: parent.left
                         right: parent.right
-                        leftMargin: constant.paddingMedium
-                        rightMargin: constant.paddingMedium
+                        margins: constant.paddingMedium
                     }
 
-                    font { family: constant.fontName; pixelSize: constant.fontSizeXLarge; }
+                    font { family: constant.largeFontName; pixelSize: constant.fontSizeXLarge; }
                     color: constant.colorLight
                     wrapMode: Text.WordWrap
                     height: visible ? (paintedHeight + constant.paddingMedium) : 0

@@ -144,6 +144,14 @@ void Controller::changePage(const int page)
     }
 }
 
+void Controller::openSura(const int suraId)
+{
+    int page = manager->openSura(suraId);
+    changePage(page);
+
+    emit pageChanged(page);
+}
+
 QString Controller::getBismillah() const
 {
     return bismillah;
