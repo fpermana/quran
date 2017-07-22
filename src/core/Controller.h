@@ -12,6 +12,7 @@ class Controller : public QObject
     Q_OBJECT
     Q_PROPERTY(int pages READ getPages CONSTANT)
     Q_PROPERTY(PageModel* preview READ getPreview CONSTANT)
+    Q_PROPERTY(PageModel* currentPage READ getCurrentPage CONSTANT)
     Q_PROPERTY(SqlQueryModel* indexModel READ getIndexModel CONSTANT)
     Q_PROPERTY(QString bismillah READ getBismillah  NOTIFY refreshed)
 public:
@@ -21,6 +22,7 @@ public:
     int getPages() const;
 
     PageModel *getPreview() const;
+    PageModel *getCurrentPage() const;
     Settings *getSettings() const;
 
     QString getBismillah() const;
@@ -42,7 +44,7 @@ private:
     void checkDatabase(const bool reset = false);
 
     DbManager *manager;
-    int pages, currentPage;
+    int pages;
 
     PageModel *firstPage, *midPage, *lastPage, *preview;
     SqlQueryModel *indexModel;

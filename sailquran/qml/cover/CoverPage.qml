@@ -36,7 +36,7 @@ CoverBackground {
     Label {
         id: label
         anchors.centerIn: parent
-        text: Controller.midPage.suraName
+        text: Controller.getPage(Settings.currentPage).suraName
     }
 
     /*SilicaListView {

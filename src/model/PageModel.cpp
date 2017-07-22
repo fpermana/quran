@@ -111,6 +111,7 @@ void PageModel::setTranslation(const QString &value)
 
 void PageModel::refresh()
 {
+//    qDebug() << __FUNCTION__ << type;
     if(type == SingleLine) {
         getAya(sura1, aya1);
     }

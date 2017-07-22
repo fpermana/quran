@@ -3,7 +3,6 @@ import Sailfish.Silica 1.0
 
 Page {
     id: settingPage
-//    onStatusChanged: console.log(settingPage.status)
 //    allowedOrientations: Orientation.All
     property string textType
     property string translation
@@ -26,6 +25,10 @@ Page {
             MenuItem {
                 text: "Reset"
                 onClicked: console.log("Clicked option 1")
+            }
+            MenuItem {
+                text: "Clear Database"
+                onClicked: console.log("Clicked option 2")
             }
         }
 
@@ -100,17 +103,20 @@ Page {
             label: "Text Style"
 
             menu: ContextMenu {
-                MenuItem { text: "Simplified" }
+                MenuItem { text: "Original" }
                 MenuItem { text: "Enhanced" }
                 MenuItem { text: "Uthmani" }
+//                MenuItem { text: "Simplified" }
             }
 
             onCurrentIndexChanged: {
-                var textType = "quran_text";
+                var textType = "quran_text_original";
                 if(currentIndex == 1)
                     textType = "quran_text_enhanced";
                 else if(currentIndex == 2)
                     textType = "quran_text_uthmani";
+                else if(currentIndex == 3)
+                    textType = "quran_text";
 
                 settingPage.textType = textType;
                 Controller.preview.textType = textType;
@@ -123,6 +129,8 @@ Page {
                     index = 1;
                 else if(Settings.textType == "quran_text_uthmani")
                     index = 2;
+                else if(Settings.textType == "quran_text")
+                    index = 3;
 
                 currentIndex = index;
             }

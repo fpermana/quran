@@ -169,6 +169,11 @@ PageModel *Controller::getPreview() const
     return preview;
 }
 
+PageModel *Controller::getCurrentPage() const
+{
+    return pageModelHash.value(settings->getCurrentPage(),0);
+}
+
 int Controller::getPages() const
 {
     return pages;

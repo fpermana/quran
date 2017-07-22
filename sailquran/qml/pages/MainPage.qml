@@ -12,6 +12,7 @@ Page {
         console.log("Theme.fontSizeMedium " + Theme.fontSizeMedium)
         console.log("pdms.name " + pdms.name)
         console.log("almushaf.name " + almushaf.name)
+        console.log("uthmanic.name " + uthmanic.name)
         console.log(Utils.convertNumber(12345));
         console.log(Utils.reverseString("12345"));
         console.log(Utils.reverseString(Number(12345).toLocaleString(Qt.locale("ar-SA"), 'd', 0)));
@@ -80,6 +81,7 @@ Page {
                     bottom: parent.bottom
                     margins: constant.paddingSmall
                 }
+                width: parent.height
 
                 Label {
                     anchors.centerIn: parent
@@ -93,7 +95,7 @@ Page {
                 }
 
                 onClicked: {
-                    pageStack.push(Qt.resolvedUrl("IndexPage.qml"), {suraId: Controller.midPage.suraId});
+                    pageStack.push(Qt.resolvedUrl("IndexPage.qml"), {suraId: Controller.currentPage.suraId});
                 }
             }
         }
@@ -133,13 +135,6 @@ Page {
                     pageView.model = Controller.getPage(delegatePage)
                 }
             }
-
-            /*Connections {
-                target: mainPage
-                onStatusChanged: console.log(mainPage.status)
-            }*/
-
-//            onContentYChanged: console.log("contentY " + contentY + " " + delegatePage)
 
             delegate: Item {
                 height: childrenRect.height

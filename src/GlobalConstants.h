@@ -14,7 +14,7 @@
 #define TEXT_TYPE_KEY               "text_type"
 #define TRANSLATION_KEY             "translation"
 
-#define DEFAULT_TEXT_TYPE_KEY       "quran_text"
+#define DEFAULT_TEXT_TYPE_KEY       "quran_text_original"
 #define DEFAULT_TRANSLATION_KEY     "id_indonesian"
 
 #endif // GLOBALCONSTANTS_H
