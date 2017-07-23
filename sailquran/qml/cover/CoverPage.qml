@@ -33,9 +33,30 @@ import Sailfish.Silica 1.0
 
 CoverBackground {
     id: cover
+    allowResize: true
+
+    Image {
+        id: iconImage
+        source: "qrc:/icons/quran.svg"
+        anchors {
+            top: parent.top
+            horizontalCenter: parent.horizontalCenter
+            margins: constant.paddingLarge
+        }
+
+        height: parent.height/2
+        sourceSize.width: parent.width/2
+        horizontalAlignment: Image.AlignHCenter
+        fillMode: Image.PreserveAspectFit
+        opacity: 0.4
+    }
+
     Label {
         id: label
-        anchors.centerIn: parent
+        anchors{
+            top: iconImage.bottom
+            horizontalCenter: parent.horizontalCenter
+        }
         text: Controller.getPage(Settings.currentPage).suraName
     }
 

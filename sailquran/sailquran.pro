@@ -30,6 +30,9 @@ OTHER_FILES += qml/sailquran.qml \
     qml/pages/MainPage.qml \
     qml/pages/SettingsPage.qml \
     qml/pages/AboutPage.qml \
+    qml/pages/IndexPage.qml \
+    qml/components/Constant.qml \
+    qml/components/ConfirmationDialog.qml \
     rpm/sailquran.changes.in \
     rpm/sailquran.spec \
     rpm/sailquran.yaml \
@@ -46,15 +49,10 @@ SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
 
 # to disable building translations every time, comment out the
 # following CONFIG line
-CONFIG += sailfishapp_i18n
+# CONFIG += sailfishapp_i18n
 
 # German translation is enabled as an example. If you aren't
 # planning to localize your app, remember to comment out the
 # following TRANSLATIONS line. And also do not forget to
 # modify the localized app name in the the .desktop file.
 # TRANSLATIONS += translations/sailquran-de.ts
-
-DISTFILES += \
-    qml/components/Constant.qml \
-    qml/pages/SettingsPage.qml \
-    qml/pages/IndexPage.qml

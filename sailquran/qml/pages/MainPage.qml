@@ -122,6 +122,10 @@ Page {
 //            snapMode: ListView.SnapToItem
 //            highlightRangeMode: ListView.StrictlyEnforceRange
 //            highlightFollowsCurrentItem: false
+//            currentIndex: 0
+//            onCurrentIndexChanged: {
+//                console.log(currentIndex)
+//            }
 
             header: Item {
                 height: constant.headerHeight

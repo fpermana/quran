@@ -1,5 +1,6 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
+import "../components" as Components
 
 Page {
     id: settingPage
@@ -24,11 +25,33 @@ Page {
         PullDownMenu {
             MenuItem {
                 text: "Clear Database"
-                onClicked: console.log("Clicked option 2")
+                onClicked: {
+                    var dialog = pageStack.push(
+                                Qt.resolvedUrl("../components/ConfirmationDialog.qml"),
+                                    {
+                                        "title": "Clear current database?",
+                                        "description": "This action will erase all your bookmarks",
+                                    }
+                                );
+                    dialog.accepted.connect(function() {
+                        console.log("Database cleared");
+                    })
+                }
             }
             MenuItem {
                 text: "Reset Settings"
-                onClicked: console.log("Clicked option 1")
+                onClicked: {
+                    var dialog = pageStack.push(
+                                Qt.resolvedUrl("../components/ConfirmationDialog.qml"),
+                                    {
+                                        "title": "Reset current settings?",
+                                        "description": "This action will reset your settings to default value",
+                                    }
+                                );
+                    dialog.accepted.connect(function() {
+                        console.log("Settings reset");
+                    })
+                }
             }
         }
 
@@ -125,11 +148,11 @@ Page {
 
             Component.onCompleted: {
                 var index = 0;
-                if(Settings.textType == "quran_text_enhanced")
+                if(Settings.textType === "quran_text_enhanced")
                     index = 1;
-                else if(Settings.textType == "quran_text_uthmani")
+                else if(Settings.textType === "quran_text_uthmani")
                     index = 2;
-                else if(Settings.textType == "quran_text")
+                else if(Settings.textType === "quran_text")
                     index = 3;
 
                 currentIndex = index;
@@ -160,7 +183,7 @@ Page {
 
             Component.onCompleted: {
                 var index = 0;
-                if(Settings.translation == "en_sahih")
+                if(Settings.translation === "en_sahih")
                     index = 1;
 
                 currentIndex = index;
