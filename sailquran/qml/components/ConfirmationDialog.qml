@@ -8,28 +8,31 @@ Dialog {
 
     Column {
         width: parent.width
+        anchors.margins: constant.paddingLarge
 
         DialogHeader {
             acceptText: "Yes"
             cancelText: "No"
         }
 
-        Text {
+        Label {
             id: titleText
             width: parent.width
             verticalAlignment: Text.AlignVCenter
             color: constant.colorLight
             wrapMode: Text.WordWrap
-            font { family: constant.fontName; pixelSize: constant.fontSizeXLarge; }
+            font { family: constant.fontName; pixelSize: constant.fontSizeLarge; }
+            anchors.margins: constant.paddingMedium
         }
-        Text {
+        Label {
             id: descriptionText
             width: parent.width
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             color: constant.colorLight
             wrapMode: Text.WordWrap
-            font { family: constant.fontName; pixelSize: constant.fontSizeMedium; }
+            font { family: constant.fontName; pixelSize: constant.fontSizeSmall; italic: true; }
+            anchors.margins: constant.paddingMedium
         }
     }
 }

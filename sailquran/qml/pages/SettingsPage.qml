@@ -22,15 +22,15 @@ Page {
     SilicaFlickable {
         anchors.fill: parent
 
-        PullDownMenu {
+        /*PullDownMenu {
             MenuItem {
                 text: "Clear Database"
                 onClicked: {
                     var dialog = pageStack.push(
                                 Qt.resolvedUrl("../components/ConfirmationDialog.qml"),
                                     {
-                                        "title": "Clear current database?",
-                                        "description": "This action will erase all your bookmarks",
+                                        "title": "Clear database?",
+                                        "description": "This action will also erase your bookmarks and custom translations",
                                     }
                                 );
                     dialog.accepted.connect(function() {
@@ -44,7 +44,7 @@ Page {
                     var dialog = pageStack.push(
                                 Qt.resolvedUrl("../components/ConfirmationDialog.qml"),
                                     {
-                                        "title": "Reset current settings?",
+                                        "title": "Reset settings?",
                                         "description": "This action will reset your settings to default value",
                                     }
                                 );
@@ -53,7 +53,7 @@ Page {
                     })
                 }
             }
-        }
+        }*/
 
         Item {
             id: header
@@ -80,7 +80,7 @@ Page {
 
         SilicaListView {
             id: preview
-            height: constant.headerHeight
+            height: constant.headerHeight + constant.paddingMedium
             focus: true
             anchors {
                 left: parent.left
@@ -112,6 +112,24 @@ Page {
                     font { pixelSize: Settings.fontSize; }
                     font.family: constant.fontName
                 }
+                /*Label {
+                    id: translationLabel
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignJustify
+                    color: constant.colorLight
+                    height: paintedHeight + constant.paddingMedium
+                    anchors {
+                        top: textLabel.bottom
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: constant.paddingMedium
+                        rightMargin: constant.paddingMedium
+                    }
+
+                    wrapMode: Text.WordWrap
+                    text: model.translation
+                    font.pixelSize: Settings.translationFontSize
+                }*/
             }
         }
 
