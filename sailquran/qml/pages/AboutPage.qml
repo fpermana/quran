@@ -37,9 +37,10 @@ Page {
 
     SilicaListView {
         anchors.fill: parent
-        header: Item {
+        header: Rectangle {
             width: aboutPage.width
             height: childrenRect.height + 60
+            color: "red"
             Column {
                 spacing: 10
                 height: childrenRect.height
@@ -59,9 +60,15 @@ Page {
                 }
 
                 Label {
-                    text: "Copyright"
+                    text: "Simple Quran Reader Version 0.1"
                     anchors.horizontalCenter: parent.horizontalCenter
-                    font { family: constant.fontName; pixelSize: constant.fontSizeLarge; }
+                    font { pixelSize: constant.fontSizeLarge; }
+                }
+
+                Label {
+                    text: "Copyright © Fandy Permana 2017"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    font { pixelSize: constant.fontSizeMedium; }
                 }
 
                 Component.onCompleted: {
