@@ -80,7 +80,7 @@ Page {
 
         SilicaListView {
             id: preview
-            height: constant.headerHeight + constant.paddingMedium
+            height: childrenRect.height
             focus: true
             anchors {
                 left: parent.left
@@ -112,7 +112,7 @@ Page {
                     font { pixelSize: Settings.fontSize; }
                     font.family: constant.fontName
                 }
-                /*Label {
+                Label {
                     id: translationLabel
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignJustify
@@ -129,7 +129,7 @@ Page {
                     wrapMode: Text.WordWrap
                     text: model.translation
                     font.pixelSize: Settings.translationFontSize
-                }*/
+                }
             }
         }
 
@@ -197,6 +197,8 @@ Page {
                 if(currentIndex == 1)
                     translation = "en_sahih";
                 settingPage.translation = translation;
+                Controller.preview.translation = translation;
+                Controller.preview.refresh()
             }
 
             Component.onCompleted: {

@@ -7,6 +7,10 @@ Page {
     allowedOrientations: Orientation.Portrait
 //    backNavigation: false
 
+//    Flickable {
+//        anchors.fill: parent
+//    }
+
     ListModel {
         id: detailModel
 
@@ -32,9 +36,38 @@ Page {
     }
 
     SilicaListView {
+        anchors.fill: parent
         header: Item {
             width: aboutPage.width
-            height: 200
+            height: childrenRect.height + 60
+            Column {
+                spacing: 10
+                height: childrenRect.height
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+
+                Image {
+                    id: iconImage
+                    source: "qrc:/icons/quran.svg"
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    sourceSize.width: parent.width/3
+                    horizontalAlignment: Image.AlignHCenter
+                    fillMode: Image.PreserveAspectFit
+                }
+
+                Label {
+                    text: "Copyright"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    font { family: constant.fontName; pixelSize: constant.fontSizeLarge; }
+                }
+
+                Component.onCompleted: {
+                    anchors.verticalCenter = parent.verticalCenter
+                }
+            }
         }
     }
 }

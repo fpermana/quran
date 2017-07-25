@@ -45,7 +45,7 @@ CoverBackground {
         }
 
         height: parent.height/2
-        sourceSize.width: parent.width/2
+        sourceSize.width: parent.width*3/4
         horizontalAlignment: Image.AlignHCenter
         fillMode: Image.PreserveAspectFit
         opacity: 0.4
