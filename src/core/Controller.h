@@ -14,6 +14,8 @@ class Controller : public QObject
     Q_PROPERTY(PageModel* preview READ getPreview CONSTANT)
     Q_PROPERTY(PageModel* currentPage READ getCurrentPage CONSTANT)
     Q_PROPERTY(SqlQueryModel* indexModel READ getIndexModel CONSTANT)
+    Q_PROPERTY(SqlQueryModel* translationModel READ getTranslationModel CONSTANT)
+    Q_PROPERTY(SqlQueryModel* activeTranslationModel READ getActiveTranslationModel CONSTANT)
     Q_PROPERTY(QString bismillah READ getBismillah  NOTIFY refreshed)
 public:
     explicit Controller(QObject *parent = 0);
@@ -28,6 +30,8 @@ public:
     QString getBismillah() const;
 
     SqlQueryModel *getIndexModel() const;
+    SqlQueryModel *getTranslationModel() const;
+    SqlQueryModel *getActiveTranslationModel() const;
 
     Q_INVOKABLE void addBookmark(const int quranTextId);
     Q_INVOKABLE PageModel *getPage(const int page) const;
@@ -49,7 +53,7 @@ private:
     int pages;
 
     PageModel *firstPage, *midPage, *lastPage, *preview;
-    SqlQueryModel *indexModel;
+    SqlQueryModel *indexModel, *translationModel, *activeTranslationModel;
 
     QHash<int, PageModel*> pageModelHash;
     Settings *settings;

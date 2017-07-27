@@ -26,6 +26,12 @@ void Controller::init()
     indexModel = new SqlQueryModel(this);
     indexModel->setQuery("SELECT * FROM suras", *manager->getDb());
 
+    translationModel = new SqlQueryModel(this);
+    translationModel->setQuery("SELECT * FROM translations", *manager->getDb());
+
+    activeTranslationModel = new SqlQueryModel(this);
+    activeTranslationModel->setQuery("SELECT * FROM translations WHERE active = 1", *manager->getDb());
+
     preview = new PageModel(manager->getDb(), this);
     preview->setTextType(settings->getTextType());
     preview->setTranslation(settings->getTranslation());
@@ -84,6 +90,16 @@ void Controller::checkDatabase(const bool reset)
 SqlQueryModel *Controller::getIndexModel() const
 {
     return indexModel;
+}
+
+SqlQueryModel *Controller::getTranslationModel() const
+{
+    return translationModel;
+}
+
+SqlQueryModel *Controller::getActiveTranslationModel() const
+{
+    return activeTranslationModel;
 }
 
 void Controller::addBookmark(const int quranTextId)

@@ -7,16 +7,12 @@ Page {
     allowedOrientations: Orientation.Portrait
 //    backNavigation: false
 
-//    Flickable {
-//        anchors.fill: parent
-//    }
-
     ListModel {
         id: detailModel
 
         ListElement {
             title: "Contributors"
-            detail: ""
+            detail: "Icon by Hariyanto Wibowo"
         }
 
         ListElement {
@@ -36,11 +32,11 @@ Page {
     }
 
     SilicaListView {
+        id: detailListView
         anchors.fill: parent
-        header: Rectangle {
+        header: Item {
             width: aboutPage.width
             height: childrenRect.height + 60
-            color: "red"
             Column {
                 spacing: 10
                 height: childrenRect.height
@@ -74,6 +70,21 @@ Page {
                 Component.onCompleted: {
                     anchors.verticalCenter = parent.verticalCenter
                 }
+            }
+        }
+
+        model: detailModel
+
+        delegate: Column {
+            width: detailListView.width
+            height: childrenRect.height
+            Label {
+                text: model.title
+                font { pixelSize: constant.fontSizeMedium; }
+            }
+            Label {
+                text: model.detail
+                font { pixelSize: constant.fontSizeMedium; }
             }
         }
     }
