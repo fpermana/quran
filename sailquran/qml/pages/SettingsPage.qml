@@ -53,6 +53,13 @@ Page {
                     })
                 }
             }
+
+            MenuItem {
+                text: "Manage Translations"
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("TranslationsPage.qml"));
+                }
+            }
         }*/
 
         Item {

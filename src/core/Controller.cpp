@@ -30,7 +30,8 @@ void Controller::init()
     translationModel->setQuery("SELECT * FROM translations", *manager->getDb());
 
     activeTranslationModel = new SqlQueryModel(this);
-    activeTranslationModel->setQuery("SELECT * FROM translations WHERE active = 1", *manager->getDb());
+    activeTranslationModel->setQuery("SELECT * FROM translations WHERE installed = 1", *manager->getDb());
+//    qDebug() << "activeTranslationModel" << activeTranslationModel->rowCount();
 
     preview = new PageModel(manager->getDb(), this);
     preview->setTextType(settings->getTextType());

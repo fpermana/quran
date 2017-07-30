@@ -27,6 +27,7 @@ include(../src/src.pri)
 
 OTHER_FILES += qml/sailquran.qml \
     qml/cover/CoverPage.qml \
+    qml/pages/TranslationsPage.qml \
     qml/pages/MainPage.qml \
     qml/pages/SettingsPage.qml \
     qml/pages/AboutPage.qml \
@@ -41,6 +42,7 @@ OTHER_FILES += qml/sailquran.qml \
 
 RESOURCES += \
     ../db.qrc \
+    ../flags.qrc \
     ../fonts.qrc \
     ../js.qrc \
     ../icons.qrc

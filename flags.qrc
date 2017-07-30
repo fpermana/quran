@@ -7,11 +7,15 @@
 	<file>flags/bd.png</file>
 	<file>flags/bg.png</file>
 	<file>flags/cn.png</file>
-	<file>flags/cz.png</file>
-	<file>flags/de.png</file>
-	<file>flags/es.png</file>
-	<file>flags/id.png</file>
-	<file>flags/in.png</file>
+        <file>flags/cz.png</file>
+        <file>flags/de.png</file>
+        <file>flags/dz.png</file>
+        <file>flags/es.png</file>
+        <file>flags/et.png</file>
+        <file>flags/fr.png</file>
+        <file>flags/id.png</file>
+        <file>flags/in.png</file>
+        <file>flags/it.png</file>
 	<file>flags/iq.png</file>
 	<file>flags/ir.png</file>
 	<file>flags/jp.png</file>
@@ -26,8 +30,9 @@
 	<file>flags/pl.png</file>
 	<file>flags/pt.png</file>
 	<file>flags/ro.png</file>
-	<file>flags/ru.png</file>
-	<file>flags/se.png</file>
+        <file>flags/ru.png</file>
+        <file>flags/sa.png</file>
+        <file>flags/se.png</file>
 	<file>flags/so.png</file>
 	<file>flags/th.png</file>
 	<file>flags/tj.png</file>
