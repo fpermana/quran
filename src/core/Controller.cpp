@@ -21,7 +21,9 @@ void Controller::init()
     connect(settings, SIGNAL(settingsChanged()), this, SLOT(refresh()));
 
     manager = new DbManager(this);
-    checkDatabase(true);
+    checkDatabase();
+
+    downloader = new Downloader(this);
 
     indexModel = new SqlQueryModel(this);
     indexModel->setQuery("SELECT * FROM suras", *manager->getDb());
@@ -31,7 +33,14 @@ void Controller::init()
 
     activeTranslationModel = new SqlQueryModel(this);
     activeTranslationModel->setQuery("SELECT * FROM translations WHERE installed = 1", *manager->getDb());
-//    qDebug() << "activeTranslationModel" << activeTranslationModel->rowCount();
+    qDebug() << "activeTranslationModel" << activeTranslationModel->rowCount();
+    qDebug() << "translationModel" << translationModel->rowCount();
+    int c = translationModel->rowCount();
+    for(int i=0; i<c; i++) {
+//        qDebug() << translationModel->data(translationModel->index(i,0),262);
+        downloadTranslation(translationModel->data(translationModel->index(i,0),262).toString());
+    }
+//    qDebug() << translationModel->roleNames();
 
     preview = new PageModel(manager->getDb(), this);
     preview->setTextType(settings->getTextType());
@@ -167,6 +176,17 @@ void Controller::openSura(const int suraId)
     changePage(page);
 
     emit pageChanged(page);
+}
+
+void Controller::downloadTranslation(const QString tid)
+{
+    QString url = QString("http://tanzil.net/trans/?transID=%1&type=txt-2").arg(tid);
+    QString filepath = QString("%1trans/%2.txt").arg(GlobalFunctions::dataLocation()).arg(tid);
+    QVariantMap downloadMap;
+    downloadMap.insert(URL_KEY, url);
+    downloadMap.insert(FILEPATH_KEY, filepath);
+//    downloader->addDownloadMap(downloadMap);
+    qDebug() << filepath << url;
 }
 
 QString Controller::getBismillah() const

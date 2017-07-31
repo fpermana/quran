@@ -57,7 +57,7 @@ ApplicationWindow {
             console.log(Controller.currentPage-1)
             loaded = true
         }
-        visibleArea.onXPositionChanged: {
+        /*visibleArea.onXPositionChanged: {
             if(loaded) {
 //                Controller.currentPage = Math.round(Controller.pages - Controller.pages * visibleArea.xPosition)
 //                console.log(Math.round(Controller.pages - Controller.pages * visibleArea.xPosition));
@@ -65,7 +65,7 @@ ApplicationWindow {
                 if(p == Controller.currentPage-1 || p == Controller.currentPage+1)
                     Controller.currentPage = p
             }
-        }
+        }*/
 
         delegate: ListView {
             id: pageView

@@ -4,7 +4,7 @@ INCLUDEPATH += $$PWD
 include(core/core.pri)
 #include(client/client.pri)
 include(helper/helper.pri)
-#include(network/network.pri)
+include(network/network.pri)
 #include(patcher/patcher.pri)
 #include(utils/utils.pri)
 include(model/model.pri)

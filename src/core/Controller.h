@@ -4,6 +4,7 @@
 #include <QObject>
 #include "database/DbManager.h"
 #include "model/PageModel.h"
+#include "network/Downloader.h"
 #include "Settings.h"
 #include <QHash>
 
@@ -38,6 +39,7 @@ public:
     Q_INVOKABLE void gatherPage(const int page);
     Q_INVOKABLE void changePage(const int page);
     Q_INVOKABLE void openSura(const int suraId);
+    Q_INVOKABLE void downloadTranslation(const QString tid);
 
 public slots:
     void refresh();
@@ -50,6 +52,7 @@ private:
     void checkDatabase(const bool reset = false);
 
     DbManager *manager;
+    Downloader *downloader;
     int pages;
 
     PageModel *firstPage, *midPage, *lastPage, *preview;
