@@ -15,11 +15,11 @@
    viewBox="0 0 67.73304 67.733337"
    version="1.1"
    id="svg4600"
-   inkscape:version="0.92.1 r15371"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
    sodipodi:docname="quran.svg"
-   inkscape:export-filename="C:\Users\Setiawan Paiman\Sailfish\quran\sailquran\icons\256x256\sailquran.png"
-   inkscape:export-xdpi="96.00042"
-   inkscape:export-ydpi="96.00042">
+   inkscape:export-filename="C:\Users\fpermana\Qt\quran\sailquran\icons\256x256\sailquran.png"
+   inkscape:export-xdpi="95.999992"
+   inkscape:export-ydpi="95.999992">
   <defs
      id="defs4594">
     <linearGradient
@@ -27,10 +27,10 @@
        inkscape:collect="always"
        xlink:href="#linearGradient4554"
        id="linearGradient4556"
-       x1="-268.87411"
-       y1="606.33246"
-       x2="-95.351624"
-       y2="779.85498"
+       x1="-465.46616"
+       y1="409.74039"
+       x2="86.561577"
+       y2="961.76813"
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        inkscape:collect="always"
@@ -56,9 +56,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="-135.974"
-     inkscape:cy="143.70053"
+     inkscape:zoom="1"
+     inkscape:cx="-242.50612"
+     inkscape:cy="93.849134"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -67,9 +67,9 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:window-width="1920"
-     inkscape:window-height="1018"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata4597">
