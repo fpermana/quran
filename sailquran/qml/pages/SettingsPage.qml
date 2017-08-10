@@ -21,6 +21,7 @@ Page {
 
     SilicaFlickable {
         anchors.fill: parent
+        contentHeight: header.height + preview.height + textStyleCombobox.height + translationCombobox.height + fontSizeSlider.height + translationFontSizeSlider.height + backgroundImageSwitch.height + fontColorLabel.height + fontColorPicker.height
 
         /*PullDownMenu {
             MenuItem {
@@ -85,6 +86,12 @@ Page {
             }
         }
 
+        Rectangle {
+            anchors.fill: preview
+            color: Settings.backgroundColor
+            visible: Settings.useBackground
+        }
+
         SilicaListView {
             id: preview
             height: childrenRect.height
@@ -104,7 +111,7 @@ Page {
                     id: textLabel
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignRight
-                    color: constant.colorLight
+                    color: Settings.fontColor
                     height: paintedHeight + constant.paddingLarge
                     anchors {
                         top: parent.top
@@ -123,7 +130,7 @@ Page {
                     id: translationLabel
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignJustify
-                    color: constant.colorLight
+                    color: Settings.fontColor
                     height: paintedHeight + constant.paddingMedium
                     anchors {
                         top: textLabel.bottom
@@ -253,6 +260,86 @@ Page {
             Component.onCompleted: value = Settings.translationFontSize
         }
 
+        TextSwitch {
+             id: backgroundImageSwitch
+             text: "Use Background"
+             checked: Settings.useBackground
+//             onCheckedChanged: {
+//                 device.setStatus(checked ? DeviceState.Armed : DeviceState.Disarmed)
+//             }
+             anchors {
+                 left: parent.left
+                 right: parent.right
+                 top: translationFontSizeSlider.bottom
+                 topMargin: 15
+             }
+             onCheckedChanged: {
+                 Settings.useBackground = checked
+                 if(checked && Settings.fontColor === "#ffffff") {
+                     Settings.fontColor = "#000000"
+                 }
+                 else if(!checked) {
+                     Settings.fontColor = "#ffffff"
+                 }
+             }
+         }
+
+        Label {
+            id: fontColorLabel
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: backgroundImageSwitch.bottom
+                topMargin: 15
+            }
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            color: Theme.primaryColor
+            wrapMode: Text.WordWrap
+            text: "Font Color"
+            visible: Settings.useBackground
+        }
+
+        ColorPicker {
+            id: fontColorPicker
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: fontColorLabel.bottom
+            }
+            columns: 5
+            height: width/5
+            colors: Settings.useBackground ? ["black", "darkblue", "darkred", "darkgreen", "gray"] : ["white", "darkblue", "darkred", "darkgreen", "gray"]
+
+            onColorChanged: Settings.fontColor = color
+            visible: Settings.useBackground
+        }
+
+        /*Label {
+            id: backgroundColorLabel
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: fontColorPicker.bottom
+            }
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            color: Theme.primaryColor
+            wrapMode: Text.WordWrap
+            text: "Font Color"
+        }
+
+        ColorPicker {
+            id: backgroundColorPicker
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: backgroundColorLabel.bottom
+            }
+            columns: 5
+            height: width/5
+            colors: ["black", "white", "darkred", "darkgreen", "gray"]
+        }*/
     }
 }
 

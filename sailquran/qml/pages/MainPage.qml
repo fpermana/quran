@@ -27,10 +27,11 @@ Page {
 
 //    onStatusChanged: console.log(page.status)
 
-    /*Rectangle {
+    Rectangle {
         anchors.fill: mainView
-        color: "blue"
-    }*/
+        color: Settings.backgroundColor
+        visible: Settings.useBackground
+    }
 
     SilicaListView {
         id: mainView
@@ -95,7 +96,7 @@ Page {
                     anchors.centerIn: parent
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
-                    color: constant.colorLight
+                    color: Settings.fontColor
                     wrapMode: Text.WordWrap
                     text: Number(Settings.currentPage).toLocaleString(Qt.locale("ar-SA"), 'd', 0)
 //                    text: Utils.reverseString(Number(Controller.currentPage).toLocaleString(Qt.locale("ar-SA"), 'd', 0))
@@ -188,7 +189,7 @@ Page {
                         id: textLabel
                         verticalAlignment: Text.AlignVCenter
 //                        horizontalAlignment: Text.AlignRight
-                        color: constant.colorLight
+                        color: Settings.fontColor
                         height: paintedHeight + constant.paddingLarge
                         anchors {
                             top: parent.top
@@ -207,7 +208,7 @@ Page {
                         id: translationLabel
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignJustify
-                        color: constant.colorLight
+                        color: Settings.fontColor
                         height: paintedHeight + constant.paddingMedium
                         anchors {
                             top: textLabel.bottom

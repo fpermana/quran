@@ -11,6 +11,9 @@ class Settings : public QSettings
     Q_PROPERTY(int currentPage READ getCurrentPage WRITE setCurrentPage NOTIFY currentPageChanged)
     Q_PROPERTY(QString textType READ getTextType WRITE setTextType NOTIFY settingsChanged)
     Q_PROPERTY(QString translation READ getTranslation WRITE setTranslation NOTIFY settingsChanged)
+    Q_PROPERTY(QString fontColor READ getFontColor WRITE setFontColor NOTIFY fontColorChanged)
+    Q_PROPERTY(QString backgroundColor READ getBackgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
+    Q_PROPERTY(bool useBackground READ getUseBackground WRITE setUseBackground NOTIFY useBackgroundChanged)
 public:
     explicit Settings(QObject *parent = 0);
 
@@ -24,6 +27,15 @@ public:
     QString getTranslation() const;
     QString getTextType() const;
 
+    QString getBackgroundColor() const;
+    void setBackgroundColor(const QString &value);
+
+    QString getFontColor() const;
+    void setFontColor(const QString &value);
+
+    bool getUseBackground() const;
+    void setUseBackground(bool value);
+
 public slots:
     void setCurrentPage(const int &value);
     void setFontSize(const int &value);
@@ -36,6 +48,9 @@ public slots:
 
 signals:
     void fontSizeChanged();
+    void fontColorChanged();
+    void backgroundColorChanged();
+    void useBackgroundChanged();
     void translationFontSizeChanged();
     void currentPageChanged();
     void settingsChanged();
@@ -49,6 +64,9 @@ private:
     int translationFontSize;
     QString textType;
     QString theme;
+    QString fontColor;
+    QString backgroundColor;
+    bool useBackground;
 };
 
 #endif // SETTINGS_H

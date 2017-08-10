@@ -33,13 +33,13 @@ void Controller::init()
 
     activeTranslationModel = new SqlQueryModel(this);
     activeTranslationModel->setQuery("SELECT * FROM translations WHERE installed = 1", *manager->getDb());
-    qDebug() << "activeTranslationModel" << activeTranslationModel->rowCount();
+    /*qDebug() << "activeTranslationModel" << activeTranslationModel->rowCount();
     qDebug() << "translationModel" << translationModel->rowCount();
     int c = translationModel->rowCount();
     for(int i=0; i<c; i++) {
 //        qDebug() << translationModel->data(translationModel->index(i,0),262);
         downloadTranslation(translationModel->data(translationModel->index(i,0),262).toString());
-    }
+    }*/
 //    qDebug() << translationModel->roleNames();
 
     preview = new PageModel(manager->getDb(), this);
@@ -186,7 +186,7 @@ void Controller::downloadTranslation(const QString tid)
     downloadMap.insert(URL_KEY, url);
     downloadMap.insert(FILEPATH_KEY, filepath);
 //    downloader->addDownloadMap(downloadMap);
-    qDebug() << filepath << url;
+//    qDebug() << filepath << url;
 }
 
 QString Controller::getBismillah() const

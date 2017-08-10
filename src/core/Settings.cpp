@@ -15,6 +15,9 @@ void Settings::restoreSettings()
     setFontName(value(FONT_NAME_KEY,"Alvi").toString()); // Al_Mushaf.ttf
     setTextType(value(TEXT_TYPE_KEY,DEFAULT_TEXT_TYPE_KEY).toString()); // quran_text_original
     setTranslation(value(TRANSLATION_KEY,DEFAULT_TRANSLATION_KEY).toString()); // indonesia
+    setFontColor(value(FONT_COLOR_KEY,DEFAULT_FONT_COLOR_KEY).toString()); // white
+    setBackgroundColor(value(BACKGROUND_COLOR_KEY,DEFAULT_BACKGROUND_COLOR_KEY).toString()); // white
+    setUseBackground(value(USE_BACKGROUND_KEY,DEFAULT_USE_BACKGROUND_KEY).toBool()); // 0
 }
 
 void Settings::resetSettings()
@@ -26,7 +29,51 @@ void Settings::saveSettings()
 {
     setValue(TEXT_TYPE_KEY, textType);
     setValue(TRANSLATION_KEY, translation);
+    setValue(FONT_SIZE_KEY,fontSize);
+    setValue(TRANSLATION_FONT_SIZE_KEY,translationFontSize);
+    setValue(FONT_COLOR_KEY,fontColor);
+    setValue(BACKGROUND_COLOR_KEY,backgroundColor);
+    setValue(USE_BACKGROUND_KEY,useBackground);
     emit settingsChanged();
+}
+
+bool Settings::getUseBackground() const
+{
+    return useBackground;
+}
+
+void Settings::setUseBackground(bool value)
+{
+    if(useBackground == value)
+        return;
+    useBackground = value;
+    emit useBackgroundChanged();
+}
+
+QString Settings::getFontColor() const
+{
+    return fontColor;
+}
+
+void Settings::setFontColor(const QString &value)
+{
+    if(fontColor == value || value.isEmpty())
+        return;
+    fontColor = value;
+    emit fontColorChanged();
+}
+
+QString Settings::getBackgroundColor() const
+{
+    return backgroundColor;
+}
+
+void Settings::setBackgroundColor(const QString &value)
+{
+    if(backgroundColor == value || value.isEmpty())
+        return;
+    backgroundColor = value;
+    emit backgroundColorChanged();
 }
 
 int Settings::getCurrentPage() const
@@ -78,6 +125,8 @@ QString Settings::getTranslation() const
 
 void Settings::setFontName(const QString &value)
 {
+    if(fontName == value || value.isEmpty())
+        return;
     fontName = value;
 }
 
