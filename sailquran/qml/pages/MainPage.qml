@@ -141,7 +141,7 @@ Page {
                     }
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignLeft
-                    color: constant.colorLight
+                    color: Settings.fontColor
                     wrapMode: Text.WordWrap
                     text: (model !== undefined) ? model.suraName : ""
                     font { family: constant.largeFontName; pixelSize: constant.fontSizeXLarge; }
@@ -171,7 +171,7 @@ Page {
                     }
 
                     font { family: constant.largeFontName; pixelSize: constant.fontSizeXLarge; }
-                    color: constant.colorLight
+                    color: Settings.fontColor
                     wrapMode: Text.WordWrap
                     height: visible ? (paintedHeight + constant.paddingMedium) : 0
                 }
