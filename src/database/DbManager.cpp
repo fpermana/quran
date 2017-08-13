@@ -144,6 +144,46 @@ QStringList DbManager::getPage(const int page)
     return dataList;
 }
 
+double DbManager::getYPosition(const int page)
+{
+    double y = -1.0;
+
+    QSqlQuery *query = new QSqlQuery(*db);
+    query->prepare("SELECT y FROM contentY WHERE page = :first LIMIT 1");
+    query->bindValue(":first",page);
+
+    if (!query->exec()) {
+        qDebug() << __FUNCTION__ << "Query error:" + query->lastError().text();
+    }
+    else if (!query->first()) {
+        qDebug() << "No data in the database";
+    }
+    else {
+        y = query->value("y").toDouble();
+    }
+
+    return y;
+}
+
+int DbManager::setYPosition(const int page, const double position)
+{
+    int rows = 0;
+
+    QSqlQuery *query = new QSqlQuery(*db);
+    query->prepare("UPDATE contentY SET y=:first WHERE page = :second");
+    query->bindValue(":first",position);
+    query->bindValue(":second",page);
+
+    if (!query->exec()) {
+        qDebug() << __FUNCTION__ << "Query error:" + query->lastError().text();
+    }
+    else {
+        rows = query->numRowsAffected();
+    }
+
+    return rows;
+}
+
 QVariantMap DbManager::getJuz(const int sura, const int aya, const QString &textType)
 {
     QVariantMap dataMap;

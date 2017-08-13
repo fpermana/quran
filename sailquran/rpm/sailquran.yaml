@@ -12,7 +12,7 @@ License: LICENSE
 Sources:
 - '%{name}-%{version}.tar.bz2'
 Description: |
-  Native Sailfish OS apps for simple Quran reader with Indonesian and English translation included.
+  Native Sailfish OS apps for  basic Quran reader with Indonesian and English translation included.
 Configure: none
 # The qtc5 builder inserts macros to allow QtCreator to have fine
 # control over qmake/make execution

@@ -12,11 +12,11 @@ Name:       sailquran
 %{!?qtc_qmake5:%define qtc_qmake5 %qmake5}
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
-Summary:    My Sailfish OS Application
+Summary:    Quran reader
 Version:    0.1
 Release:    1
 Group:      Qt/Qt
-License:    LICENSE
+License:    GPL V2
 URL:        http://github.com/fpermana
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  sailquran.yaml
@@ -28,7 +28,7 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  desktop-file-utils
 
 %description
-Short description of my Sailfish OS Application
+Native Sailfish OS apps for  basic Quran reader with Indonesian and English translation included.
 
 
 %prep

@@ -28,11 +28,11 @@ void Controller::init()
     indexModel = new SqlQueryModel(this);
     indexModel->setQuery("SELECT * FROM suras", *manager->getDb());
 
-    translationModel = new SqlQueryModel(this);
+    /*translationModel = new SqlQueryModel(this);
     translationModel->setQuery("SELECT * FROM translations", *manager->getDb());
 
     activeTranslationModel = new SqlQueryModel(this);
-    activeTranslationModel->setQuery("SELECT * FROM translations WHERE installed = 1", *manager->getDb());
+    activeTranslationModel->setQuery("SELECT * FROM translations WHERE installed = 1", *manager->getDb());*/
     /*qDebug() << "activeTranslationModel" << activeTranslationModel->rowCount();
     qDebug() << "translationModel" << translationModel->rowCount();
     int c = translationModel->rowCount();
@@ -81,8 +81,8 @@ void Controller::checkDatabase(const bool reset)
         else {
 
             QVariantMap fileMap;
-            fileMap.insert(FILEPATH_KEY, fileInfo.absoluteFilePath());
-//            fileMap.insert(EXTRACT_PATH_KEY, GlobalFunctions::dataLocation());
+            fileMap.insert(SOURCE_FILEPATH_KEY, fileInfo.absoluteFilePath());
+//            fileMap.insert(EXTRACT_DIR_KEY, GlobalFunctions::dataLocation());
 
             QVariantList fileList;
             fileList.append(fileMap);
@@ -94,7 +94,10 @@ void Controller::checkDatabase(const bool reset)
         }
     }
 
-    manager->init(filepath);
+    if(QFile::exists(filepath))
+        manager->init(filepath);
+    else
+        qDebug() << "NOT EXIST" << filepath;
 }
 
 SqlQueryModel *Controller::getIndexModel() const
@@ -186,7 +189,18 @@ void Controller::downloadTranslation(const QString tid)
     downloadMap.insert(URL_KEY, url);
     downloadMap.insert(FILEPATH_KEY, filepath);
 //    downloader->addDownloadMap(downloadMap);
-//    qDebug() << filepath << url;
+    //    qDebug() << filepath << url;
+}
+
+double Controller::getYPosition(const int page)
+{
+    double y = manager->getYPosition(page);
+    return y;
+}
+
+double Controller::setYPosition(const int page, const double position)
+{
+    manager->setYPosition(page, position);
 }
 
 QString Controller::getBismillah() const

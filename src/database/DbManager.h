@@ -31,6 +31,8 @@ public:
     QVariantMap getQuranText(const int sura, const int aya, const QString &textType = DEFAULT_TEXT_TYPE_KEY);
     void addBookmark(const int quranTextId);
 
+    double getYPosition(const int page);
+    int setYPosition(const int page, const double position);
 private:
     QSqlDatabase *db;
     QString filepath;

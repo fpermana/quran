@@ -101,7 +101,7 @@ bool FileExtractorWorker::startExtracting()
         if(!_isRunning)
             return false;
         fileZipMap = fileZipList.at(i).toMap();
-        fileZip = fileZipMap.value(FILEPATH_KEY).toString();
+        fileZip = fileZipMap.value(SOURCE_FILEPATH_KEY).toString();
         destinationList.append(fileZipMap.value(EXTRACT_DIR_KEY, "").toString());
         QuaZip *archive = new QuaZip(fileZip);
         if (!archive->open(QuaZip::mdUnzip)) {

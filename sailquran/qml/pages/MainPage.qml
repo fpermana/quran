@@ -112,6 +112,7 @@ Page {
 
         delegate: SilicaListView {
             id: pageView
+            property bool loaded: false
             property int delegatePage: (index+1)
             height: mainView.height - constant.headerHeight
             width: mainView.width
@@ -127,6 +128,32 @@ Page {
 //            onCurrentIndexChanged: {
 //                console.log(currentIndex)
 //            }
+
+            onMovingVerticallyChanged: {
+                if(!movingVertically && !pageMenu.active && loaded)
+                    Controller.setYPosition(delegatePage, contentY)
+            }
+
+            Component.onCompleted: {
+                if(pageView.model === undefined) {
+                    Controller.gatherPage(delegatePage)
+                    pageView.model = Controller.getPage(delegatePage)
+                }
+
+                if(delegatePage == Settings.currentPage) {
+                    var yPosition = Controller.getYPosition(delegatePage)
+                    if(yPosition !== -1)
+                        contentY = yPosition
+                }
+
+                /*var yPosition = Controller.getYPosition(delegatePage)
+                if(yPosition === -1)
+                    Controller.setYPosition(delegatePage, contentY)
+                else
+                    contentY = yPosition*/
+
+                loaded = true
+            }
 
             header: Item {
                 height: constant.headerHeight
@@ -145,12 +172,6 @@ Page {
                     wrapMode: Text.WordWrap
                     text: (model !== undefined) ? model.suraName : ""
                     font { family: constant.largeFontName; pixelSize: constant.fontSizeXLarge; }
-                }
-            }
-            Component.onCompleted: {
-                if(pageView.model === undefined) {
-                    Controller.gatherPage(delegatePage)
-                    pageView.model = Controller.getPage(delegatePage)
                 }
             }
 
@@ -241,6 +262,7 @@ Page {
             }
 
             PullDownMenu {
+                id: pageMenu
                 visible: delegatePage == Settings.currentPage
                 MenuItem {
                     text: qsTr("About")
