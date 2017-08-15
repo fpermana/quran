@@ -10,7 +10,7 @@
 #   - translation filenames have to be changed
 
 # The name of your application
-TARGET = sailquran
+TARGET = harbour-sailquran
 
 QT += sql
 
@@ -34,11 +34,7 @@ OTHER_FILES += qml/sailquran.qml \
     qml/pages/IndexPage.qml \
     qml/components/Constant.qml \
     qml/components/ConfirmationDialog.qml \
-    rpm/sailquran.changes.in \
-    rpm/sailquran.spec \
-    rpm/sailquran.yaml \
-    translations/*.ts \
-    sailquran.desktop
+    translations/*.ts
 
 RESOURCES += \
     ../db.qrc \
@@ -58,3 +54,9 @@ SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
 # following TRANSLATIONS line. And also do not forget to
 # modify the localized app name in the the .desktop file.
 # TRANSLATIONS += translations/sailquran-de.ts
+
+DISTFILES += \
+    rpm/harbour-sailquran.changes.in \
+    rpm/harbour-sailquran.spec \
+    rpm/harbour-sailquran.yaml \
+    harbour-sailquran.desktop
