@@ -18,27 +18,84 @@ Page {
         model: Controller.indexModel
         currentIndex: suraId
 
+        header: Item {
+            id: header
+            height: constant.headerHeight
+            width: parent.width
+            anchors {
+                right: parent.right
+                rightMargin: constant.paddingMedium
+            }
+
+            Label {
+                anchors {
+                    top: parent.top
+                    right: parent.right
+                    bottom: parent.bottom
+                    rightMargin: constant.paddingMedium
+                }
+                verticalAlignment: Text.AlignVCenter
+                color: Theme.primaryColor
+                wrapMode: Text.WordWrap
+                text: "Index"
+            }
+        }
+
         delegate: BackgroundItem {
             id: listItem
-            height: textLabel.height + 40
+            height: 80
             width: indexView.width
+
+            Label {
+                id: numberLabel
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignRight
+                color: model.id === indexPage.suraId ? constant.colorHighlighted : constant.colorLight
+                height: parent.height
+                width: 50
+                anchors {
+                    right: parent.right
+                    rightMargin: constant.paddingMedium
+                    leftMargin: constant.paddingMedium
+                }
+
+                wrapMode: Text.WordWrap
+                text: Number(model.id).toLocaleString(Qt.locale("ar-SA"), 'd', 0)
+//                font { pixelSize: constant.fontSizeXLarge; family: constant.largeFontName; }
+//                LayoutMirroring.enabled: true
+            }
 
             Label {
                 id: textLabel
                 verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignRight
                 color: model.id === indexPage.suraId ? constant.colorHighlighted : constant.colorLight
-                height: paintedHeight + constant.paddingLarge
+                height: parent.height
+                width: 150
                 anchors {
-                    top: parent.top
-                    left: parent.left
-                    right: parent.right
-                    margins: constant.paddingMedium
+                    right: numberLabel.left
+                    rightMargin: constant.paddingMedium
+                    leftMargin: constant.paddingMedium
                 }
 
                 wrapMode: Text.WordWrap
-                text: Number(model.id).toLocaleString(Qt.locale("ar-SA"), 'd', 0) + "\t" + model.name
-                font { pixelSize: constant.fontSizeXLarge; family: constant.largeFontName; }
-                LayoutMirroring.enabled: true
+                text: model.name
+//                font { pixelSize: constant.fontSizeXLarge; family: constant.largeFontName; }
+//                LayoutMirroring.enabled: true
+            }
+
+            Label {
+                id: nameLabel
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignRight
+                color: model.id === indexPage.suraId ? constant.colorHighlighted : constant.colorLight
+                height: parent.height
+                anchors {
+                    right: textLabel.left
+                }
+
+                wrapMode: Text.WordWrap
+                text: model.tname
             }
 
             onClicked: {

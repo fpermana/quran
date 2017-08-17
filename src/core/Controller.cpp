@@ -7,6 +7,7 @@
 #include <QFileInfo>
 #include <QStringList>
 #include "helper/FileExtractorWorker.h"
+#include "network/DownloadManager.h"
 
 Controller::Controller(QObject *parent) : QObject(parent)
 {
@@ -23,22 +24,24 @@ void Controller::init()
     manager = new DbManager(this);
     checkDatabase();
 
-    downloader = new Downloader(this);
+//    downloader = new Downloader(this);
 
     indexModel = new SqlQueryModel(this);
     indexModel->setQuery("SELECT * FROM suras", *manager->getDb());
 
-    /*translationModel = new SqlQueryModel(this);
+    translationModel = new SqlQueryModel(this);
     translationModel->setQuery("SELECT * FROM translations", *manager->getDb());
 
     activeTranslationModel = new SqlQueryModel(this);
-    activeTranslationModel->setQuery("SELECT * FROM translations WHERE installed = 1", *manager->getDb());*/
+    activeTranslationModel->setQuery("SELECT * FROM translations WHERE installed = 1", *manager->getDb());
+
     /*qDebug() << "activeTranslationModel" << activeTranslationModel->rowCount();
     qDebug() << "translationModel" << translationModel->rowCount();
     int c = translationModel->rowCount();
     for(int i=0; i<c; i++) {
 //        qDebug() << translationModel->data(translationModel->index(i,0),262);
         downloadTranslation(translationModel->data(translationModel->index(i,0),262).toString());
+        break;
     }*/
 //    qDebug() << translationModel->roleNames();
 
@@ -185,11 +188,15 @@ void Controller::downloadTranslation(const QString tid)
 {
     QString url = QString("http://tanzil.net/trans/?transID=%1&type=txt-2").arg(tid);
     QString filepath = QString("%1trans/%2.txt").arg(GlobalFunctions::dataLocation()).arg(tid);
-    QVariantMap downloadMap;
-    downloadMap.insert(URL_KEY, url);
-    downloadMap.insert(FILEPATH_KEY, filepath);
+    qDebug() << filepath << url;
+    DownloadManager *dm = new DownloadManager;
+    dm->setFilepath(filepath);
+    dm->setUrl(url);
+    dm->download();
+//    QVariantMap downloadMap;
+//    downloadMap.insert(URL_KEY, url);
+//    downloadMap.insert(FILEPATH_KEY, filepath);
 //    downloader->addDownloadMap(downloadMap);
-    //    qDebug() << filepath << url;
 }
 
 double Controller::getYPosition(const int page)

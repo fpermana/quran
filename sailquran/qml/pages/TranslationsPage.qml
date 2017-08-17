@@ -6,7 +6,7 @@ Page {
     id: translationsPage
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.Portrait
-//    backNavigation: false
+//    showNavigationIndicator: false
 
     SilicaListView {
         id: indexView
@@ -15,38 +15,63 @@ Page {
         anchors.fill: parent
         model: Controller.translationModel
 
+        header: Item {
+            id: header
+            height: constant.headerHeight
+            width: indexView.width
+
+            Label {
+                anchors {
+                    top: parent.top
+                    right: parent.right
+                    bottom: parent.bottom
+                    rightMargin: constant.paddingMedium
+                }
+                verticalAlignment: Text.AlignVCenter
+                color: Theme.primaryColor
+                wrapMode: Text.WordWrap
+                text: "Translations"
+            }
+        }
+
         delegate: BackgroundItem {
             id: listItem
-            height: textLabel.height + 40
+
+            property bool menuOpen: contextMenu != null && contextMenu.parent === listItem
+            height: (menuOpen ? contextMenu.height : 0) + textLabel.height
+
             width: indexView.width
 
             Item {
                 id: flagImage
                 anchors {
                     left: parent.left
+                    verticalCenter: textLabel.verticalCenter
+                    leftMargin: 10
                 }
-                height: parent.height
-                width: parent.height
+                height: textLabel.height/3
+                width: textLabel.height
 
                 Image {
-                    source: "qrc:/flags/" + model.flag + ".svg"
+                    source: "qrc:/flags/" + model.flag + ".png"
                     horizontalAlignment: Image.AlignHCenter
                     verticalAlignment: Image.AlignVCenter
                     fillMode: Image.PreserveAspectFit
                     anchors.centerIn: parent
-                    width: parent.width*3/4
+                    height: parent.height
                 }
             }
 
             Label {
                 id: textLabel
                 verticalAlignment: Text.AlignVCenter
-                height: paintedHeight + constant.paddingLarge
+                height: 80
                 anchors {
                     top: parent.top
                     left: flagImage.right
                     right: parent.right
-                    margins: constant.paddingMedium
+                    leftMargin: constant.paddingMedium
+                    rightMargin: constant.paddingMedium
                 }
 
                 wrapMode: Text.WordWrap
@@ -54,7 +79,18 @@ Page {
                 font { pixelSize: constant.fontSizeMedium; }
             }
 
-            onClicked: {
+            onPressAndHold: {
+                contextMenu.show(listItem)
+            }
+
+            ContextMenu {
+                id: contextMenu
+                MenuItem {
+                    text: "Download"
+                    onClicked: {
+                        Controller.downloadTranslation(model.tid);
+                    }
+                }
             }
         }
     }

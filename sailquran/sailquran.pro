@@ -34,6 +34,7 @@ OTHER_FILES += qml/sailquran.qml \
     qml/pages/IndexPage.qml \
     qml/components/Constant.qml \
     qml/components/ConfirmationDialog.qml \
+    qml/components/IconMenuItem.qml \
     translations/*.ts
 
 RESOURCES += \

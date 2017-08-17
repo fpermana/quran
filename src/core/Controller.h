@@ -4,7 +4,7 @@
 #include <QObject>
 #include "database/DbManager.h"
 #include "model/PageModel.h"
-#include "network/Downloader.h"
+//#include "network/Downloader.h"
 #include "Settings.h"
 #include <QHash>
 
@@ -54,7 +54,7 @@ private:
     void checkDatabase(const bool reset = false);
 
     DbManager *manager;
-    Downloader *downloader;
+//    Downloader *downloader;
     int pages;
 
     PageModel *firstPage, *midPage, *lastPage, *preview;

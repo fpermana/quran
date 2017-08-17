@@ -100,7 +100,7 @@ Page {
                     wrapMode: Text.WordWrap
                     text: Number(Settings.currentPage).toLocaleString(Qt.locale("ar-SA"), 'd', 0)
 //                    text: Utils.reverseString(Number(Controller.currentPage).toLocaleString(Qt.locale("ar-SA"), 'd', 0))
-                    font { family: constant.largeFontName; pixelSize: constant.fontSizeXXLarge; }
+                    font { pixelSize: constant.fontSizeLarge; }
                 }
 
                 onClicked: {

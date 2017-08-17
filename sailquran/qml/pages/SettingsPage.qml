@@ -1,6 +1,6 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import "../components" as Components
+import "../components"
 
 Page {
     id: settingPage
@@ -23,8 +23,8 @@ Page {
         anchors.fill: parent
         contentHeight: header.height + preview.height + textStyleCombobox.height + translationCombobox.height + fontSizeSlider.height + translationFontSizeSlider.height + backgroundImageSwitch.height + fontColorLabel.height + fontColorPicker.height
 
-        /*PullDownMenu {
-            MenuItem {
+        PullDownMenu {
+            /*MenuItem {
                 text: "Clear Database"
                 onClicked: {
                     var dialog = pageStack.push(
@@ -60,8 +60,8 @@ Page {
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("TranslationsPage.qml"));
                 }
-            }
-        }*/
+            }*/
+        }
 
         Item {
             id: header
@@ -70,7 +70,6 @@ Page {
             anchors {
                 top: parent.top
                 right: parent.right
-                margins: constant.paddingMedium
             }
 
             Label {
@@ -78,6 +77,7 @@ Page {
                     top: parent.top
                     right: parent.right
                     bottom: parent.bottom
+                    rightMargin: constant.paddingMedium
                 }
                 verticalAlignment: Text.AlignVCenter
                 color: Theme.primaryColor
@@ -191,7 +191,7 @@ Page {
             }
         }
 
-        ComboBox {
+        /*ComboBox {
             id: translationCombobox
             anchors {
                 left: parent.left
@@ -221,6 +221,21 @@ Page {
                     index = 1;
 
                 currentIndex = index;
+            }
+        }*/
+        ComboBox {
+            id: translationCombobox
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: textStyleCombobox.bottom
+            }
+            label: "Translation"
+            menu: ContextMenu {
+                Repeater {
+                    model: Controller.activeTranslationModel
+                    IconMenuItem { text: model.name; icon: "qrc:/flags/" + model.flag + ".png"}
+                }
             }
         }
 

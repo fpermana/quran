@@ -2,11 +2,12 @@
 #define DOWNLOADMANAGER_H
 
 #include <QObject>
+#include <QFile>
+#include <QNetworkReply>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QUrl>
-#include <QFile>
+#include <QTime>
+#include <QTimer>
 
 class DownloadManager : public QObject
 {
@@ -22,16 +23,35 @@ public:
     QString getFilepath() const;
     void setFilepath(const QString &value);
 
-signals:
+    void download();
 
-public slots:
+signals:
+    void downloadProgress(const double speed, const qint64 bytesReceived, const qint64 bytesTotal);
+    void downloadComplete();
+
+private slots:
+    void finishedHead();
+    void finishedContent();
+    void error(QNetworkReply::NetworkError e);
+    void progress(qint64 bytesReceived, qint64 bytesTotal);
 
 private:
+    void downloadContent();
+
+    QNetworkAccessManager* pManager;
     QNetworkRequest currentRequest;
-    QNetworkReply* _currentReply;
+    QNetworkReply* currentReply;
 
     QString url;
     QString filepath;
+
+    QFile* pFile;
+    qint64 nDownloadTotal;
+    bool bAcceptRanges;
+    qint64 nDownloadSize;
+    qint64 nDownloadSizeAtPause;
+    QTimer timeoutTimer;
+    QTime timer;
 };
 
 #endif // DOWNLOADMANAGER_H
