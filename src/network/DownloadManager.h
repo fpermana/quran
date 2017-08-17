@@ -27,7 +27,7 @@ public:
 
 signals:
     void downloadProgress(const double speed, const qint64 bytesReceived, const qint64 bytesTotal);
-    void downloadComplete();
+    void downloadCompleted();
 
 private slots:
     void finishedHead();

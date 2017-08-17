@@ -35,7 +35,8 @@ CREATE TABLE `id_indonesian` (
   `id` int(4) NOT NULL PRIMARY KEY,
   `sura` int(3) NOT NULL default '0',
   `aya` int(3) NOT NULL default '0',
-  `text` text NOT NULL
+  `text` text NOT NULL,
+  UNIQUE(`sura`, `aya`)
 );
 
 

@@ -1,5 +1,7 @@
 HEADERS += \
-    $$PWD/DbManager.h
+    $$PWD/DbManager.h \
+    $$PWD/TranslationParser.h
 
 SOURCES += \
-    $$PWD/DbManager.cpp
+    $$PWD/DbManager.cpp \
+    $$PWD/TranslationParser.cpp

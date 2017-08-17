@@ -6,7 +6,6 @@
 
 DbManager::DbManager(QObject *parent)
 {
-
 }
 
 DbManager::~DbManager()

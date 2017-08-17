@@ -7,6 +7,7 @@
 #include <QFileInfo>
 #include <QStringList>
 #include "helper/FileExtractorWorker.h"
+#include "database/TranslationParser.h"
 #include "network/DownloadManager.h"
 
 Controller::Controller(QObject *parent) : QObject(parent)
@@ -34,15 +35,15 @@ void Controller::init()
 
     activeTranslationModel = new SqlQueryModel(this);
     activeTranslationModel->setQuery("SELECT * FROM translations WHERE installed = 1", *manager->getDb());
-
-    /*qDebug() << "activeTranslationModel" << activeTranslationModel->rowCount();
+    qDebug() << "activeTranslationModel" << activeTranslationModel->rowCount();
     qDebug() << "translationModel" << translationModel->rowCount();
-    int c = translationModel->rowCount();
-    for(int i=0; i<c; i++) {
+//    int c = translationModel->rowCount();
+//    for(int i=0; i<c; i++) {
 //        qDebug() << translationModel->data(translationModel->index(i,0),262);
-        downloadTranslation(translationModel->data(translationModel->index(i,0),262).toString());
-        break;
-    }*/
+//        downloadTranslation(translationModel->data(translationModel->index(i,0),262).toString());
+//        if(i==3)
+//            break;
+//    }
 //    qDebug() << translationModel->roleNames();
 
     preview = new PageModel(manager->getDb(), this);
@@ -186,17 +187,19 @@ void Controller::openSura(const int suraId)
 
 void Controller::downloadTranslation(const QString tid)
 {
-    QString url = QString("http://tanzil.net/trans/?transID=%1&type=txt-2").arg(tid);
-    QString filepath = QString("%1trans/%2.txt").arg(GlobalFunctions::dataLocation()).arg(tid);
-    qDebug() << filepath << url;
-    DownloadManager *dm = new DownloadManager;
-    dm->setFilepath(filepath);
-    dm->setUrl(url);
-    dm->download();
-//    QVariantMap downloadMap;
-//    downloadMap.insert(URL_KEY, url);
-//    downloadMap.insert(FILEPATH_KEY, filepath);
-//    downloader->addDownloadMap(downloadMap);
+    bool empty = translationList.isEmpty();
+    if(!translationList.contains(tid))
+        translationList.append(tid);
+    if(empty) {
+        QString filepath = QString("%1trans/%2.txt").arg(GlobalFunctions::dataLocation()).arg(tid);
+        QString url = QString("http://tanzil.net/trans/?transID=%1&type=txt-2").arg(tid);
+
+        DownloadManager *dm = new DownloadManager;
+        connect(dm, SIGNAL(downloadCompleted()), this, SLOT(translationDownloaded()));
+        dm->setFilepath(filepath);
+        dm->setUrl(url);
+        dm->download();
+    }
 }
 
 double Controller::getYPosition(const int page)
@@ -223,6 +226,58 @@ void Controller::refresh()
     changePage(settings->getCurrentPage());
 
     emit refreshed();
+}
+
+void Controller::translationDownloaded()
+{
+    DownloadManager *d = qobject_cast<DownloadManager *>(sender());
+    if(!d)
+        return;
+    parseTranslation();
+    d->deleteLater();
+}
+
+void Controller::parseTranslation()
+{
+    QString tid = translationList.first();
+    QString filepath = QString("%1trans/%2.txt").arg(GlobalFunctions::dataLocation()).arg(tid);
+    QString tableName = tid.replace(".","_");
+
+    QThread* thread = new QThread;
+    TranslationParser *p = new TranslationParser(tableName,*manager->getDb());
+    p->setFilepath(filepath);
+    p->moveToThread(thread);
+//        connect(p, SIGNAL(error(QString)), this, SLOT(errorString(QString)));
+    connect(thread, SIGNAL(started()), p, SLOT(parse()));
+    connect(p, SIGNAL(parsingFinished()), thread, SLOT(quit()));
+    connect(p, SIGNAL(parsingFinished()), this, SLOT(parsingFinished()));
+//        connect(p, SIGNAL(parsingFinished()), p, SLOT(deleteLater()));
+    connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+    thread->start();
+}
+
+void Controller::parsingFinished()
+{
+    TranslationParser *p = qobject_cast<TranslationParser *>(sender());
+    if(!p)
+        return;
+    translationList.removeFirst();
+    bool empty = translationList.isEmpty();
+    if(!empty) {
+        QString tid = translationList.first();
+        QString filepath = QString("%1trans/%2.txt").arg(GlobalFunctions::dataLocation()).arg(tid);
+        QString url = QString("http://tanzil.net/trans/?transID=%1&type=txt-2").arg(tid);
+
+        DownloadManager *dm = new DownloadManager;
+        connect(dm, SIGNAL(downloadCompleted()), this, SLOT(translationDownloaded()));
+        dm->setFilepath(filepath);
+        dm->setUrl(url);
+        dm->download();
+    }
+    else {
+        activeTranslationModel->setQuery("SELECT * FROM translations WHERE installed = 1", *manager->getDb());
+    }
+    p->deleteLater();
 }
 
 Settings *Controller::getSettings() const

@@ -33,6 +33,10 @@ public:
 
     double getYPosition(const int page);
     int setYPosition(const int page, const double position);
+
+signals:
+    void queryExecuted();
+
 private:
     QSqlDatabase *db;
     QString filepath;

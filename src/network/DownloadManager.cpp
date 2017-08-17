@@ -68,7 +68,7 @@ void DownloadManager::finishedHead()
     QList<QByteArray> list = currentReply->rawHeaderList();
     foreach (QByteArray header, list)
     {
-        qDebug() << currentReply->rawHeader(header);
+        qDebug() << header << currentReply->rawHeader(header);
     }
 
     if(currentReply->error() != QNetworkReply::NoError) {
@@ -88,18 +88,22 @@ void DownloadManager::finishedHead()
     QFileInfo fileInfo(filepath);
     QString partFilename(QString("%1.part").arg(filepath));
     if(fileInfo.exists()) {
-        if(fileInfo.size() == nDownloadTotal) {
+        emit downloadCompleted();
+        return;
+//        qDebug() << fileInfo.size() << nDownloadTotal << filepath << QFile::exists(filepath);
+        /*if(fileInfo.size() == nDownloadTotal) {
             timeoutTimer.stop();
             currentReply->deleteLater();
             currentReply = 0;
             pManager->deleteLater();
             pManager = 0;
             emit downloadProgress(0, nDownloadTotal, nDownloadTotal);
+            emit downloadCompleted();
             return;
         }
         else {
             QFile::remove(fileInfo.absoluteFilePath());
-        }
+        }*/
     }
 
     currentRequest.setRawHeader("Connection", "Keep-Alive");
@@ -140,7 +144,7 @@ void DownloadManager::finishedContent()
         pManager->deleteLater();
         pManager = 0;
 
-        emit downloadComplete();
+        emit downloadCompleted();
     }
 }
 

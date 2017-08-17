@@ -4,9 +4,9 @@
 #include <QObject>
 #include "database/DbManager.h"
 #include "model/PageModel.h"
-//#include "network/Downloader.h"
 #include "Settings.h"
 #include <QHash>
+#include <QStringList>
 
 class Controller : public QObject
 {
@@ -46,9 +46,15 @@ public:
 public slots:
     void refresh();
 
+private slots:
+    void translationDownloaded();
+    void parseTranslation();
+    void parsingFinished();
+
 signals:
     void refreshed();
     void pageChanged(const int page);
+    void translationParsed();
 
 private:
     void checkDatabase(const bool reset = false);
@@ -64,6 +70,8 @@ private:
     Settings *settings;
 
     QString bismillah;
+
+    QStringList translationList;
 };
 
 #endif // CONTROLLER_H
