@@ -191,7 +191,7 @@ Page {
             }
         }
 
-        /*ComboBox {
+        ComboBox {
             id: translationCombobox
             anchors {
                 left: parent.left
@@ -222,8 +222,9 @@ Page {
 
                 currentIndex = index;
             }
-        }*/
-        ComboBox {
+        }
+
+        /*ComboBox {
             id: translationCombobox
             anchors {
                 left: parent.left
@@ -237,7 +238,7 @@ Page {
                     IconMenuItem { text: model.name; icon: "qrc:/flags/" + model.flag + ".png"}
                 }
             }
-        }
+        }*/
 
         Slider {
             id: fontSizeSlider
