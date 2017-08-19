@@ -31,7 +31,7 @@ void Controller::init()
     indexModel->setQuery("SELECT * FROM suras", *manager->getDb());
 
     translationModel = new SqlQueryModel(this);
-    translationModel->setQuery("SELECT * FROM translations", *manager->getDb());
+    translationModel->setQuery("SELECT * FROM translations WHERE is_default != 1 AND visible = 1", *manager->getDb());
 
     activeTranslationModel = new SqlQueryModel(this);
     activeTranslationModel->setQuery("SELECT * FROM translations WHERE installed = 1", *manager->getDb());
@@ -202,6 +202,14 @@ void Controller::downloadTranslation(const QString tid)
     }
 }
 
+void Controller::removeTranslation(const QString tid)
+{
+    if(manager->uninstallTranslation(tid)) {
+        translationModel->setQuery("SELECT * FROM translations WHERE is_default != 1 AND visible = 1", *manager->getDb());
+        activeTranslationModel->setQuery("SELECT * FROM translations WHERE installed = 1", *manager->getDb());
+    }
+}
+
 double Controller::getYPosition(const int page)
 {
     double y = manager->getYPosition(page);
@@ -231,8 +239,17 @@ void Controller::refresh()
 void Controller::translationDownloaded()
 {
     DownloadManager *d = qobject_cast<DownloadManager *>(sender());
-    if(!d)
+    if(!d) {
+        translationList.takeFirst();
+        d->deleteLater();
         return;
+    }
+    if(d->getError()) {
+        translationList.takeFirst();
+        d->deleteLater();
+        return;
+    }
+
     parseTranslation();
     d->deleteLater();
 }
@@ -261,20 +278,23 @@ void Controller::parsingFinished()
     TranslationParser *p = qobject_cast<TranslationParser *>(sender());
     if(!p)
         return;
-    translationList.removeFirst();
+    QString tid = translationList.takeFirst();
+    manager->installTranslation(tid);
+    qDebug() << __FUNCTION__ << tid;
     bool empty = translationList.isEmpty();
     if(!empty) {
         QString tid = translationList.first();
         QString filepath = QString("%1trans/%2.txt").arg(GlobalFunctions::dataLocation()).arg(tid);
         QString url = QString("http://tanzil.net/trans/?transID=%1&type=txt-2").arg(tid);
 
-        DownloadManager *dm = new DownloadManager;
+        DownloadManager *dm = new DownloadManager(this);
         connect(dm, SIGNAL(downloadCompleted()), this, SLOT(translationDownloaded()));
         dm->setFilepath(filepath);
         dm->setUrl(url);
         dm->download();
     }
     else {
+        translationModel->setQuery("SELECT * FROM translations WHERE is_default != 1 AND visible = 1", *manager->getDb());
         activeTranslationModel->setQuery("SELECT * FROM translations WHERE installed = 1", *manager->getDb());
     }
     p->deleteLater();

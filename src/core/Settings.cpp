@@ -1,5 +1,6 @@
 #include "Settings.h"
 #include "GlobalConstants.h"
+#include <QLocale>
 
 Settings::Settings(QObject *parent) :
     QSettings(QString(SETTINGS_ORGANIZATION), QString(SETTINGS_APPLICATION), parent)
@@ -14,10 +15,12 @@ void Settings::restoreSettings()
     setTranslationFontSize(value(TRANSLATION_FONT_SIZE_KEY,25).toInt()); // Theme.fontSizeMedium
     setFontName(value(FONT_NAME_KEY,"Alvi").toString()); // Al_Mushaf.ttf
     setTextType(value(TEXT_TYPE_KEY,DEFAULT_TEXT_TYPE_KEY).toString()); // quran_text_original
-    setTranslation(value(TRANSLATION_KEY,DEFAULT_TRANSLATION_KEY).toString()); // indonesia
+    setTranslation(value(TRANSLATION_KEY,DEFAULT_TRANSLATION_KEY).toString()); // id_indonesian
+    setTranslationLocale(value(TRANSLATION_LOCALE_KEY,QLocale::system().name()).toString());
     setFontColor(value(FONT_COLOR_KEY,DEFAULT_FONT_COLOR_KEY).toString()); // white
     setBackgroundColor(value(BACKGROUND_COLOR_KEY,DEFAULT_BACKGROUND_COLOR_KEY).toString()); // white
     setUseBackground(value(USE_BACKGROUND_KEY,DEFAULT_USE_BACKGROUND_KEY).toBool()); // 0
+    setUseTranslation(value(USE_TRANSLATION_KEY,DEFAULT_USE_TRANSLATION_KEY).toBool()); // 1
 }
 
 void Settings::resetSettings()
@@ -29,12 +32,40 @@ void Settings::saveSettings()
 {
     setValue(TEXT_TYPE_KEY, textType);
     setValue(TRANSLATION_KEY, translation);
+    setValue(TRANSLATION_LOCALE_KEY, translationLocale);
     setValue(FONT_SIZE_KEY,fontSize);
     setValue(TRANSLATION_FONT_SIZE_KEY,translationFontSize);
     setValue(FONT_COLOR_KEY,fontColor);
     setValue(BACKGROUND_COLOR_KEY,backgroundColor);
     setValue(USE_BACKGROUND_KEY,useBackground);
+    setValue(USE_TRANSLATION_KEY,useTranslation);
     emit settingsChanged();
+}
+
+QString Settings::getTranslationLocale() const
+{
+    return translationLocale;
+}
+
+void Settings::setTranslationLocale(const QString &value)
+{
+    if(translationLocale == value || value.isEmpty())
+        return;
+    translationLocale = value;
+    emit translationLocaleChanged();
+}
+
+bool Settings::getUseTranslation() const
+{
+    return useTranslation;
+}
+
+void Settings::setUseTranslation(bool value)
+{
+    if(useTranslation == value)
+        return;
+    useTranslation = value;
+    emit useTranslationChanged();
 }
 
 bool Settings::getUseBackground() const

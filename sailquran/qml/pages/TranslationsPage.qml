@@ -88,8 +88,18 @@ Page {
                 MenuItem {
                     text: "Download"
                     onClicked: {
+                        enabled = false
+                        text = "Downloading..."
                         Controller.downloadTranslation(model.tid);
                     }
+                    visible: !model.installed
+                }
+                MenuItem {
+                    text: "Remove"
+                    onClicked: {
+                        Controller.removeTranslation(model.tid);
+                    }
+                    visible: model.installed
                 }
             }
         }

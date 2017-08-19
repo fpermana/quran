@@ -40,6 +40,7 @@ public:
     Q_INVOKABLE void changePage(const int page);
     Q_INVOKABLE void openSura(const int suraId);
     Q_INVOKABLE void downloadTranslation(const QString tid);
+    Q_INVOKABLE void removeTranslation(const QString tid);
     Q_INVOKABLE double getYPosition(const int page);
     Q_INVOKABLE double setYPosition(const int page, const double position);
 

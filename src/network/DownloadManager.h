@@ -14,6 +14,7 @@ class DownloadManager : public QObject
     Q_OBJECT
 public:
     explicit DownloadManager(QObject *parent = 0);
+    ~DownloadManager();
 
     void getHeader();
 
@@ -24,6 +25,8 @@ public:
     void setFilepath(const QString &value);
 
     void download();
+
+    QNetworkReply::NetworkError getError() const;
 
 signals:
     void downloadProgress(const double speed, const qint64 bytesReceived, const qint64 bytesTotal);
@@ -41,6 +44,7 @@ private:
     QNetworkAccessManager* pManager;
     QNetworkRequest currentRequest;
     QNetworkReply* currentReply;
+    QNetworkReply::NetworkError networkError;
 
     QString url;
     QString filepath;

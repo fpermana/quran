@@ -56,7 +56,123 @@ void DbManager::closeDB()
 
 bool DbManager::checkForUpdate()
 {
+    bool settingsExist = checkTable("settings");
+    QVariantMap settingsMap;
+    if(settingsExist) {
+        QVariantMap dataMap = getDbSettings();
+        QStringList keys = dataMap.keys();
+        foreach (QString key, keys) {
+            settingsMap.insert(key, dataMap.value(key).toString());
+        }
+    }
+    else {
+        QSqlQuery *query = new QSqlQuery(*db);
+        QString queryString = QString("CREATE TABLE settings (`key` TEXT PRIMARY KEY, `value` TEXT);");
+        if(!query->exec(queryString)) {
+            qDebug() << query->lastError().text();
+        }
 
+        query->clear();
+        delete query;
+    }
+
+    int dbVersion = settingsMap.value(DB_VERSION_KEY, FIRST_RELEASE_DB_VERSION).toInt();
+    int currentDbVersion = QString(CURRENT_DB_VERSION).toInt();
+
+    for(int i=(dbVersion+1); i<=currentDbVersion; i++) {
+//        qDebug() << i;
+        if(i==1) {
+            QStringList defaultTranslationList;
+            defaultTranslationList << "en_sahih" << "id_indonesian";
+
+            foreach (QString tableName, defaultTranslationList) {
+                if(checkTable(tableName)) {
+                    QSqlQuery *query = new QSqlQuery(*db);
+                    QString queryString = QString("CREATE UNIQUE INDEX idx_%1 ON %1(sura,aya)").arg(tableName);
+                    if(!query->exec(queryString)) {
+                        qDebug() << query->lastError().text();
+                    }
+
+                    query->clear();
+                    delete query;
+                }
+            }
+
+            if(!checkTable("translations")) {
+                QSqlQuery *query = new QSqlQuery(*db);
+                QString queryString = QString("CREATE TABLE translations (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, flag text NOT NULL, lang text NOT NULL, name text NOT NULL, translator text NOT NULL, tid text NOT NULL, installed INTEGER, is_default INTEGER, visible INTEGER, iso6391 text);");
+                if(!query->exec(queryString)) {
+                    qDebug() << query->lastError().text();
+                }
+
+                query->clear();
+                delete query;
+            }
+            else {
+                QStringList newColumnList;
+                newColumnList << "is_default" << "visible" << "iso6391";
+
+                foreach (QString column, newColumnList) {
+                    QSqlQuery *query = new QSqlQuery(*db);
+                    QString type = "INTEGER";
+                    if(column == "iso6391")
+                        type = "text";
+                    QString queryString = QString("ALTER TABLE translations ADD COLUMN %1 %2").arg(column).arg(type);
+                    if(!query->exec(queryString)) {
+                        qDebug() << query->lastError().text();
+                    }
+
+                    query->clear();
+                    delete query;
+                }
+            }
+
+            QStringList iso6391List;
+            iso6391List << "am" << "ar" << "az" << "ber" << "bg" << "bn" << "bs" << "cs" << "de" << "dv" << "en" << "es" << "fa" << "ha" << "hi" << "id" << "it" << "ja" << "ko" << "ku" << "ml" << "ms" << "nl" << "no" << "pl" << "ps" << "pt" << "ro" << "ru" << "sd" << "so" << "sq" << "sv" << "sw" << "ta" << "tg" << "th" << "tr" << "tt" << "ug" << "ur" << "uz" << "zh";
+
+            foreach (QString iso, iso6391List) {
+                QSqlQuery *query = new QSqlQuery(*db);
+                QString queryString = QString("UPDATE translations SET iso6391='%1' WHERE tid LIKE '%1.%2'").arg(iso).arg("%");
+
+                if(!query->exec(queryString)) {
+                    qDebug() << iso << query->lastError().text();
+                }
+                else {
+                    qDebug() << iso << query->numRowsAffected();
+                }
+
+                query->clear();
+                delete query;
+            }
+
+            for(int j=0; j<3; j++) {
+                QSqlQuery *query = new QSqlQuery(*db);
+                if(j==0) {
+                    query->prepare("UPDATE translations SET visible=:first, is_default =:second WHERE 1");
+                    query->bindValue(":first",1);
+                    query->bindValue(":second",0);
+                }
+                else if(j==1) {
+                    query->prepare("UPDATE translations SET is_default=:first WHERE tid LIKE ':second' OR  tid LIKE ':third'");
+                    query->bindValue(":first",1);
+                    query->bindValue(":second","en.sahih");
+                    query->bindValue(":third","id.indonesian");
+                }
+                else {
+                    query->prepare("INSERT OR REPLACE INTO settings (`key`, `value`) values (:first, :second);");
+                    query->bindValue(":first",DB_VERSION_KEY);
+                    query->bindValue(":second",i);
+                }
+
+                if(!query->exec()) {
+                    qDebug() << j << query->lastError().text();
+                }
+
+                query->clear();
+                delete query;
+            }
+        }
+    }
 }
 
 QSqlError DbManager::lastError()
@@ -181,6 +297,92 @@ int DbManager::setYPosition(const int page, const double position)
     }
 
     return rows;
+}
+
+bool DbManager::installTranslation(const QString &tid)
+{
+    bool result = 0;
+    QSqlQuery *query = new QSqlQuery(*db);
+    query->prepare("UPDATE translations SET installed=1 WHERE tid = :first");
+    query->bindValue(":first",tid);
+
+    if (!query->exec()) {
+        qDebug() << "Query error:" + query->lastError().text();
+    }
+    else {
+        qDebug() << query->numRowsAffected();
+        result = true;
+    }
+
+    query->clear();
+    delete query;
+
+    return result;
+}
+
+bool DbManager::uninstallTranslation(const QString &tid)
+{
+    bool result = 0;
+    QSqlQuery *query = new QSqlQuery(*db);
+    query->prepare("UPDATE translations SET installed=0 WHERE tid = :first");
+    query->bindValue(":first",tid);
+
+    if (!query->exec()) {
+        qDebug() << "Query error:" + query->lastError().text();
+    }
+    else {
+        qDebug() << query->numRowsAffected();
+        result = true;
+    }
+
+    query->clear();
+    delete query;
+
+    return result;
+}
+
+bool DbManager::checkTable(const QString &tableName)
+{
+    bool result = false;
+    QSqlQuery *query = new QSqlQuery(*db);
+    QString queryString = QString("SELECT name FROM sqlite_master WHERE type='table' AND name='%1';").arg(tableName);
+    query->exec(queryString);
+    while (query->next())
+    {
+        QString name = query->value("name").toString();
+        if (name == tableName) {
+            result = true;
+            break;
+        }
+    }
+
+    query->clear();
+    delete query;
+
+    return result;
+}
+
+QVariantMap DbManager::getDbSettings()
+{
+    QVariantMap dataMap;
+    QSqlQuery *query = new QSqlQuery(*db);
+    query->prepare("SELECT * FROM settings");
+
+    if (!query->exec()) {
+        qDebug() << "Query error:" + query->lastError().text();
+    }
+    else if (!query->first()) {
+        qDebug() << "No data in the database";
+    }
+    else {
+        do {
+            dataMap.insert(query->value("key").toString(),query->value("value").toString());
+        } while(query->next());
+    }
+
+    query->clear();
+    delete query;
+    return dataMap;
 }
 
 QVariantMap DbManager::getJuz(const int sura, const int aya, const QString &textType)

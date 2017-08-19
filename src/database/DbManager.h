@@ -34,6 +34,12 @@ public:
     double getYPosition(const int page);
     int setYPosition(const int page, const double position);
 
+    bool installTranslation(const QString &tid);
+    bool uninstallTranslation(const QString &tid);
+    bool checkTable(const QString &tableName);
+
+    QVariantMap getDbSettings();
+
 signals:
     void queryExecuted();
 

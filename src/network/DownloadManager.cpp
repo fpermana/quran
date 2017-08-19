@@ -4,8 +4,28 @@
 #include <QList>
 
 DownloadManager::DownloadManager(QObject *parent) : QObject(parent)
+  , pManager(0)
+  , currentReply(0)
+  , pFile(0)
+  , nDownloadTotal(0)
+  , bAcceptRanges(false)
+  , nDownloadSize(0)
+  , nDownloadSizeAtPause(0)
+  , networkError(QNetworkReply::NoError)
 {
+}
 
+DownloadManager::~DownloadManager()
+{
+    currentReply = 0;
+    if (pManager)
+        pManager->deleteLater();
+
+    if(pFile && pFile->isOpen())
+        pFile->close();
+
+    pFile = 0;
+    pManager = 0;
 }
 
 void DownloadManager::getHeader()
@@ -57,11 +77,18 @@ void DownloadManager::download()
 //    timeoutTimer.start();
 
     connect(currentReply, SIGNAL(finished()), this, SLOT(finishedHead()));
-    connect(currentReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(error(QNetworkReply::NetworkError)));
+//    connect(currentReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(error(QNetworkReply::NetworkError)));
 }
 
 void DownloadManager::finishedHead()
 {
+    if(currentReply->error() != QNetworkReply::NoError) {
+        qDebug() << __FUNCTION__ << currentReply->errorString();
+        networkError = currentReply->error();
+        emit downloadCompleted();
+        return;
+    }
+
     timeoutTimer.stop();
     bAcceptRanges = false;
 
@@ -70,14 +97,7 @@ void DownloadManager::finishedHead()
     {
         qDebug() << header << currentReply->rawHeader(header);
     }
-
-    if(currentReply->error() != QNetworkReply::NoError) {
-        qDebug() << __FUNCTION__ << currentReply->errorString();
-//        emit downloadError(currentReply->error(), currentReply->errorString());
-        return;
-    }
-
-    if (currentReply->hasRawHeader("Accept-Ranges"))
+    if(currentReply->hasRawHeader("Accept-Ranges"))
     {
         QString qstrAcceptRanges = currentReply->rawHeader("Accept-Ranges");
         bAcceptRanges = (qstrAcceptRanges.compare("bytes", Qt::CaseInsensitive) == 0);
@@ -88,35 +108,23 @@ void DownloadManager::finishedHead()
     QFileInfo fileInfo(filepath);
     QString partFilename(QString("%1.part").arg(filepath));
     if(fileInfo.exists()) {
+        currentReply->deleteLater();
         emit downloadCompleted();
-        return;
-//        qDebug() << fileInfo.size() << nDownloadTotal << filepath << QFile::exists(filepath);
-        /*if(fileInfo.size() == nDownloadTotal) {
-            timeoutTimer.stop();
-            currentReply->deleteLater();
-            currentReply = 0;
-            pManager->deleteLater();
-            pManager = 0;
-            emit downloadProgress(0, nDownloadTotal, nDownloadTotal);
-            emit downloadCompleted();
-            return;
+    }
+    else {
+        currentRequest.setRawHeader("Connection", "Keep-Alive");
+        currentRequest.setAttribute(QNetworkRequest::HttpPipeliningAllowedAttribute, true);
+        pFile = new QFile(partFilename);
+        if (!bAcceptRanges)
+        {
+            pFile->remove();
         }
-        else {
-            QFile::remove(fileInfo.absoluteFilePath());
-        }*/
-    }
+        pFile->open(QIODevice::ReadWrite | QIODevice::Append);
 
-    currentRequest.setRawHeader("Connection", "Keep-Alive");
-    currentRequest.setAttribute(QNetworkRequest::HttpPipeliningAllowedAttribute, true);
-    pFile = new QFile(partFilename);
-    if (!bAcceptRanges)
-    {
-        pFile->remove();
+        qDebug() << "END";
+        nDownloadSizeAtPause = pFile->size();
+        downloadContent();
     }
-    pFile->open(QIODevice::ReadWrite | QIODevice::Append);
-
-    nDownloadSizeAtPause = pFile->size();
-    downloadContent();
 }
 
 void DownloadManager::finishedContent()
@@ -155,6 +163,7 @@ void DownloadManager::error(QNetworkReply::NetworkError e)
 
 void DownloadManager::downloadContent()
 {
+    qDebug() << __FUNCTION__;
     if (bAcceptRanges)
     {
         QByteArray rangeHeaderValue = "bytes=";
@@ -180,6 +189,11 @@ void DownloadManager::downloadContent()
     connect(currentReply, SIGNAL(finished()), this, SLOT(finishedContent()));
     connect(currentReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(progress(qint64,qint64)));
     connect(currentReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(error(QNetworkReply::NetworkError)));
+}
+
+QNetworkReply::NetworkError DownloadManager::getError() const
+{
+    return networkError;
 }
 
 void DownloadManager::progress(qint64 bytesReceived, qint64 bytesTotal)

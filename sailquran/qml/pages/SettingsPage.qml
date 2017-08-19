@@ -21,7 +21,7 @@ Page {
 
     SilicaFlickable {
         anchors.fill: parent
-        contentHeight: header.height + preview.height + textStyleCombobox.height + translationCombobox.height + fontSizeSlider.height + translationFontSizeSlider.height + backgroundImageSwitch.height + fontColorLabel.height + fontColorPicker.height
+        contentHeight: contentColumn.height
 
         PullDownMenu {
             /*MenuItem {
@@ -53,309 +53,302 @@ Page {
                         console.log("Settings reset");
                     })
                 }
-            }
+            }*/
 
             MenuItem {
                 text: "Manage Translations"
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("TranslationsPage.qml"));
                 }
-            }*/
+            }
         }
 
-        Item {
-            id: header
-            height: constant.headerHeight
-            width: parent.width
+        Column {
+            id: contentColumn
+            height: childrenRect.height
             anchors {
-                top: parent.top
+                left: parent.left
                 right: parent.right
+            }
+
+            Item {
+                id: header
+                height: constant.headerHeight
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+
+                Label {
+                    anchors {
+                        top: parent.top
+                        right: parent.right
+                        bottom: parent.bottom
+                        rightMargin: constant.paddingMedium
+                    }
+                    verticalAlignment: Text.AlignVCenter
+                    color: Theme.primaryColor
+                    wrapMode: Text.WordWrap
+                    text: "Settings"
+                }
+            }
+
+            Item {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                height: preview.height
+
+                Rectangle {
+                    anchors.fill: preview
+                    color: Settings.backgroundColor
+                    visible: Settings.useBackground
+                }
+
+                SilicaListView {
+                    id: preview
+                    height: childrenRect.height
+                    focus: true
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
+                    interactive: false
+                    model: Controller.preview
+
+                    delegate: Item {
+                        height: childrenRect.height
+                        width: preview.width
+                        Label {
+                            id: textLabel
+                            verticalAlignment: Text.AlignVCenter
+                            horizontalAlignment: Text.AlignRight
+                            color: Settings.fontColor
+                            height: paintedHeight + constant.paddingLarge
+                            anchors {
+                                top: parent.top
+                                left: parent.left
+                                right: parent.right
+                                leftMargin: constant.paddingMedium
+                                rightMargin: constant.paddingMedium
+                            }
+
+                            wrapMode: Text.WordWrap
+                            text: model.text
+                            font { pixelSize: Settings.fontSize; family: constant.fontName }
+                        }
+                        Label {
+                            id: translationLabel
+                            verticalAlignment: Text.AlignVCenter
+                            horizontalAlignment: Text.AlignJustify
+                            color: Settings.fontColor
+                            visible: Settings.useTranslation
+                            height: visible ? (paintedHeight + constant.paddingMedium) : 0
+                            anchors {
+                                top: textLabel.bottom
+                                left: parent.left
+                                right: parent.right
+                                leftMargin: constant.paddingMedium
+                                rightMargin: constant.paddingMedium
+                            }
+
+                            wrapMode: Text.WordWrap
+                            text: model.translation
+                            font { pixelSize: Settings.translationFontSize; /*family: hanserif.name*/ }
+                        }
+                    }
+                }
+            }
+
+            ComboBox {
+                id: textStyleCombobox
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+
+                label: "Text Style"
+
+                menu: ContextMenu {
+                    MenuItem {
+                        text: "Original"
+                        onClicked: {
+                            settingPage.textType = "quran_text_original";
+                            Controller.preview.textType = textType;
+                            Controller.preview.refresh()
+                        }
+                    }
+                    MenuItem {
+                        text: "Enhanced"
+                        onClicked: {
+                            settingPage.textType = "quran_text_enhanced";
+                            Controller.preview.textType = textType;
+                            Controller.preview.refresh()
+                        }
+                    }
+                    MenuItem {
+                        text: "Uthmani"
+                        onClicked: {
+                            settingPage.textType = "quran_text_uthmani";
+                            Controller.preview.textType = textType;
+                            Controller.preview.refresh()
+                        }
+                    }
+    //                MenuItem { text: "Simplified" }
+                }
+
+                Component.onCompleted: {
+                    var index = 0;
+                    if(Settings.textType === "quran_text_enhanced")
+                        index = 1;
+                    else if(Settings.textType === "quran_text_uthmani")
+                        index = 2;
+                    else if(Settings.textType === "quran_text")
+                        index = 3;
+
+                    currentIndex = index;
+                }
+            }
+
+            Slider {
+                id: fontSizeSlider
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                label: "Font Size"
+                minimumValue: 25
+                maximumValue: 50
+    //            value: 32
+                valueText: Math.round(value)
+
+                onValueChanged: Settings.fontSize = Math.round(value)
+
+                Component.onCompleted: value = Settings.fontSize
+            }
+            TextSwitch {
+                id: useTranslationSwitch
+                text: "Use Translation"
+                checked: Settings.useTranslation
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                onCheckedChanged: {
+                    Settings.useTranslation = checked
+                }
+            }
+
+            ComboBox {
+                id: translationCombobox
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                visible: Settings.useTranslation
+                label: "Translation"
+                menu: ContextMenu {
+                    Repeater {
+                        id: translationRepeater
+                        model: Controller.activeTranslationModel
+                        IconMenuItem {
+                            property string tid: model.tid
+                            text: model.name + (translationRepeater.count>5 ? (" " + model.lang) : "");
+                            icon: "qrc:/flags/" + model.flag + ".png"
+
+                            onClicked: {
+                                var translation = tid;
+                                translation = translation.replace(".", "_");
+                                settingPage.translation = translation;
+
+                                Controller.preview.translation = translation;
+                                Controller.preview.refresh()
+                                console.log(model.iso6391 + "-" + model.flag.toUpperCase())
+                            }
+                        }
+                    }
+                }
+
+                Component.onCompleted: {
+                    var itemCount = translationRepeater.count
+                    for(var i=0; i<itemCount; i++) {
+                        translationCombobox.currentIndex = i;
+                        var tid = currentItem.tid;
+                        tid = tid.replace(".", "_");
+    //                    console.log(tid + " " + Settings.translation)
+                        if(tid === Settings.translation)
+                            break;
+                    }
+                }
+            }
+
+            Slider {
+                id: translationFontSizeSlider
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                visible: Settings.useTranslation
+                label: "Translation Font Size"
+                minimumValue: 15
+                maximumValue: 35
+    //            value: 20
+                valueText: Math.round(value)
+
+                onValueChanged: Settings.translationFontSize = Math.round(value)
+
+                Component.onCompleted: {
+                    value = Settings.translationFontSize
+                }
+            }
+
+            TextSwitch {
+                id: useBackgroundSwitch
+                text: "Use Background"
+                checked: Settings.useBackground
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                onCheckedChanged: {
+                    Settings.useBackground = checked
+                    if(checked && Settings.fontColor === "#ffffff") {
+                        Settings.fontColor = "#000000"
+                    }
+                    else if(!checked) {
+                        Settings.fontColor = "#ffffff"
+                    }
+                }
             }
 
             Label {
+                id: fontColorLabel
                 anchors {
-                    top: parent.top
+                    left: parent.left
                     right: parent.right
-                    bottom: parent.bottom
-                    rightMargin: constant.paddingMedium
                 }
+                horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 color: Theme.primaryColor
                 wrapMode: Text.WordWrap
-                text: "Settings"
+                text: "Font Color"
+                visible: Settings.useBackground
             }
-        }
 
-        Rectangle {
-            anchors.fill: preview
-            color: Settings.backgroundColor
-            visible: Settings.useBackground
-        }
-
-        SilicaListView {
-            id: preview
-            height: childrenRect.height
-            focus: true
-            anchors {
-                left: parent.left
-                right: parent.right
-                top: header.bottom
-            }
-            interactive: false
-            model: Controller.preview
-
-            delegate: Item {
-                height: childrenRect.height
-                width: preview.width
-                Label {
-                    id: textLabel
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignRight
-                    color: Settings.fontColor
-                    height: paintedHeight + constant.paddingLarge
-                    anchors {
-                        top: parent.top
-                        left: parent.left
-                        right: parent.right
-                        leftMargin: constant.paddingMedium
-                        rightMargin: constant.paddingMedium
-                    }
-
-                    wrapMode: Text.WordWrap
-                    text: model.text
-                    font { pixelSize: Settings.fontSize; }
-                    font.family: constant.fontName
+            ColorPicker {
+                id: fontColorPicker
+                anchors {
+                    left: parent.left
+                    right: parent.right
                 }
-                Label {
-                    id: translationLabel
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignJustify
-                    color: Settings.fontColor
-                    height: paintedHeight + constant.paddingMedium
-                    anchors {
-                        top: textLabel.bottom
-                        left: parent.left
-                        right: parent.right
-                        leftMargin: constant.paddingMedium
-                        rightMargin: constant.paddingMedium
-                    }
+                columns: 5
+                height: width/5
+                colors: Settings.useBackground ? ["black", "darkblue", "darkred", "darkgreen", "gray"] : ["white", "darkblue", "darkred", "darkgreen", "gray"]
 
-                    wrapMode: Text.WordWrap
-                    text: model.translation
-                    font.pixelSize: Settings.translationFontSize
-                }
+                onColorChanged: Settings.fontColor = color
+                visible: Settings.useBackground
             }
         }
-
-        ComboBox {
-            id: textStyleCombobox
-            anchors {
-                left: parent.left
-                right: parent.right
-                top: preview.bottom
-            }
-
-            label: "Text Style"
-
-            menu: ContextMenu {
-                MenuItem { text: "Original" }
-                MenuItem { text: "Enhanced" }
-                MenuItem { text: "Uthmani" }
-//                MenuItem { text: "Simplified" }
-            }
-
-            onCurrentIndexChanged: {
-                var textType = "quran_text_original";
-                if(currentIndex == 1)
-                    textType = "quran_text_enhanced";
-                else if(currentIndex == 2)
-                    textType = "quran_text_uthmani";
-                else if(currentIndex == 3)
-                    textType = "quran_text";
-
-                settingPage.textType = textType;
-                Controller.preview.textType = textType;
-                Controller.preview.refresh()
-            }
-
-            Component.onCompleted: {
-                var index = 0;
-                if(Settings.textType === "quran_text_enhanced")
-                    index = 1;
-                else if(Settings.textType === "quran_text_uthmani")
-                    index = 2;
-                else if(Settings.textType === "quran_text")
-                    index = 3;
-
-                currentIndex = index;
-            }
-        }
-
-        ComboBox {
-            id: translationCombobox
-            anchors {
-                left: parent.left
-                right: parent.right
-                top: textStyleCombobox.bottom
-            }
-
-            label: "Translation"
-
-            menu: ContextMenu {
-                MenuItem { text: "Indonesian" }
-                MenuItem { text: "English" }
-            }
-
-            onCurrentIndexChanged:  {
-                var translation = "id_indonesian";
-                if(currentIndex == 1)
-                    translation = "en_sahih";
-                settingPage.translation = translation;
-                Controller.preview.translation = translation;
-                Controller.preview.refresh()
-            }
-
-            Component.onCompleted: {
-                var index = 0;
-                if(Settings.translation === "en_sahih")
-                    index = 1;
-
-                currentIndex = index;
-            }
-        }
-
-        /*ComboBox {
-            id: translationCombobox
-            anchors {
-                left: parent.left
-                right: parent.right
-                top: textStyleCombobox.bottom
-            }
-            label: "Translation"
-            menu: ContextMenu {
-                Repeater {
-                    model: Controller.activeTranslationModel
-                    IconMenuItem { text: model.name; icon: "qrc:/flags/" + model.flag + ".png"}
-                }
-            }
-        }*/
-
-        Slider {
-            id: fontSizeSlider
-            anchors {
-                left: parent.left
-                right: parent.right
-                top: translationCombobox.bottom
-            }
-            label: "Font Size"
-            minimumValue: 25
-            maximumValue: 50
-//            value: 32
-            valueText: Math.round(value)
-
-            onValueChanged: Settings.fontSize = Math.round(value)
-
-            Component.onCompleted: value = Settings.fontSize
-        }
-
-        Slider {
-            id: translationFontSizeSlider
-            anchors {
-                left: parent.left
-                right: parent.right
-                top: fontSizeSlider.bottom
-            }
-            label: "Translation Font Size"
-            minimumValue: 15
-            maximumValue: 35
-//            value: 20
-            valueText: Math.round(value)
-
-            onValueChanged: Settings.translationFontSize = Math.round(value)
-
-            Component.onCompleted: value = Settings.translationFontSize
-        }
-
-        TextSwitch {
-             id: backgroundImageSwitch
-             text: "Use Background"
-             checked: Settings.useBackground
-//             onCheckedChanged: {
-//                 device.setStatus(checked ? DeviceState.Armed : DeviceState.Disarmed)
-//             }
-             anchors {
-                 left: parent.left
-                 right: parent.right
-                 top: translationFontSizeSlider.bottom
-                 topMargin: 15
-             }
-             onCheckedChanged: {
-                 Settings.useBackground = checked
-                 if(checked && Settings.fontColor === "#ffffff") {
-                     Settings.fontColor = "#000000"
-                 }
-                 else if(!checked) {
-                     Settings.fontColor = "#ffffff"
-                 }
-             }
-         }
-
-        Label {
-            id: fontColorLabel
-            anchors {
-                left: parent.left
-                right: parent.right
-                top: backgroundImageSwitch.bottom
-                topMargin: 15
-            }
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            color: Theme.primaryColor
-            wrapMode: Text.WordWrap
-            text: "Font Color"
-            visible: Settings.useBackground
-        }
-
-        ColorPicker {
-            id: fontColorPicker
-            anchors {
-                left: parent.left
-                right: parent.right
-                top: fontColorLabel.bottom
-            }
-            columns: 5
-            height: width/5
-            colors: Settings.useBackground ? ["black", "darkblue", "darkred", "darkgreen", "gray"] : ["white", "darkblue", "darkred", "darkgreen", "gray"]
-
-            onColorChanged: Settings.fontColor = color
-            visible: Settings.useBackground
-        }
-
-        /*Label {
-            id: backgroundColorLabel
-            anchors {
-                left: parent.left
-                right: parent.right
-                top: fontColorPicker.bottom
-            }
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            color: Theme.primaryColor
-            wrapMode: Text.WordWrap
-            text: "Font Color"
-        }
-
-        ColorPicker {
-            id: backgroundColorPicker
-            anchors {
-                left: parent.left
-                right: parent.right
-                top: backgroundColorLabel.bottom
-            }
-            columns: 5
-            height: width/5
-            colors: ["black", "white", "darkred", "darkgreen", "gray"]
-        }*/
     }
 }
-

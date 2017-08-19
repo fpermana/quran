@@ -199,7 +199,7 @@ Page {
                 BackgroundItem {
                     id: listItem
                     property bool menuOpen: contextMenu != null && contextMenu.parent === listItem
-                    height: (menuOpen ? contextMenu.height : 0) + textLabel.height + translationLabel.height + 25
+                    height: (menuOpen ? contextMenu.height : 0) + textLabel.height + translationLabel.height + 20
                     anchors {
                         top: bismillahLabel.bottom
                         left: parent.left
@@ -230,7 +230,7 @@ Page {
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignJustify
                         color: Settings.fontColor
-                        height: paintedHeight + constant.paddingMedium
+                        height: visible ? (paintedHeight + constant.paddingMedium) : 0
                         anchors {
                             top: textLabel.bottom
                             left: parent.left
@@ -243,6 +243,7 @@ Page {
                         text: model.translation
                         font.pixelSize: Settings.translationFontSize
     //                  color: highlighted ? constant.colorHighlighted : constant.colorLight
+                        visible: (Settings.useTranslation)
                     }
 
                     /*onPressAndHold: {
