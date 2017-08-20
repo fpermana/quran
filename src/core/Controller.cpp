@@ -207,15 +207,17 @@ void Controller::removeTranslation(const QString tid)
     if(manager->uninstallTranslation(tid)) {
         translationModel->setQuery("SELECT * FROM translations WHERE is_default != 1 AND visible = 1", *manager->getDb());
         activeTranslationModel->setQuery("SELECT * FROM translations WHERE installed = 1", *manager->getDb());
-        emit translationChanged();
 
         QString uTid = QString(tid);
         uTid = uTid.replace(".","_");
 
         if(uTid == settings->getTranslation()) {
             settings->setTranslation(DEFAULT_TRANSLATION_KEY);
+            preview->setTranslation(settings->getTranslation());
+            preview->refresh();
             refresh();
         }
+        emit translationChanged();
     }
 }
 

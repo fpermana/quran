@@ -101,10 +101,6 @@ bool DbManager::checkForUpdate()
                             }
                         }
                     }
-                    /*QString queryString = QString("CREATE UNIQUE INDEX idx_%1 ON %1(sura,aya)").arg(tableName);
-                    if(!query->exec(queryString)) {
-                        qDebug() << query->lastError().text();
-                    }*/
 
                     query->clear();
                     delete query;
@@ -113,7 +109,7 @@ bool DbManager::checkForUpdate()
 
             if(!checkTable("translations")) {
                 QSqlQuery *query = new QSqlQuery(*db);
-                QString queryString = QString("CREATE TABLE translations (id INTEGER NOT NULL PRIMARY KEY, flag text NOT NULL, lang text NOT NULL, name text NOT NULL, translator text NOT NULL, tid text NOT NULL, installed INTEGER, is_default INTEGER, visible INTEGER, iso6391 text);");
+                QString queryString = QString("CREATE TABLE translations (id INTEGER NOT NULL PRIMARY KEY, flag text NOT NULL, lang text NOT NULL, name text NOT NULL, translator text NOT NULL, tid text NOT NULL, installed INTEGER, is_default INTEGER, visible INTEGER, iso6391 text, UNIQUE (tid));");
                 if(!query->exec(queryString)) {
                     qDebug() << query->lastError().text();
                 }
@@ -122,22 +118,22 @@ bool DbManager::checkForUpdate()
                 delete query;
             }
             else {
-                QStringList newColumnList;
-                newColumnList << "is_default" << "visible" << "iso6391";
-
-                foreach (QString column, newColumnList) {
-                    QSqlQuery *query = new QSqlQuery(*db);
-                    QString type = "INTEGER";
-                    if(column == "iso6391")
-                        type = "text";
-                    QString queryString = QString("ALTER TABLE translations ADD COLUMN %1 %2").arg(column).arg(type);
-                    if(!query->exec(queryString)) {
-                        qDebug() << query->lastError().text();
+                QSqlQuery *query = new QSqlQuery(*db);
+                QString queryString = QString("ALTER TABLE translations RENAME TO tmp_table_name");
+                if(query->exec(queryString)) {
+                    queryString = QString("CREATE TABLE translations (id INTEGER NOT NULL PRIMARY KEY, flag text NOT NULL, lang text NOT NULL, name text NOT NULL, translator text NOT NULL, tid text NOT NULL, installed INTEGER, is_default INTEGER, visible INTEGER, iso6391 text, UNIQUE (tid));");
+                    if(query->exec(queryString)) {
+                        queryString = QString("INSERT INTO translations (id, flag, lang, name, translator, tid, installed, is_default, visible, iso6391) SELECT id, flag, lang, name, translator, tid, installed, is_default, visible, iso6391 FROM tmp_table_name;");
+                        if(query->exec(queryString)) {
+                            queryString = QString("DROP TABLE tmp_table_name");
+                            if(query->exec(queryString)) {
+                                qDebug() << "translations DONE";
+                            }
+                        }
                     }
-
-                    query->clear();
-                    delete query;
                 }
+                query->clear();
+                delete query;
             }
 
             QStringList iso6391List;
@@ -166,10 +162,8 @@ bool DbManager::checkForUpdate()
                     query->bindValue(":second",0);
                 }
                 else if(j==1) {
-                    query->prepare("UPDATE translations SET is_default=:first WHERE tid LIKE ':second' OR  tid LIKE ':third'");
+                    query->prepare("UPDATE translations SET is_default=:first WHERE tid LIKE 'en.sahih' OR  tid LIKE 'id.indonesian'");
                     query->bindValue(":first",1);
-                    query->bindValue(":second","en.sahih");
-                    query->bindValue(":third","id.indonesian");
                 }
                 else {
                     query->prepare("INSERT OR REPLACE INTO settings (`key`, `value`) values (:first, :second);");
@@ -298,9 +292,9 @@ int DbManager::setYPosition(const int page, const double position)
     int rows = 0;
 
     QSqlQuery *query = new QSqlQuery(*db);
-    query->prepare("UPDATE contentY SET y=:first WHERE page = :second");
+    QString queryString = QString("UPDATE contentY SET y=:first WHERE page = %1").arg(page);
+    query->prepare(queryString);
     query->bindValue(":first",position);
-    query->bindValue(":second",page);
 
     if (!query->exec()) {
         qDebug() << __FUNCTION__ << "Query error:" + query->lastError().text();
@@ -316,10 +310,9 @@ bool DbManager::installTranslation(const QString &tid)
 {
     bool result = 0;
     QSqlQuery *query = new QSqlQuery(*db);
-    query->prepare("UPDATE translations SET installed=1 WHERE tid = :first");
-    query->bindValue(":first",tid);
+    QString queryString = QString("UPDATE translations SET installed=1 WHERE tid LIKE '%1'").arg(tid);
 
-    if (!query->exec()) {
+    if (!query->exec(queryString)) {
         qDebug() << "Query error:" + query->lastError().text();
     }
     else {
@@ -337,15 +330,13 @@ bool DbManager::uninstallTranslation(const QString &tid)
 {
     bool result = 0;
     QSqlQuery *query = new QSqlQuery(*db);
-    query->prepare("UPDATE translations SET installed=0 WHERE tid LIKE ':first'");
-    query->bindValue(":first",tid);
+    QString queryString = QString("UPDATE translations SET installed=0 WHERE tid LIKE '%1'").arg(tid);
 
-    if (!query->exec()) {
+    if (!query->exec(queryString)) {
         qDebug() << "Query error:" + query->lastError().text();
     }
-    else {
-        qDebug() << query->numRowsAffected();
-        result = true;
+    else if(query->numRowsAffected()>0) {
+            result = true;
     }
 
     query->clear();
