@@ -37,13 +37,13 @@ void Controller::init()
     activeTranslationModel->setQuery("SELECT * FROM translations WHERE installed = 1", *manager->getDb());
     qDebug() << "activeTranslationModel" << activeTranslationModel->rowCount();
     qDebug() << "translationModel" << translationModel->rowCount();
-//    int c = translationModel->rowCount();
-//    for(int i=0; i<c; i++) {
+    /*int c = translationModel->rowCount();
+    for(int i=0; i<c; i++) {
 //        qDebug() << translationModel->data(translationModel->index(i,0),262);
-//        downloadTranslation(translationModel->data(translationModel->index(i,0),262).toString());
+        downloadTranslation(translationModel->data(translationModel->index(i,0),262).toString());
 //        if(i==3)
 //            break;
-//    }
+    }*/
 //    qDebug() << translationModel->roleNames();
 
     preview = new PageModel(manager->getDb(), this);
@@ -207,6 +207,15 @@ void Controller::removeTranslation(const QString tid)
     if(manager->uninstallTranslation(tid)) {
         translationModel->setQuery("SELECT * FROM translations WHERE is_default != 1 AND visible = 1", *manager->getDb());
         activeTranslationModel->setQuery("SELECT * FROM translations WHERE installed = 1", *manager->getDb());
+        emit translationChanged();
+
+        QString uTid = QString(tid);
+        uTid = uTid.replace(".","_");
+
+        if(uTid == settings->getTranslation()) {
+            settings->setTranslation(DEFAULT_TRANSLATION_KEY);
+            refresh();
+        }
     }
 }
 
@@ -296,6 +305,7 @@ void Controller::parsingFinished()
     else {
         translationModel->setQuery("SELECT * FROM translations WHERE is_default != 1 AND visible = 1", *manager->getDb());
         activeTranslationModel->setQuery("SELECT * FROM translations WHERE installed = 1", *manager->getDb());
+        emit translationChanged();
     }
     p->deleteLater();
 }

@@ -88,10 +88,23 @@ bool DbManager::checkForUpdate()
             foreach (QString tableName, defaultTranslationList) {
                 if(checkTable(tableName)) {
                     QSqlQuery *query = new QSqlQuery(*db);
-                    QString queryString = QString("CREATE UNIQUE INDEX idx_%1 ON %1(sura,aya)").arg(tableName);
+                    QString queryString = QString("ALTER TABLE %1 RENAME TO tmp_table_name").arg(tableName);
+                    if(query->exec(queryString)) {
+                        queryString = QString("CREATE TABLE IF NOT EXISTS %1 (`id` int(4) NOT NULL PRIMARY KEY, `sura` int(3) NOT NULL default '0', `aya` int(3) NOT NULL default '0', `text` text NOT NULL, UNIQUE (sura, aya));").arg(tableName);
+                        if(query->exec(queryString)) {
+                            queryString = QString("INSERT INTO %1 (`id`, `sura`, `aya`, `text`) SELECT `id`, `sura`, `aya`, `text` FROM tmp_table_name;").arg(tableName);
+                            if(query->exec(queryString)) {
+                                queryString = QString("DROP TABLE tmp_table_name");
+                                if(query->exec(queryString)) {
+                                    qDebug() << tableName << "DONE";
+                                }
+                            }
+                        }
+                    }
+                    /*QString queryString = QString("CREATE UNIQUE INDEX idx_%1 ON %1(sura,aya)").arg(tableName);
                     if(!query->exec(queryString)) {
                         qDebug() << query->lastError().text();
-                    }
+                    }*/
 
                     query->clear();
                     delete query;
@@ -100,7 +113,7 @@ bool DbManager::checkForUpdate()
 
             if(!checkTable("translations")) {
                 QSqlQuery *query = new QSqlQuery(*db);
-                QString queryString = QString("CREATE TABLE translations (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, flag text NOT NULL, lang text NOT NULL, name text NOT NULL, translator text NOT NULL, tid text NOT NULL, installed INTEGER, is_default INTEGER, visible INTEGER, iso6391 text);");
+                QString queryString = QString("CREATE TABLE translations (id INTEGER NOT NULL PRIMARY KEY, flag text NOT NULL, lang text NOT NULL, name text NOT NULL, translator text NOT NULL, tid text NOT NULL, installed INTEGER, is_default INTEGER, visible INTEGER, iso6391 text);");
                 if(!query->exec(queryString)) {
                     qDebug() << query->lastError().text();
                 }
@@ -324,7 +337,7 @@ bool DbManager::uninstallTranslation(const QString &tid)
 {
     bool result = 0;
     QSqlQuery *query = new QSqlQuery(*db);
-    query->prepare("UPDATE translations SET installed=0 WHERE tid = :first");
+    query->prepare("UPDATE translations SET installed=0 WHERE tid LIKE ':first'");
     query->bindValue(":first",tid);
 
     if (!query->exec()) {

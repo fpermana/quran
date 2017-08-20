@@ -155,7 +155,7 @@ Page {
 
                             wrapMode: Text.WordWrap
                             text: model.translation
-                            font { pixelSize: Settings.translationFontSize; /*family: hanserif.name*/ }
+                            font { pixelSize: Settings.translationFontSize; }
                         }
                     }
                 }
@@ -254,7 +254,8 @@ Page {
                         model: Controller.activeTranslationModel
                         IconMenuItem {
                             property string tid: model.tid
-                            text: model.name + (translationRepeater.count>5 ? (" " + model.lang) : "");
+                            text: model.name + ( (translationRepeater.count>5 && model.name !== model.lang) ? (" " + model.lang) : "" );
+//                            text: model.name
                             icon: "qrc:/flags/" + model.flag + ".png"
 
                             onClicked: {
@@ -264,7 +265,7 @@ Page {
 
                                 Controller.preview.translation = translation;
                                 Controller.preview.refresh()
-                                console.log(model.iso6391 + "-" + model.flag.toUpperCase())
+//                                console.log(model.iso6391 + "-" + model.flag.toUpperCase())
                             }
                         }
                     }
@@ -273,13 +274,35 @@ Page {
                 Component.onCompleted: {
                     var itemCount = translationRepeater.count
                     for(var i=0; i<itemCount; i++) {
-                        translationCombobox.currentIndex = i;
-                        var tid = currentItem.tid;
+                        var cit = translationRepeater.itemAt(i);
+                        var tid = cit.tid;
                         tid = tid.replace(".", "_");
     //                    console.log(tid + " " + Settings.translation)
-                        if(tid === Settings.translation)
+                        if(tid === Settings.translation) {
+                            currentIndex = i;
                             break;
+                        }
                     }
+                }
+
+                Connections {
+                    target: Controller
+                    onTranslationChanged: {
+                        var itemCount = translationRepeater.count
+                        for(var i=0; i<itemCount; i++) {
+                            var cit = translationRepeater.itemAt(i);
+                            var tid = cit.tid;
+                            tid = tid.replace(".", "_");
+        //                    console.log(tid + " " + Settings.translation)
+                            if(tid === Settings.translation) {
+                                translationCombobox.currentIndex = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+                onCurrentIndexChanged: {
+                    console.log(currentIndex)
                 }
             }
 

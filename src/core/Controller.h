@@ -16,7 +16,7 @@ class Controller : public QObject
     Q_PROPERTY(PageModel* currentPage READ getCurrentPage CONSTANT)
     Q_PROPERTY(SqlQueryModel* indexModel READ getIndexModel CONSTANT)
     Q_PROPERTY(SqlQueryModel* translationModel READ getTranslationModel CONSTANT)
-    Q_PROPERTY(SqlQueryModel* activeTranslationModel READ getActiveTranslationModel CONSTANT)
+    Q_PROPERTY(SqlQueryModel* activeTranslationModel READ getActiveTranslationModel NOTIFY translationChanged)
     Q_PROPERTY(QString bismillah READ getBismillah  NOTIFY refreshed)
 public:
     explicit Controller(QObject *parent = 0);
@@ -55,7 +55,7 @@ private slots:
 signals:
     void refreshed();
     void pageChanged(const int page);
-    void translationParsed();
+    void translationChanged();
 
 private:
     void checkDatabase(const bool reset = false);

@@ -1,6 +1,7 @@
 #include "TranslationParser.h"
 #include <QDebug>
 #include <QSqlQuery>
+#include <QTextCodec>
 #include <QSqlError>
 
 TranslationParser::TranslationParser(QString &tableName, QSqlDatabase &db, QObject *parent) : QObject(parent)
@@ -42,6 +43,8 @@ void TranslationParser::parse()
         if (inputFile.open(QIODevice::ReadOnly))
         {
             QTextStream in(&inputFile);
+            in.codec()->setCodecForLocale(QTextCodec::codecForName("UTF-8"));;
+            in.setCodec("UTF-8");
             int lineCounter = 0;
             QStringList idList, suraList, ayaList, textList;
             while (!in.atEnd())
@@ -56,7 +59,7 @@ void TranslationParser::parse()
                     textList.append(fieldList.at(2));
                 }
                 if(lineCounter%15 == 14) {
-                    qDebug() << lineCounter;
+//                    qDebug() << lineCounter;
                     QSqlQuery *query = new QSqlQuery(db);
                     QString queryString = QString("INSERT OR IGNORE INTO %1 (id, sura, aya, text) values (?, ?, ?, ?)").arg(tableName);
                     query->prepare(queryString);
@@ -65,20 +68,41 @@ void TranslationParser::parse()
                     query->addBindValue(ayaList);
                     query->addBindValue(textList);
 
-                     if (!query->execBatch()) {
-                         qDebug() << query->lastError().text();
-                     }
-                     else {
-                         idList.clear();
-                         suraList.clear();
-                         ayaList.clear();
-                         textList.clear();
-                     }
-
-                     query->clear();
-                     delete query;
+                    if (!query->execBatch()) {
+                        qDebug() << query->lastError().text();
+                    }
+                    else {
+                        idList.clear();
+                        suraList.clear();
+                        ayaList.clear();
+                        textList.clear();
+                    }
+                    query->clear();
+                    delete query;
                 }
             }
+
+            if(!idList.isEmpty()) {QSqlQuery *query = new QSqlQuery(db);
+                QString queryString = QString("INSERT OR IGNORE INTO %1 (id, sura, aya, text) values (?, ?, ?, ?)").arg(tableName);
+                query->prepare(queryString);
+                query->addBindValue(idList);
+                query->addBindValue(suraList);
+                query->addBindValue(ayaList);
+                query->addBindValue(textList);
+
+                if (!query->execBatch()) {
+                    qDebug() << query->lastError().text();
+                }
+                else {
+                    idList.clear();
+                    suraList.clear();
+                    ayaList.clear();
+                    textList.clear();
+                }
+                query->clear();
+                delete query;
+            }
+
             inputFile.close();
         }
     }

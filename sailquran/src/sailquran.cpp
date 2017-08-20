@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName(SETTINGS_ORGANIZATION);
     QCoreApplication::setOrganizationDomain(SETTINGS_DOMAIN);
     QCoreApplication::setApplicationName(SETTINGS_APPLICATION);
+
     // SailfishApp::main() will display "qml/template.qml", if you need more
     // control over initialization, you can use:
     //
