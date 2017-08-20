@@ -43,6 +43,7 @@ public:
     Q_INVOKABLE void removeTranslation(const QString tid);
     Q_INVOKABLE double getYPosition(const int page);
     Q_INVOKABLE double setYPosition(const int page, const double position);
+    Q_INVOKABLE bool isDownloading(const QString tid);
 
 public slots:
     void refresh();

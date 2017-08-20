@@ -232,6 +232,11 @@ double Controller::setYPosition(const int page, const double position)
     manager->setYPosition(page, position);
 }
 
+bool Controller::isDownloading(const QString tid)
+{
+    return translationList.contains(tid);
+}
+
 QString Controller::getBismillah() const
 {
     return bismillah;

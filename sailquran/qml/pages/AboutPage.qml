@@ -61,7 +61,7 @@ Page {
                 }
 
                 Label {
-                    text: "Simple Quran Reader Version 0.1"
+                    text: "Simple Quran Reader Version 0.2"
                     anchors.horizontalCenter: parent.horizontalCenter
                     font { pixelSize: constant.fontSizeXLarge; bold: true }
                 }

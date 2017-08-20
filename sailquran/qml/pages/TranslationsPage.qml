@@ -79,7 +79,15 @@ Page {
                 font { pixelSize: constant.fontSizeMedium; }
             }
 
-            onPressAndHold: {
+            Component.onCompleted: {
+                var isDownloading = Controller.isDownloading(model.tid);
+                if(isDownloading) {
+                    listItem.enabled = false
+                    textLabel.text = "Downloading..."
+                }
+            }
+
+            onClicked: {
                 contextMenu.show(listItem)
             }
 
@@ -88,8 +96,8 @@ Page {
                 MenuItem {
                     text: "Download"
                     onClicked: {
-                        enabled = false
-                        text = "Downloading..."
+                        listItem.enabled = false
+                        textLabel.text = "Downloading..."
                         Controller.downloadTranslation(model.tid);
                     }
                     visible: !model.installed
@@ -97,11 +105,13 @@ Page {
                 MenuItem {
                     text: "Remove"
                     onClicked: {
-                        Controller.removeTranslation(model.tid);
+                        remorse.execute(listItem, "Removing...", function() { Controller.removeTranslation(model.tid); } )
                     }
                     visible: model.installed
                 }
             }
+
+            RemorseItem { id: remorse }
         }
     }
 }
