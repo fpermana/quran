@@ -38,6 +38,7 @@ bool TranslationParser::createTranslationTable()
 
 void TranslationParser::parse()
 {
+    qDebug() << __FUNCTION__;
     if(createTranslationTable()) {
         QFile inputFile(filepath);
         if (inputFile.open(QIODevice::ReadOnly))

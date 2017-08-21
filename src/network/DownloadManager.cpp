@@ -17,7 +17,10 @@ DownloadManager::DownloadManager(QObject *parent) : QObject(parent)
 
 DownloadManager::~DownloadManager()
 {
-    currentReply = 0;
+    if(currentReply) {
+        currentReply->deleteLater();
+        currentReply = 0;
+    }
     if (pManager)
         pManager->deleteLater();
 
@@ -109,6 +112,7 @@ void DownloadManager::finishedHead()
     QString partFilename(QString("%1.part").arg(filepath));
     if(fileInfo.exists()) {
         currentReply->deleteLater();
+        currentReply = 0;
         emit downloadCompleted();
     }
     else {
@@ -148,6 +152,7 @@ void DownloadManager::finishedContent()
         pFile->rename(partFilename, filepath);
 
         pFile = 0;
+        currentReply->deleteLater();
         currentReply = 0;
         pManager->deleteLater();
         pManager = 0;

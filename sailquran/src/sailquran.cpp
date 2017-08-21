@@ -78,5 +78,11 @@ int main(int argc, char *argv[])
     view->setSource(SailfishApp::pathTo("qml/sailquran.qml"));
     view->show();
 
-    return app->exec();
+    int ret = app->exec();
+
+    delete c;
+    delete view;
+    delete app;
+
+    return ret;
 }

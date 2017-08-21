@@ -256,12 +256,14 @@ void Controller::translationDownloaded()
 {
     DownloadManager *d = qobject_cast<DownloadManager *>(sender());
     if(!d) {
-        translationList.takeFirst();
+        if(!translationList.isEmpty())
+            translationList.takeFirst();
         d->deleteLater();
         return;
     }
     if(d->getError()) {
-        translationList.takeFirst();
+        if(!translationList.isEmpty())
+            translationList.takeFirst();
         d->deleteLater();
         return;
     }
