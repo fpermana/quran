@@ -22,7 +22,11 @@
 
 #define DEFAULT_TEXT_TYPE_KEY               "quran_text_original"
 #define DEFAULT_TRANSLATION_KEY             "id_indonesian"
+#ifdef WIN32
+#define DEFAULT_FONT_COLOR_KEY              "#000000"
+#else
 #define DEFAULT_FONT_COLOR_KEY              "#ffffff"
+#endif
 #define DEFAULT_BACKGROUND_COLOR_KEY        "#ffffff"
 #define DEFAULT_USE_BACKGROUND_KEY          0
 #define DEFAULT_USE_TRANSLATION_KEY         0

@@ -59,7 +59,7 @@ signals:
     void translationChanged();
 
 private:
-    void checkDatabase(const bool reset = false);
+    bool checkDatabase(const bool reset = false);
 
     DbManager *manager;
 //    Downloader *downloader;

@@ -23,7 +23,8 @@ void Controller::init()
     connect(settings, SIGNAL(settingsChanged()), this, SLOT(refresh()));
 
     manager = new DbManager(this);
-    checkDatabase();
+    if(!checkDatabase())
+        return;
 
 //    downloader = new Downloader(this);
 
@@ -59,7 +60,7 @@ void Controller::init()
     changePage(settings->getCurrentPage());
 }
 
-void Controller::checkDatabase(const bool reset)
+bool Controller::checkDatabase(const bool reset)
 {
     QString filepath = GlobalFunctions::databaseLocation();
     QFile file(filepath);
@@ -98,10 +99,15 @@ void Controller::checkDatabase(const bool reset)
         }
     }
 
-    if(QFile::exists(filepath))
+    if(QFile::exists(filepath)) {
         manager->init(filepath);
-    else
+        qDebug() << "EXIST" << filepath;
+        return true;
+    }
+    else {
         qDebug() << "NOT EXIST" << filepath;
+        return false;
+    }
 }
 
 SqlQueryModel *Controller::getIndexModel() const

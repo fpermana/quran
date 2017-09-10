@@ -8,7 +8,7 @@ equals(QT_MAJOR_VERSION, 5) {
     }
     else:android {
         SUBDIRS += \
-            Quran-Android
+            androquran
     }
     else {
         SUBDIRS += \
