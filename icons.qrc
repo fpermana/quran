@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
-    <file>icons/quran.svg</file>
+        <file>icons/quran.svg</file>
+        <file>icons/search_icon.svg</file>
     </qresource>
 </RCC>

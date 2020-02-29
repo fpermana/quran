@@ -1,18 +1,25 @@
 INCLUDEPATH += $$PWD
 
-#include(config/config.pri)
-include(core/core.pri)
-#include(client/client.pri)
-include(helper/helper.pri)
-include(network/network.pri)
-#include(patcher/patcher.pri)
-#include(utils/utils.pri)
-include(model/model.pri)
-include(database/database.pri)
+include(paging/paging.pri)
+include(bookmarking/bookmarking.pri)
+include(searching/searching.pri)
+include(translation/translation.pri)
+include(quran/quran.pri)
 
 HEADERS += \
-    $$PWD/GlobalFunctions.h \
     $$PWD/GlobalConstants.h
 
-SOURCES += \
-    $$PWD/GlobalFunctions.cpp
+webassembly {
+    DEFINES += USE_API
+    include(api/api.pri)
+} else {
+    include(downloader/downloader.pri)
+    include(utils/utils.pri)
+    include(sqlite/sqlite.pri)
+
+    HEADERS += \
+        $$PWD/GlobalFunctions.h
+
+    SOURCES += \
+        $$PWD/GlobalFunctions.cpp
+}

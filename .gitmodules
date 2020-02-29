@@ -1,0 +1,6 @@
+[submodule "3rdparty/singleapplication"]
+	path = 3rdparty/singleapplication
+	url = https://github.com/itay-grudev/SingleApplication.git
+[submodule "3rdparty/quazip"]
+	path = 3rdparty/quazip
+	url = https://github.com/stachenov/quazip.git

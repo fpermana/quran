@@ -1,5 +1,4 @@
-quran.pro.user*
+*.pro.user
 build*
-sailquran/sailquran.pro.user*
 flags/*.db
 db/*.db
