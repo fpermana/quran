@@ -2,3 +2,4 @@
 build*
 flags/*.db
 db/*.db
+.gradle

@@ -2,7 +2,7 @@ TARGET = sailquran
 TEMPLATE = app
 
 #QT += core gui declarative network sql
-QT += core sql qml quick
+QT += core sql qml quick quickcontrols2
 
 CONFIG += c++11
 
@@ -24,16 +24,16 @@ include(../src/src.pri)
 #include(declarative/declarative.pri)
 
 SOURCES += main.cpp
-#        SingleApplication.cpp
 
 #HEADERS  += \
-#        build.h \
-#        SingleApplication.h
+#        build.h
 
 RESOURCES += qml.qrc \
-    ../db.qrc #\
-    #../fonts.qrc
-#    ../scripts.qrc \
+    ../db.qrc \
+    ../flags.qrc \
+    ../fonts.qrc \
+    ../icons.qrc \
+    js.qrc
 #    ../apks.qrc \
 #    resources.qrc \
 #    components.qrc
@@ -66,11 +66,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android-build
 
-DISTFILES += \
-    android-build/AndroidManifest.xml \
-    android-build/gradle/wrapper/gradle-wrapper.jar \
-    android-build/gradlew \
-    android-build/res/values/libs.xml \
-    android-build/build.gradle \
-    android-build/gradle/wrapper/gradle-wrapper.properties \
-    android-build/gradlew.bat
+DISTFILES += qtquickcontrols2.conf \
+    android-build/AndroidManifest.xml
+#    android-build/gradle/wrapper/gradle-wrapper.jar \
+#    android-build/gradlew \
+#    android-build/res/values/libs.xml \
+#    android-build/build.gradle \
+#    android-build/gradle/wrapper/gradle-wrapper.properties \
+#    android-build/gradlew.bat

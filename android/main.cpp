@@ -1,34 +1,59 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-/*#include "core/Controller.h"
-#include "core/Settings.h"
-#include "model/PageModel.h"*/
+#include "sqlite/DbManager.h"
+#include "quran/Quran.h"
+#include "paging/Paging.h"
+#include "searching/Searching.h"
+#include "translation/Translation.h"
+#include "bookmarking/Bookmarking.h"
 #include "GlobalConstants.h"
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setOrganizationName(SETTINGS_ORGANIZATION);
     QCoreApplication::setOrganizationDomain(SETTINGS_DOMAIN);
     QCoreApplication::setApplicationName(SETTINGS_APPLICATION);
 
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
-    /*qmlRegisterType<PageModel>("QuranQuick",1,0,"PageModel");
-    qRegisterMetaType<PageModel*>("PageModel");
+    DbManager man;
+    Quran quran;
+    Translation translation;
+    Searching searching;
+    Bookmarking bookmarking;
+    QObject::connect(&man, SIGNAL(dataReady(bool)), &bookmarking, SLOT(dataReady(bool)),Qt::QueuedConnection);
+    QObject::connect(&man, SIGNAL(dataReady(bool)), &quran, SLOT(dataReady(bool)),Qt::QueuedConnection);
+    QObject::connect(&man, SIGNAL(dataReady(bool)), &translation, SLOT(dataReady(bool)),Qt::QueuedConnection);
 
-    Controller *c = new Controller;
-    c->init();*/
+    qmlRegisterType<Paging>("id.fpermana.sailquran", 1, 0, "Paging");
+    qmlRegisterType<AyaListModel>("id.fpermana.sailquran", 1, 0, "AyaList");
+    qmlRegisterType<AyaModel>("id.fpermana.sailquran", 1, 0, "AyaModel");
+    qmlRegisterType<TranslationListModel>("id.fpermana.sailquran", 1, 0, "TranslationList");
+    qmlRegisterType<TranslationModel>("id.fpermana.sailquran", 1, 0, "TranslationModel");
 
     QQmlApplicationEngine engine;
-    QQmlContext *context = engine.rootContext();
-//    context->setContextProperty("Controller", c);
-//    context->setContextProperty("Settings", c->getSettings());
+    const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
+                     &app, [url](QObject *obj, const QUrl &objUrl) {
+        if (!obj && url == objUrl)
+            QCoreApplication::exit(-1);
+    }, Qt::QueuedConnection);
 
-    engine.load(QUrl(QLatin1String("qrc:/qml/main.qml")));
-    if (engine.rootObjects().isEmpty())
-        return -1;
+    QQmlContext *rootContext = engine.rootContext();
+    rootContext->setContextProperty("Quran", &quran);
+    rootContext->setContextProperty("Translation", &translation);
+    rootContext->setContextProperty("Searching", &searching);
+    rootContext->setContextProperty("Bookmarking", &bookmarking);
+
+    engine.load(url);
+
+    /*QList<QObject *> ols = engine.rootObjects();
+    QObject* applicationWindow = ols.first();
+    QObject::connect(&man, SIGNAL(dataReady(bool)), applicationWindow, SIGNAL(dataReady(bool)));*/
+    man.openDB();
 
     return app.exec();
 }
