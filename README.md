@@ -6,6 +6,12 @@ SailQuran is simple Quran reader with basic features such as bookmarking and tra
 With advantages of Qt framework, SailQuran could also be developed to another OS like Android, Linux, Windows OS and also as WebAssembly app.
 
 ----
+## Cloning
+    $ git clone https://github.com/fpermana/sailquran.git
+    $ cd sailquran
+    $ git submodule update --init --recursive
+
+----
 ## Usage
 1. For development on Sailfish OS, open sailfish/sailquran.pro with [Sailfish SDK](https://sailfishos.org/wiki/Application_SDK#Latest_SDK_Release).
 2. For development on other OS open sailquran.pro with [Qt Creator](https://www.qt.io/download).
