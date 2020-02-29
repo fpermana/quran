@@ -5,6 +5,6 @@ INCLUDEPATH += $$PWD
 #DEFINES += QUAZIP_STATIC
 
 #INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
-INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtZlib
+#INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtZlib
 
 include(quazip/quazip.pri)

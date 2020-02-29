@@ -11,6 +11,7 @@ OBJECTS_DIR=generated_files #Intermediate object files directory
 MOC_DIR=generated_files #Intermediate moc files directory
 RCC_DIR=generated_files #Intermediate qrc files directory
 
+LIBS += -lz
 DEFINES += QUAZIP_STATIC
 INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtZlib
 

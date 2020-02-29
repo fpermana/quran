@@ -9,7 +9,7 @@
 #include "GlobalConstants.h"
 
 Quran::Quran(QObject *parent) :
-    QObject(parent), m_currentPage(1), m_translation(""), m_quranText(""), m_settings(QSettings::IniFormat, QSettings::UserScope, QString(SETTINGS_ORGANIZATION), QString(SETTINGS_APPLICATION)), m_bismillah(nullptr), m_preview(nullptr)
+    QObject(parent), m_currentPage(1), m_quranText(""), m_translation(""), m_settings(QSettings::IniFormat, QSettings::UserScope, QString(SETTINGS_ORGANIZATION), QString(SETTINGS_APPLICATION)), m_bismillah(nullptr), m_preview(nullptr)
 {
     loadSettings();
 }
