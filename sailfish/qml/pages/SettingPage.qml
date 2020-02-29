@@ -20,7 +20,7 @@ Page {
     }
 
     function getTranslation() {
-        var model = translationList.get(translationCombobox.currentIndex);
+        var model = translationList.get(Math.max(0,translationCombobox.currentIndex));
         var tid = model.tid
         tid = tid.replace(".", "_");
         return tid

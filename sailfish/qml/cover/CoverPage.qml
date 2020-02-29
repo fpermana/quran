@@ -58,7 +58,7 @@ CoverBackground {
             horizontalCenter: parent.horizontalCenter
             margins: 15
         }
-        text: currentAya.suraName
+        text: currentAya !== null ? currentAya.suraName : ""
     }
 
     /*SilicaListView {
