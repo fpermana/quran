@@ -100,8 +100,25 @@ QVariantMap QuranManager::getSuraPage(const int sura) const
     QVariantMap pageMap;
     QSqlDatabase db = QSqlDatabase::database(DEFAULT_CONNECTION_NAME);
     if(db.isOpen()) {
+        int cnt = 0;
         QSqlQuery query(db);
-        query.prepare("SELECT id,sura,aya FROM pages WHERE sura <= :sura ORDER BY sura DESC LIMIT 1");
+        query.prepare("SELECT COUNT(*) FROM pages WHERE sura = :sura");
+        query.bindValue(":sura", sura);
+        if (!query.exec()) {
+            qDebug() << "Query error:" + query.lastError().text();
+        }
+        else if (!query.first()) {
+            qDebug() << "No data in the database";
+        }
+        else {
+            cnt = query.value(0).toInt();
+        }
+
+        if(cnt == 0) {
+            query.prepare("SELECT id,sura,aya FROM pages WHERE sura <= :sura ORDER BY sura DESC LIMIT 1");
+        } else {
+            query.prepare("SELECT id,sura,aya FROM pages WHERE sura = :sura ORDER BY sura ASC LIMIT 1");
+        }
         query.bindValue(":sura", sura);
 
         if (!query.exec()) {
