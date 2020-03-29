@@ -1,6 +1,5 @@
 #include "ApiManager.h"
 #include "GlobalConstants.h"
-#include "GlobalFunctions.h"
 #include <QDebug>
 #include <QFileInfo>
 #include <QDir>
@@ -47,7 +46,7 @@ void ApiManager::prepareDatabase()
 
 bool ApiManager::tableExist(const QString tableName)
 {
-
+    return true;
 }
 
 QVariantMap ApiManager::getDbSettings()

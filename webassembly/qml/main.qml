@@ -27,7 +27,7 @@ ApplicationWindow {
         property color colorMid: "#b0ffffff"
         property color colorTextSelection: "#b001bcf9"
         property color colorDisabled: "#b0ffffff"
-        property color colorHighlightBackground: "#00ade6"
+		property color colorHighlightBackground: "#00ade6"
         property color colorHighlightedBackground: "#4c00ade6"
         property color colorHighlightBackgroundOpacity: "#000000"
 
@@ -38,13 +38,13 @@ ApplicationWindow {
         property int paddingXLarge: 32
 
         // font size
-        property int fontSizeXSmall: 8
-        property int fontSizeSmall: 12
-        property int fontSizeMedium: 16
-        property int fontSizeLarge: 22
-        property int fontSizeXLarge: 26
-        property int fontSizeXXLarge: 30
-        property int fontSizeHuge: 36
+        property int fontSizeXSmall: 16
+        property int fontSizeSmall: 20
+        property int fontSizeMedium: 24
+        property int fontSizeLarge: 30
+        property int fontSizeXLarge: 36
+        property int fontSizeXXLarge: 40
+        property int fontSizeHuge: 50
 
         // graphic size
         property int graphicSizeTiny: 24

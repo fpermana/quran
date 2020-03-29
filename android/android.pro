@@ -2,7 +2,7 @@ TARGET = sailquran
 TEMPLATE = app
 
 #QT += core gui declarative network sql
-QT += core sql qml quick quickcontrols2
+QT += core sql qml quick quickcontrols2 svg
 
 CONFIG += c++11
 

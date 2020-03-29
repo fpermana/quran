@@ -1,7 +1,6 @@
 INCLUDEPATH += $$PWD
 
 include(paging/paging.pri)
-include(bookmarking/bookmarking.pri)
 include(searching/searching.pri)
 include(translation/translation.pri)
 include(quran/quran.pri)
@@ -13,6 +12,7 @@ webassembly {
     DEFINES += USE_API
     include(api/api.pri)
 } else {
+    include(bookmarking/bookmarking.pri)
     include(downloader/downloader.pri)
     include(utils/utils.pri)
     include(sqlite/sqlite.pri)

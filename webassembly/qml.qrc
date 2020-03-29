@@ -1,9 +1,14 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>HomeForm.ui.qml</file>
-        <file>Page1Form.ui.qml</file>
-        <file>Page2Form.ui.qml</file>
-        <file>qtquickcontrols2.conf</file>
+        <file>qml/main.qml</file>
+        <file>qml/pages/MainPage.qml</file>
+        <file>qml/pages/AboutPage.qml</file>
+        <file>qml/pages/IndexPage.qml</file>
+        <file>qml/pages/SettingPage.qml</file>
+        <file>qml/pages/TranslationPage.qml</file>
+        <file>qml/components/AyaList.qml</file>
+        <file>qml/pages/SearchPage.qml</file>
+        <file>qml/pages/BookmarkPage.qml</file>
+        <file>qml/components/Dropdown.qml</file>
     </qresource>
 </RCC>

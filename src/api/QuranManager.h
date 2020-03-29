@@ -16,7 +16,7 @@ public:
     int pageCount() const;
     AyaModel *getBismillah(const QString quranText, const QString translation) const;
     AyaModel *getAya(const int sura, const int aya, const QString quranText, const QString translation) const;
-    int getSuraPage(const int sura) const;
+    QVariantMap getSuraPage(const int sura) const;
     QList<SuraModel *> getSuraList() const;
 
 signals:

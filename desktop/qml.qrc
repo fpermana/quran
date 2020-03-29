@@ -9,5 +9,6 @@
         <file>qml/components/AyaList.qml</file>
         <file>qml/pages/SearchPage.qml</file>
         <file>qml/pages/BookmarkPage.qml</file>
+        <file>qml/components/Dropdown.qml</file>
     </qresource>
 </RCC>

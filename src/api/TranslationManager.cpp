@@ -2,7 +2,6 @@
 #include <QDebug>
 
 #include "GlobalConstants.h"
-#include "GlobalFunctions.h"
 
 TranslationManager::TranslationManager(bool threaded, QObject *parent) : QObject(parent), m_threaded(threaded)
 {

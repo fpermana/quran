@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>icons/quran.svg</file>
         <file>icons/search_icon.svg</file>
+        <file>icons/drop_down.svg</file>
     </qresource>
 </RCC>

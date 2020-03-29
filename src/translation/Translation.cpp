@@ -2,11 +2,11 @@
 #include <QDebug>
 #include <QThread>
 
-#include "GlobalFunctions.h"
 #include "translation/TranslationParser.h"
 #ifdef USE_API
 #include "api/TranslationManager.h"
 #else
+#include "GlobalFunctions.h"
 #include "downloader/DownloadManager.h"
 #include "sqlite/TranslationManager.h"
 #endif
@@ -80,10 +80,9 @@ int Translation::getStatus(const QString tid) const
 
 void Translation::downloadTranslation(QString tid)
 {
+#ifndef USE_API
     QString filepath = QString("%1%2.txt").arg(GlobalFunctions::translationLocation()).arg(tid);
     QString url = QString("http://tanzil.net/trans/?transID=%1&type=txt-2").arg(tid);
-#ifdef USE_API
-#else
     DownloadManager *dm = new DownloadManager;
     connect(dm, SIGNAL(downloadCompleted()), this, SLOT(translationDownloaded()));
     dm->setFilepath(filepath);
@@ -96,8 +95,7 @@ void Translation::downloadTranslation(QString tid)
 
 void Translation::translationDownloaded()
 {
-#ifdef USE_API
-#else
+#ifndef USE_API
     DownloadManager *d = qobject_cast<DownloadManager *>(sender());
     if(!d || d->getError()) {
         d->deleteLater();
@@ -125,6 +123,7 @@ void Translation::translationDownloaded()
 
 void Translation::parseTranslation(QString tid)
 {
+#ifndef USE_API
     QString filepath = QString("%1%2.txt").arg(GlobalFunctions::translationLocation()).arg(tid);
     QString tableName = tid.replace(".","_");
 
@@ -143,6 +142,7 @@ void Translation::parseTranslation(QString tid)
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
     thread->start();
     m_downloadMap.insert(tid, Installing);
+#endif
 }
 
 void Translation::translationParsed()

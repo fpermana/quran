@@ -74,6 +74,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    qml/components/Dropdown.qml \
     qml/main.qml \
     qml/pages/AboutPage.qml \
     qml/pages/BookmarkPage.qml \
