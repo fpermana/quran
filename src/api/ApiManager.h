@@ -4,9 +4,10 @@
 #include <QObject>
 #include <QStringList>
 #include <QVariant>
+#include <QNetworkAccessManager>
 
-#ifndef DEFAULT_CONNECTION_NAME
-#define DEFAULT_CONNECTION_NAME     "sailquran"
+#ifndef API_URL
+#define API_URL     "http://quranapi.fpermana.id"
 #endif
 
 class ApiManager : public QObject
@@ -45,6 +46,7 @@ signals:
     void dataReady(const bool status);
 private slots:
     void dbExtracted(const bool isOk);
+    void pagesRequested();
 
 private:
     QString filepath;
@@ -53,6 +55,8 @@ private:
     void prepareDatabase();
     bool tableExist(const QString tableName);
     QVariantMap getDbSettings();
+
+    QNetworkAccessManager *man;
 };
 
 #endif // APIMANAGER_H

@@ -1,0 +1,11 @@
+.qmake.stash
+Makefile
+generated_files/
+qtloader.js
+qtlogo.svg
+sailquran.html
+sailquran.js
+sailquran.js_plugin_import.cpp
+sailquran.js_qml_plugin_import.cpp
+sailquran.wasm
+
