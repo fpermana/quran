@@ -56,13 +56,13 @@ Page {
                 Label {
                     text: "SailQuran Version 0.3"
                     anchors.horizontalCenter: parent.horizontalCenter
-                    font { pixelSize: constant.fontSizeMedium; bold: true }
+                    font { pixelSize: constant.fontSizeXXLarge; bold: true }
                 }
 
                 Label {
                     text: "Copyright © Fandy Permana 2020"
                     anchors.horizontalCenter: parent.horizontalCenter
-                    font { pixelSize: constant.fontSizeMedium; }
+                    font { pixelSize: constant.fontSizeLarge; }
                 }
 
                 Component.onCompleted: {
@@ -90,7 +90,7 @@ Page {
 
                 Label {
                     text: qsTr(model.title)
-                    font { pixelSize: constant.fontSizeMedium; bold: true }
+                    font { pixelSize: constant.fontSizeXLarge; bold: true }
                     width: parent.width
                     wrapMode: Text.WordWrap
                     horizontalAlignment: Text.AlignJustify
@@ -99,7 +99,7 @@ Page {
                 }
                 Label {
                     text: qsTr(model.detail)
-                    font { pixelSize: constant.fontSizeSmall; }
+                    font { pixelSize: constant.fontSizeLarge; }
                     width: parent.width
                     wrapMode: Text.WordWrap
                     horizontalAlignment: Text.AlignJustify

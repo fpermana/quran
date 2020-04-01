@@ -8,7 +8,9 @@
 #include "searching/Searching.h"
 #include "translation/Translation.h"
 #include "bookmarking/Bookmarking.h"
+#include "setting/Setting.h"
 #include "GlobalConstants.h"
+#include <QQuickStyle>
 #include <QDebug>
 
 int main(int argc, char *argv[])
@@ -21,11 +23,14 @@ int main(int argc, char *argv[])
 //    QGuiApplication app(argc, argv);
     SingleApplication app( argc, argv );
 
+    QQuickStyle::setStyle("Universal");
+
     DbManager man;
     Quran quran;
     Translation translation;
     Searching searching;
     Bookmarking bookmarking;
+    Setting setting;
     QObject::connect(&man, SIGNAL(dataReady(bool)), &bookmarking, SLOT(dataReady(bool)),Qt::QueuedConnection);
     QObject::connect(&man, SIGNAL(dataReady(bool)), &quran, SLOT(dataReady(bool)),Qt::QueuedConnection);
     QObject::connect(&man, SIGNAL(dataReady(bool)), &translation, SLOT(dataReady(bool)),Qt::QueuedConnection);
@@ -49,6 +54,7 @@ int main(int argc, char *argv[])
     rootContext->setContextProperty("Translation", &translation);
     rootContext->setContextProperty("Searching", &searching);
     rootContext->setContextProperty("Bookmarking", &bookmarking);
+    rootContext->setContextProperty("Setting", &setting);
 
     engine.load(url);
 

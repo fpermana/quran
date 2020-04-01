@@ -22,4 +22,8 @@ webassembly {
 
     SOURCES += \
         $$PWD/GlobalFunctions.cpp
+
+    !sailfishapp {
+        include(setting/setting.pri)
+    }
 }

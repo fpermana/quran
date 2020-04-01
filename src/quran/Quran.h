@@ -11,6 +11,7 @@ class Quran : public QObject
     Q_OBJECT
     Q_PROPERTY(int fontSize READ getFontSize WRITE setFontSize NOTIFY fontSizeChanged)
     Q_PROPERTY(QString fontName READ getFontName WRITE setFontName NOTIFY fontNameChanged)
+    Q_PROPERTY(QString largeFontName READ getLargeFontName WRITE setLargeFontName NOTIFY largeFontNameChanged)
     Q_PROPERTY(int translationFontSize READ getTranslationFontSize WRITE setTranslationFontSize NOTIFY translationFontSizeChanged)
     Q_PROPERTY(int currentPage READ getCurrentPage WRITE setCurrentPage NOTIFY currentPageChanged)
     Q_PROPERTY(int pageCount READ getPageCount WRITE setPageCount NOTIFY countPageChanged)
@@ -32,6 +33,7 @@ public:
 
     int getFontSize() const;
     QString getFontName() const;
+    QString getLargeFontName() const;
     int getTranslationFontSize() const;
     int getCurrentPage() const;
     int getPageCount() const;
@@ -51,6 +53,7 @@ public:
 signals:
     void fontSizeChanged(int fontSize);
     void fontNameChanged(QString fontName);
+    void largeFontNameChanged(QString largeFontName);
     void translationFontSizeChanged(int translationFontSize);
     void currentPageChanged(int currentPage);
     void countPageChanged(int pageCount);
@@ -70,6 +73,7 @@ signals:
 public slots:
     void setFontSize(int fontSize);
     void setFontName(QString fontName);
+    void setLargeFontName(QString largeFontName);
     void setTranslationFontSize(int translationFontSize);
     void setCurrentPage(int currentPage);
     void setPageCount(int pageCount);
@@ -93,6 +97,7 @@ private:
 
     int m_fontSize;
     QString m_fontName;
+    QString m_largeFontName;
     int m_translationFontSize;
     int m_currentPage;
     int m_pageCount;

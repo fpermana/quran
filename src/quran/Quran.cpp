@@ -24,6 +24,11 @@ QString Quran::getFontName() const
     return m_fontName;
 }
 
+QString Quran::getLargeFontName() const
+{
+    return m_fontName;
+}
+
 int Quran::getTranslationFontSize() const
 {
     return m_translationFontSize;
@@ -117,6 +122,15 @@ void Quran::setFontName(QString fontName)
     emit fontNameChanged(m_fontName);
 }
 
+void Quran::setLargeFontName(QString largeFontName)
+{
+    if (m_largeFontName == largeFontName)
+        return;
+
+    m_largeFontName = largeFontName;
+    emit fontNameChanged(m_largeFontName);
+}
+
 void Quran::setTranslationFontSize(int translationFontSize)
 {
     if (m_translationFontSize == translationFontSize)
@@ -171,6 +185,7 @@ void Quran::setQuranText(QString quranText)
         return;
 
     m_quranText = quranText;
+    refreshPreview(m_quranText,m_translation);
     emit quranTextChanged(m_quranText);
 }
 
@@ -180,6 +195,7 @@ void Quran::setTranslation(QString translation)
         return;
 
     m_translation = translation;
+    refreshPreview(m_quranText,m_translation);
     emit translationChanged(m_translation);
 }
 
@@ -284,6 +300,7 @@ void Quran::resetSettings()
     setQuranText(DEFAULT_QURAN_TEXT);
     setTranslation(DEFAULT_TRANSLATION);
     setFontName(DEFAULT_FONT_NAME);
+    setLargeFontName(DEFAULT_LARGE_FONT_NAME);
     setFontColor(DEFAULT_FONT_COLOR);
     setFontSize(DEFAULT_FONT_SIZE);
     setTranslationFontSize(DEFAULT_TRANSLATION_FONT_SIZE);
@@ -298,6 +315,7 @@ void Quran::saveSettings()
     m_settings.setValue(QURAN_TEXT_KEY, m_quranText);
     m_settings.setValue(TRANSLATION_KEY, m_translation);
     m_settings.setValue(FONT_NAME_KEY, m_fontName);
+    m_settings.setValue(LARGE_FONT_NAME_KEY, m_largeFontName);
     m_settings.setValue(FONT_COLOR_KEY, m_fontColor);
     m_settings.setValue(FONT_SIZE_KEY, m_fontSize);
     m_settings.setValue(TRANSLATION_FONT_SIZE_KEY, m_translationFontSize);
@@ -314,6 +332,8 @@ void Quran::loadSettings()
     setTranslation(translation);
     QString fontName = m_settings.value(FONT_NAME_KEY, DEFAULT_FONT_NAME).toString();
     setFontName(fontName);
+    QString largeFontName = m_settings.value(LARGE_FONT_NAME_KEY, DEFAULT_LARGE_FONT_NAME).toString();
+    setLargeFontName(largeFontName);
     QString fontColor = m_settings.value(FONT_COLOR_KEY, DEFAULT_FONT_COLOR).toString();
     setFontColor(fontColor);
     int fontSize = m_settings.value(FONT_SIZE_KEY, DEFAULT_FONT_SIZE).toInt();

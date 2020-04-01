@@ -37,6 +37,7 @@ RESOURCES += qml.qrc \
     ../fonts.qrc \
     ../icons.qrc \
     ../js.qrc
+#    style.qrc
 #    ../apks.qrc \
 #    resources.qrc \
 #    components.qrc
@@ -74,7 +75,12 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    qml/components/Button.qml \
     qml/components/Dropdown.qml \
+    qml/components/Label.qml \
+    qml/components/CheckBox.qml \
+    qml/components/SpinBox.qml \
+    qml/components/TextField.qml \
     qml/main.qml \
     qml/pages/AboutPage.qml \
     qml/pages/BookmarkPage.qml \
@@ -83,3 +89,4 @@ DISTFILES += \
     qml/pages/SearchPage.qml \
     qml/pages/SettingPage.qml \
     qml/pages/TranslationPage.qml
+#    qtquickcontrols2.conf

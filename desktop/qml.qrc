@@ -6,9 +6,13 @@
         <file>qml/pages/IndexPage.qml</file>
         <file>qml/pages/SettingPage.qml</file>
         <file>qml/pages/TranslationPage.qml</file>
-        <file>qml/components/AyaList.qml</file>
         <file>qml/pages/SearchPage.qml</file>
         <file>qml/pages/BookmarkPage.qml</file>
         <file>qml/components/Dropdown.qml</file>
+        <file>qml/components/Button.qml</file>
+        <file>qml/components/Label.qml</file>
+        <file>qml/components/SpinBox.qml</file>
+        <file>qml/components/TextField.qml</file>
+        <file>qml/components/CheckBox.qml</file>
     </qresource>
 </RCC>
