@@ -21,8 +21,8 @@ SOURCES += src/sailquran.cpp
 LIBS += -lz
 DEFINES += QUAZIP_STATIC
 
-DEFINES += DEFAULT_FONT_COLOR=\\\"#ffffff\\\"
-DEFINES += DEFAULT_BACKGROUND_COLOR=\\\"#000000\\\"
+DEFINES += "DEFAULT_FONT_COLOR=\"\\\"white\\\"\""
+DEFINES += "DEFAULT_BACKGROUND_COLOR=\"\\\"black\\\"\""
 
 include(../3rdparty/3rdparty.pri)
 include(../src/src.pri)

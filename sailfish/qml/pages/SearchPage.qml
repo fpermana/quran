@@ -23,12 +23,6 @@ Page {
         }
     }
 
-    Rectangle {
-        anchors.fill: searchView
-        color: Quran.backgroundColor
-        visible: Quran.useBackground
-    }
-
     SilicaListView {
         id: searchView
         header: SearchField {
@@ -72,6 +66,12 @@ Page {
             id: delegateItem
             height: childrenRect.height
             width: searchView.width
+
+            Rectangle {
+                anchors.fill: parent
+                color: Quran.backgroundColor
+                visible: Quran.useBackground
+            }
 
             BackgroundItem {
                 id: listItem

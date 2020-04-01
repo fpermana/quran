@@ -254,7 +254,7 @@ Page {
                 }
                 label: qsTr("Font Size")
                 minimumValue: 25
-                maximumValue: 50
+                maximumValue: 60
     //            value: 32
                 valueText: Math.round(value)
 
