@@ -33,8 +33,10 @@
 #define DEFAULT_LARGE_FONT_NAME             "Al_Mushaf" // from "qrc:/fonts/Al_Mushaf.ttf"
 #define DEFAULT_FONT_SIZE                   40
 #define DEFAULT_TRANSLATION_FONT_SIZE       20
+#ifndef DEFAULT_FONT_COLOR
 #define DEFAULT_FONT_COLOR                  "#000000"
 #define DEFAULT_BACKGROUND_COLOR            "#ffffff"
+#endif
 #define DEFAULT_USE_BACKGROUND              1
 #define DEFAULT_USE_TRANSLATION             1
 

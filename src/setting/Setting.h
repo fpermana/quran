@@ -25,8 +25,6 @@ public:
     explicit Setting(QObject *parent = nullptr);
 
     void loadSetting();
-    void resetSetting();
-    void saveSetting();
 
     QString universalAccent() const;
     void setUniversalAccent(const QString &universalAccent);
@@ -72,6 +70,8 @@ public:
 
 public slots:
     void dataReady(const bool isOk);
+    void resetSetting();
+    void saveSetting();
 
 signals:
     void universalAccentChanged(QString universalAccent);

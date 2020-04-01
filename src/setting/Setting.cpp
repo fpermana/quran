@@ -43,51 +43,6 @@ void Setting::loadSetting()
     endGroup();
 }
 
-void Setting::resetSetting()
-{
-    setUniversalAccent(DEFAULT_UNIVERSAL_ACCENT);
-    setUniversalBackground(DEFAULT_UNIVERSAL_BACKGROUND);
-    setUniversalForeground(DEFAULT_UNIVERSAL_FOREGROUND);
-    setUniversalTheme(DEFAULT_UNIVERSAL_THEME);
-    setMaterialAccent(DEFAULT_MATERIAL_ACCENT);
-    setMaterialBackground(DEFAULT_MATERIAL_BACKGROUND);
-    setMaterialForeground(DEFAULT_MATERIAL_FOREGROUND);
-    setMaterialTheme(DEFAULT_MATERIAL_THEME);
-    setMaterialElevation(DEFAULT_MATERIAL_ELEVATION);
-    setMaterialPrimary(DEFAULT_MATERIAL_PRIMARY);
-
-    setFontName(qApp->font().family());
-    setSmallFontSize(qApp->font().pixelSize()-4);
-    setFontSize(qApp->font().pixelSize());
-    setLargeFontSize(qApp->font().pixelSize()+6);
-}
-
-void Setting::saveSetting()
-{
-    beginGroup("UNIVERSAL");
-    setValue(UNIVERSAL_ACCENT_KEY,m_universalAccent);
-    setValue(UNIVERSAL_BACKGROUND_KEY,m_universalBackground);
-    setValue(UNIVERSAL_FOREGROUND_KEY,m_universalForeground);
-    setValue(UNIVERSAL_THEME_KEY,m_universalTheme);
-    endGroup();
-
-    beginGroup("MATERIAL");
-    setValue(MATERIAL_ACCENT_KEY,m_materialAccent);
-    setValue(MATERIAL_BACKGROUND_KEY,m_materialBackground);
-    setValue(MATERIAL_FOREGROUND_KEY,m_materialForeground);
-    setValue(MATERIAL_THEME_KEY,m_materialTheme);
-    setValue(MATERIAL_ELEVATION_KEY,m_materialElevation);
-    setValue(MATERIAL_PRIMARY_KEY,m_materialPrimary);
-    endGroup();
-
-    beginGroup("FONT");
-    setValue(FONT_NAME_KEY, m_fontName);
-    setValue(SMALL_FONT_SIZE_KEY, m_smallFontSize);
-    setValue(FONT_SIZE_KEY, m_fontSize);
-    setValue(LARGE_FONT_SIZE_KEY, m_largeFontSize);
-    endGroup();
-}
-
 QString Setting::universalAccent() const
 {
     return m_universalAccent;
@@ -291,3 +246,55 @@ void Setting::dataReady(const bool isOk)
     }
 }
 
+void Setting::resetSetting()
+{
+    setUniversalAccent(DEFAULT_UNIVERSAL_ACCENT);
+    setUniversalBackground(DEFAULT_UNIVERSAL_BACKGROUND);
+    setUniversalForeground(DEFAULT_UNIVERSAL_FOREGROUND);
+    setUniversalTheme(DEFAULT_UNIVERSAL_THEME);
+    setMaterialAccent(DEFAULT_MATERIAL_ACCENT);
+    setMaterialBackground(DEFAULT_MATERIAL_BACKGROUND);
+    setMaterialForeground(DEFAULT_MATERIAL_FOREGROUND);
+    setMaterialTheme(DEFAULT_MATERIAL_THEME);
+    setMaterialElevation(DEFAULT_MATERIAL_ELEVATION);
+    setMaterialPrimary(DEFAULT_MATERIAL_PRIMARY);
+
+    setFontName(qApp->font().family());
+
+    int pixelSize = qApp->font().pixelSize();
+    if(pixelSize == -1) {
+        QFontInfo fontInfo(qApp->font());
+        pixelSize = fontInfo.pixelSize();
+    }
+    pixelSize += 4;
+
+    setSmallFontSize(pixelSize-4);
+    setFontSize(pixelSize);
+    setLargeFontSize(pixelSize+6);
+}
+
+void Setting::saveSetting()
+{
+    beginGroup("UNIVERSAL");
+    setValue(UNIVERSAL_ACCENT_KEY,m_universalAccent);
+    setValue(UNIVERSAL_BACKGROUND_KEY,m_universalBackground);
+    setValue(UNIVERSAL_FOREGROUND_KEY,m_universalForeground);
+    setValue(UNIVERSAL_THEME_KEY,m_universalTheme);
+    endGroup();
+
+    beginGroup("MATERIAL");
+    setValue(MATERIAL_ACCENT_KEY,m_materialAccent);
+    setValue(MATERIAL_BACKGROUND_KEY,m_materialBackground);
+    setValue(MATERIAL_FOREGROUND_KEY,m_materialForeground);
+    setValue(MATERIAL_THEME_KEY,m_materialTheme);
+    setValue(MATERIAL_ELEVATION_KEY,m_materialElevation);
+    setValue(MATERIAL_PRIMARY_KEY,m_materialPrimary);
+    endGroup();
+
+    beginGroup("FONT");
+    setValue(FONT_NAME_KEY, m_fontName);
+    setValue(SMALL_FONT_SIZE_KEY, m_smallFontSize);
+    setValue(FONT_SIZE_KEY, m_fontSize);
+    setValue(LARGE_FONT_SIZE_KEY, m_largeFontSize);
+    endGroup();
+}

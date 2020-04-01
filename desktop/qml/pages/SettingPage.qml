@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
+import QtQuick.Controls.Universal 2.12
 import id.fpermana.sailquran 1.0
 import "../components" as Comp
 
@@ -204,14 +205,16 @@ Page {
             }
 
             Comp.Button {
-                anchors.right: parent.right
+                anchors {
+                    right: parent.right
+                    margins: 15
+                }
                 text: qsTr("Manage Translations")
                 visible: Quran.useTranslation
                 onClicked: {
                     stackView.push("qrc:/qml/pages/TranslationPage.qml")
                 }
             }
-
 
             ItemDelegate {
                 height: 60
@@ -223,8 +226,8 @@ Page {
                 }
                 Comp.CheckBox {
                     id: useBackgroundSwitch
-                    text: qsTr("Use Background")
-                    checked: Quran.useBackground
+                    text: qsTr("Dark Mode")
+                    checked: Setting.universalTheme
                     anchors {
                         left: parent.left
                         right: parent.right
@@ -233,13 +236,45 @@ Page {
                         verticalCenter: parent.verticalCenter
                     }
                     onCheckedChanged: {
-                        Quran.useBackground = checked
-                        if(checked && Quran.fontColor === "#ffffff") {
-                            Quran.fontColor = "#000000"
-                        }
-                        else if(!checked) {
+//                        Quran.useBackground = checked
+//                        Universal.theme = checked ? Universal.Dark : Universal.Light
+                        applicationWindow.changeTheme(checked ? Universal.Dark : Universal.Light)
+                        if(checked) {
                             Quran.fontColor = "#ffffff"
                         }
+                        else if(!checked) {
+                            Quran.fontColor = "#000000"
+                        }
+
+                        Setting.universalTheme = checked ? Universal.Dark : Universal.Light
+                    }
+                }
+            }
+            Row {
+                height: 60
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: 15
+                }
+                spacing: 15
+                layoutDirection: Qt.RightToLeft
+
+                Comp.Button {
+                    text: qsTr("Save Settings")
+                    onClicked: {
+                        Setting.saveSetting()
+                        Quran.saveSettings()
+                    }
+                }
+
+                Comp.Button {
+                    text: qsTr("Reset Settings")
+                    onClicked: {
+                        Setting.resetSetting()
+                        Quran.resetSettings()
+                        Setting.saveSetting()
+                        Quran.saveSettings()
                     }
                 }
             }

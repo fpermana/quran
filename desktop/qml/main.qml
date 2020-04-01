@@ -11,8 +11,13 @@ ApplicationWindow {
     minimumHeight: 640
     title: qsTr("SailQuran")
 
+    function changeTheme(theme) {
+        Universal.theme = theme
+    }
+
 //    Material.theme: Material.Dark // Material.Light
-    Universal.theme: Universal.Light // Universal.Dark
+//    Universal.theme: Universal.Light // Universal.Dark
+    Universal.theme: Setting.universalTheme
 
     property int orientation: width > height ? Qt.LandscapeOrientation : Qt.PortraitOrientation
 

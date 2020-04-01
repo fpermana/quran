@@ -24,11 +24,11 @@ Page {
         }
     }
 
-    Rectangle {
+    /*Rectangle {
         anchors.fill: listView
         color: Quran.backgroundColor
         visible: Quran.useBackground
-    }
+    }*/
 
     ListView {
         id: listView

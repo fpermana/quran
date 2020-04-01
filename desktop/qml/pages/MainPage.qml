@@ -16,10 +16,6 @@ Page {
         edge: Qt.TopEdge
         topInset: -20
 
-        background: Rectangle {
-            radius: 20
-        }
-
         Grid {
             columns: applicationWindow.orientation === Qt.LandscapeOrientation ? 2 : 1
             columnSpacing: 30
@@ -74,10 +70,6 @@ Page {
         edge: Qt.BottomEdge
         bottomInset: -20
 
-        background: Rectangle {
-            radius: 20
-        }
-
         Column {
             anchors.fill: parent
             anchors.margins: 20
@@ -112,10 +104,6 @@ Page {
         height: applicationWindow.height * 0.4
         edge: Qt.BottomEdge
         bottomInset: -20
-
-        background: Rectangle {
-            radius: 20
-        }
 
         Column {
             anchors.fill: parent
@@ -239,6 +227,7 @@ Page {
             if(stackView.currentItem !== root)
                 stackView.pop()
             swipeView.setCurrentIndex(page-1)
+            suraLabel.text = swipeView.currentItem !== null && swipeView.currentItem.item !== null  && swipeView.currentItem.item.currentItem !== null ? swipeView.currentItem.item.currentItem.suraName : ""
         }
     }
 
@@ -279,7 +268,8 @@ Page {
                         if(index === Quran.currentPage-1) {
                             Quran.currentIndex = listView.indexAt(0,contentY)
                             Quran.lastIndex = index
-                            root.header.title = listView.itemAtIndex(Quran.currentIndex).suraName
+                            if(listView.itemAtIndex(Quran.currentIndex) !== null)
+                                root.header.title = listView.itemAtIndex(Quran.currentIndex).suraName
                         }
                     }
                     Component.onCompleted: {

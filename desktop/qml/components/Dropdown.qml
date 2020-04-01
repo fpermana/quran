@@ -71,13 +71,9 @@ ItemDelegate {
     Drawer {
         id: options
         width: applicationWindow.width
-        height: applicationWindow.height * 0.45
+        height: applicationWindow.height * 0.4
         edge: Qt.BottomEdge
         bottomInset: -20
-
-        background: Rectangle {
-            radius: 20
-        }
 
         ListView {
             id: listView
@@ -116,7 +112,7 @@ ItemDelegate {
             options.leftInset = -20
         } else {
             options.width = applicationWindow.width
-            options.height = applicationWindow.height * 0.45
+            options.height = applicationWindow.height * 0.4
             options.edge = Qt.BottomEdge
             options.bottomInset = -20
         }
