@@ -62,10 +62,7 @@ Page {
         height: applicationWindow.height * 0.4
         edge: Qt.BottomEdge
         bottomInset: -20
-
-        background: Rectangle {
-            radius: 20
-        }
+        dragMargin : -1
 
         Column {
             anchors.fill: parent
@@ -91,12 +88,6 @@ Page {
                 }
             }
         }
-    }
-
-    Rectangle {
-        anchors.fill: listView
-        color: Quran.backgroundColor
-        visible: Quran.useBackground
     }
 
     ListView {
@@ -215,15 +206,6 @@ Page {
 //                  color: highlighted ? constant.colorHighlighted : constant.colorLight
                 visible: (Quran.useTranslation)
             }
-            /*Rectangle {
-                anchors {
-                    top: translationLabel.bottom
-                    left: parent.left
-                    right: parent.right
-                }
-                height: 2
-                color: "gray"
-            }*/
 
             onClicked: {
                 if(bookmarkCheckBox.checked) {

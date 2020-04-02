@@ -58,9 +58,6 @@ int main(int argc, char *argv[])
 
     engine.load(url);
 
-    /*QList<QObject *> ols = engine.rootObjects();
-    QObject* applicationWindow = ols.first();
-    QObject::connect(&man, SIGNAL(dataReady(bool)), applicationWindow, SIGNAL(dataReady(bool)));*/
     man.openDB();
 
     return app.exec();

@@ -13,6 +13,7 @@ ApplicationWindow {
 
     function changeTheme(theme) {
         Universal.theme = theme
+        Setting.universalTheme = theme
     }
 
 //    Material.theme: Material.Dark // Material.Light

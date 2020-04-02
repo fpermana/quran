@@ -1,6 +1,8 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
 import QtQuick.Window 2.12
+import QtQuick.Controls.Material 2.12
+//import QtQuick.Controls.Universal 2.12
 
 ApplicationWindow {
     id: applicationWindow
@@ -8,6 +10,16 @@ ApplicationWindow {
     minimumWidth: 960
     minimumHeight: 640
     title: qsTr("SailQuran")
+
+    function changeTheme(theme) {
+        Material.theme = theme
+        Setting.materialTheme = theme
+    }
+
+//    Material.theme: Material.Dark // Material.Light
+//    Universal.theme: Universal.Light // Universal.Dark
+//    Universal.theme: Setting.universalTheme
+    Material.theme: Setting.materialTheme
 
     property int orientation: width > height ? Qt.LandscapeOrientation : Qt.PortraitOrientation
 
@@ -20,31 +32,20 @@ ApplicationWindow {
     QtObject {
         id: constant
 
-        // color
-        property color colorHighlighted: "#01bcf9"
-        property color colorLight: "#ffffff"
-        property color colorDark: "#000000"
-        property color colorMid: "#b0ffffff"
-        property color colorTextSelection: "#b001bcf9"
-        property color colorDisabled: "#b0ffffff"
-        property color colorHighlightBackground: "#00ade6"
-        property color colorHighlightedBackground: "#4c00ade6"
-        property color colorHighlightBackgroundOpacity: "#000000"
-
         // padding size
         property int paddingSmall: 8
         property int paddingMedium: 16
         property int paddingLarge: 32
-        property int paddingXLarge: 32
+        property int paddingXLarge: 48
 
         // font size
-        property int fontSizeXSmall: 8
-        property int fontSizeSmall: 12
-        property int fontSizeMedium: 16
-        property int fontSizeLarge: 22
-        property int fontSizeXLarge: 26
-        property int fontSizeXXLarge: 30
-        property int fontSizeHuge: 36
+        property int fontSizeXSmall: Setting.smallFontSize - 4
+        property int fontSizeSmall: Setting.smallFontSize
+        property int fontSizeMedium: Setting.fontSize
+        property int fontSizeLarge: Setting.largeFontSize
+        property int fontSizeXLarge: Setting.largeFontSize + 4
+        property int fontSizeXXLarge: Setting.largeFontSize + 11
+        property int fontSizeHuge: Setting.largeFontSize + 16
 
         // graphic size
         property int graphicSizeTiny: 24
@@ -59,12 +60,6 @@ ApplicationWindow {
         property int headerHeight: 60
         property int footerHeight: 50
 
-       /*// other
-       // property int headerHeight: inPortrait ? 65 : 55
-        property int headerHeight: 85
-
-        property int charReservedPerMedia: 23*/
-
         property string fontName: uthmanic.name
         property string largeFontName: almushaf.name
     }
@@ -74,14 +69,24 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButton
-            text: stackView.depth > 1 ? "\u25C0" : "\u268F"
-            font.pixelSize: Qt.application.font.pixelSize * 1.6
+            text: stackView.depth > 1 ? "\u25C0" : "\u2261"
+            font.pixelSize: constant.fontSizeXXLarge
             width: parent.height
             onClicked: {
-                if (stackView.depth > 1) {
-                    stackView.pop()
-                } else {
-                    stackView.currentItem.menu.open()
+                var closed = true;
+                if(stackView.currentItem.menu !== null && stackView.currentItem.menu !== undefined) {
+                    if(stackView.currentItem.menu.position === 1) {
+                        closed = false
+                        stackView.currentItem.menu.close()
+                    }
+                }
+
+                if(closed) {
+                    if (stackView.depth > 1) {
+                        stackView.pop()
+                    } else {
+                        stackView.currentItem.menu.open()
+                    }
                 }
             }
             anchors {
@@ -96,7 +101,7 @@ ApplicationWindow {
         Label {
             text: stackView.currentItem != null ? stackView.currentItem.title : ""
             anchors.centerIn: parent
-            font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
+            font { pixelSize: constant.fontSizeXLarge; }
         }
     }
 

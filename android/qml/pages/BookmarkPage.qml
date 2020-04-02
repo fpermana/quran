@@ -1,9 +1,10 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
 import id.fpermana.sailquran 1.0
-import "../../js/utils.js" as Utils
+import "../js/utils.js" as Utils
+import "../components" as Comp
 
-Page {
+Comp.Page {
     id: page
     title: qsTr("Bookmark")
 
@@ -23,20 +24,11 @@ Page {
         }
     }
 
-    /*header: Item {
-        height: constant.headerHeight
-        Label {
-            text: qsTr("Bookmarks")
-            font.pixelSize: Quran.translationFontSize
-            anchors.centerIn: parent
-        }
-    }*/
-
-    Rectangle {
+    /*Rectangle {
         anchors.fill: listView
         color: Quran.backgroundColor
         visible: Quran.useBackground
-    }
+    }*/
 
     ListView {
         id: listView
@@ -60,12 +52,8 @@ Page {
             height: suraLabel.height + textLabel.height + translationLabel.height + 20
             width: parent.width
 
-            background: Rectangle {
-                color: parent.pressed ? constant.colorHighlightedBackground : "transparent"
-            }
-            Label {
+            Comp.Label {
                 id: numberLabel
-                verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignLeft
                 color: Quran.fontColor
                 height: suraLabel.height
@@ -79,14 +67,30 @@ Page {
 
                 wrapMode: Text.WordWrap
                 text: "("+(index+1)+")"
-//                font { pixelSize: Quran.fontSize; family: constant.fontName; }
                 LayoutMirroring.enabled: false
             }
 
-            Label {
+            Comp.CheckBox {
+                id: bookmarkCheckBox
+                enabled: false
+                height: textLabel.height
+                width: 40
+                anchors {
+                    left: parent.left
+                    leftMargin: constant.paddingMedium
+                    rightMargin: constant.paddingMedium
+                    verticalCenter: textLabel.verticalCenter
+                }
+                LayoutMirroring.enabled: false
+
+                Component.onCompleted: {
+                    checked = Bookmarking.getStatus(model.number);
+                }
+            }
+
+            Comp.Label {
                 id: suraLabel
-                verticalAlignment: Text.AlignVCenter
-//                        horizontalAlignment: Text.AlignRight
+                horizontalAlignment: Text.AlignLeft
                 color: Quran.fontColor
                 height: paintedHeight + constant.paddingLarge
                 anchors {
@@ -99,32 +103,31 @@ Page {
 
                 wrapMode: Text.WordWrap
                 text: model.suraName
-                font { pixelSize: Quran.fontSize; family: constant.fontName; }
+                font { pixelSize: Quran.fontSize; family: Quran.fontName; }
                 LayoutMirroring.enabled: true
             }
 
-            Label {
+            Comp.Label {
                 id: textLabel
-                verticalAlignment: Text.AlignVCenter
-//                        horizontalAlignment: Text.AlignRight
+                horizontalAlignment: Text.AlignLeft
                 color: Quran.fontColor
                 height: paintedHeight + constant.paddingLarge
                 anchors {
                     top: suraLabel.bottom
                     left: parent.left
-                    right: parent.right
+//                    right: parent.right
+                    right: bookmarkCheckBox.left
                     leftMargin: constant.paddingMedium
                     rightMargin: constant.paddingMedium
                 }
 
                 wrapMode: Text.WordWrap
                 text: model.text + " " + Utils.reverseString(Number(model.aya).toLocaleString(Qt.locale("ar-SA"), 'd', 0))
-                font { pixelSize: Quran.fontSize; family: constant.fontName; }
+                font { pixelSize: Quran.fontSize; family: Quran.fontName; }
                 LayoutMirroring.enabled: true
             }
-            Label {
+            Comp.Label {
                 id: translationLabel
-                verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignJustify
                 color: Quran.fontColor
                 height: visible ? (paintedHeight + constant.paddingMedium) : 0
@@ -143,7 +146,7 @@ Page {
 //                  color: highlighted ? constant.colorHighlighted : constant.colorLight
                 visible: (Quran.useTranslation)
             }
-            Rectangle {
+            /*Rectangle {
                 anchors {
                     top: translationLabel.bottom
                     left: parent.left
@@ -151,73 +154,18 @@ Page {
                 }
                 height: 2
                 color: "gray"
-            }
+            }*/
 
             onClicked: {
-
+                if(bookmarkCheckBox.checked) {
+                    Bookmarking.removeBookmark(model.number)
+                    bookmarkCheckBox.checked = false
+                }
+                else {
+                    Bookmarking.addBookmark(model.number)
+                    bookmarkCheckBox.checked = true
+                }
             }
-
-            /*Drawer {
-                id: contextMenu
-                width: applicationWindow.width
-                height: childrenRect.height + 100
-                edge: Qt.BottomEdge
-                bottomInset: -20
-
-                background: Rectangle {
-                    radius: 20
-                }
-
-                Column {
-                    anchors.fill: parent
-                    anchors.margins: 10
-                    spacing: 20
-
-                    Label {
-                        verticalAlignment: Text.AlignVCenter
-//                        horizontalAlignment: Text.AlignRight
-                        color: Quran.fontColor
-                        height: paintedHeight + constant.paddingLarge
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            leftMargin: constant.paddingMedium
-                            rightMargin: constant.paddingMedium
-                        }
-
-                        wrapMode: Text.WordWrap
-                        text: model.text + " " + Utils.reverseString(Number(model.aya).toLocaleString(Qt.locale("ar-SA"), 'd', 0))
-                        font { pixelSize: Quran.fontSize; family: constant.fontName; }
-                        LayoutMirroring.enabled: true
-                    }
-                    Label {
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignJustify
-                        color: Quran.fontColor
-                        height: visible ? (paintedHeight + constant.paddingMedium) : 0
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            leftMargin: constant.paddingMedium
-                            rightMargin: constant.paddingMedium
-                        }
-
-                        wrapMode: Text.WordWrap
-                        text: model.translation
-                        font.pixelSize: Quran.translationFontSize
-    //                  color: highlighted ? constant.colorHighlighted : constant.colorLight
-                        visible: (Quran.useTranslation)
-                    }
-
-                    Button {
-                        text: qsTr("Bookmark")
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        width: 300
-                        onClicked: {
-                        }
-                    }
-                }
-            }*/
         }
     }
 }

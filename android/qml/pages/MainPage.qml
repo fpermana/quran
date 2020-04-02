@@ -1,184 +1,76 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
 import id.fpermana.sailquran 1.0
-import "qrc:/qml/js/utils.js" as Utils
+import "../js/utils.js" as Utils
+import "../components" as Comp
 
-Page {
+Comp.Page {
     id: root
 
-    title: "SailQuran"
+    title: qsTr("Quran")
 
-    property Drawer menu: Drawer {
+    menu: Drawer {
         id: drawer
-        width: applicationWindow.width
-        height: applicationWindow.height * 0.40
-        edge: Qt.TopEdge
-        topInset: -20
+        width: applicationWindow.width * 0.6
+        height: applicationWindow.height - applicationWindow.header.height
+        y: applicationWindow.header.height
+        dragMargin : -1
 
-        background: Rectangle {
-            radius: 20
-        }
+        Column {
+            anchors.fill: parent
+            spacing: 10
 
-        Grid {
-            columns: applicationWindow.orientation === Qt.LandscapeOrientation ? 2 : 1
-            columnSpacing: 30
-            rowSpacing: 30
-            anchors {
-                bottom: parent.bottom
-                horizontalCenter: parent.horizontalCenter
-                margins: 50
-            }
-            Button {
+            ItemDelegate {
                 text: qsTr("Bookmark")
-                font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
-                width: 350
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
 
                 onClicked: {
                     stackView.push("qrc:/qml/pages/BookmarkPage.qml")
                     drawer.close()
                 }
             }
-            Button {
+
+            ItemDelegate {
                 text: qsTr("Translation")
-                font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
-                width: 350
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
 
                 onClicked: {
                     stackView.push("qrc:/qml/pages/TranslationPage.qml")
                     drawer.close()
                 }
             }
-            Button {
+
+            ItemDelegate {
                 text: qsTr("Setting")
-                font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
-                width: 350
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
 
                 onClicked: {
                     stackView.push("qrc:/qml/pages/SettingPage.qml")
                     drawer.close()
                 }
             }
-            Button {
+            ItemDelegate {
                 text: qsTr("About")
-                font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
-                width: 350
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
 
                 onClicked: {
                     stackView.push("qrc:/qml/pages/AboutPage.qml")
                     drawer.close()
                 }
             }
-            /*Button {
-                text: "satu"
-                font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
-            }*/
         }
-
-        /*Column {
-            anchors.fill: parent
-
-            ItemDelegate {
-                width: parent.width
-//                height: childrenRect.height
-                background: Rectangle {
-                    color: parent.pressed ? constant.colorHighlightedBackground : "transparent"
-                }
-
-                Label {
-                    verticalAlignment: Text.AlignVCenter
-//                        horizontalAlignment: Text.AlignRight
-                    color: constant.colorDark
-                    height: paintedHeight + constant.paddingLarge
-                    anchors {
-                        top: parent.top
-                        left: parent.left
-                        right: parent.right
-                        leftMargin: constant.paddingMedium
-                        rightMargin: constant.paddingMedium
-                    }
-                    wrapMode: Text.WordWrap
-                    text: qsTr("Translation")
-                    font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
-                }
-
-                Component.onCompleted: {
-                    height = childrenRect.height
-                }
-
-                onClicked: {
-                    stackView.push("qrc:/qml/pages/TranslationPage.qml")
-                    drawer.close()
-                }
-            }
-            ItemDelegate {
-                width: parent.width
-//                height: childrenRect.height
-                background: Rectangle {
-                    color: parent.pressed ? constant.colorHighlightedBackground : "transparent"
-                }
-
-                Label {
-                    verticalAlignment: Text.AlignVCenter
-//                        horizontalAlignment: Text.AlignRight
-                    color: constant.colorDark
-                    height: paintedHeight + constant.paddingLarge
-                    anchors {
-                        top: parent.top
-                        left: parent.left
-                        right: parent.right
-                        leftMargin: constant.paddingMedium
-                        rightMargin: constant.paddingMedium
-                    }
-
-                    wrapMode: Text.WordWrap
-                    text: qsTr("Setting")
-                    font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
-                }
-
-                Component.onCompleted: {
-                    height = childrenRect.height
-                }
-
-                onClicked: {
-                    stackView.push("qrc:/qml/pages/SettingPage.qml")
-                    drawer.close()
-                }
-            }
-            ItemDelegate {
-                width: parent.width
-//                height: childrenRect.height
-                background: Rectangle {
-                    color: parent.pressed ? constant.colorHighlightedBackground : "transparent"
-                }
-
-                Label {
-                    verticalAlignment: Text.AlignVCenter
-//                        horizontalAlignment: Text.AlignRight
-                    color: constant.colorDark
-                    height: paintedHeight + constant.paddingLarge
-                    anchors {
-                        top: parent.top
-                        left: parent.left
-                        right: parent.right
-                        leftMargin: constant.paddingMedium
-                        rightMargin: constant.paddingMedium
-                    }
-
-                    wrapMode: Text.WordWrap
-                    text: "About"
-                    font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
-                }
-
-                Component.onCompleted: {
-                    height = childrenRect.height
-                }
-
-                onClicked: {
-                    stackView.push("qrc:/qml/pages/AboutPage.qml")
-                    drawer.close()
-                }
-            }
-        }*/
     }
 
     Drawer {
@@ -190,116 +82,31 @@ Page {
         height: applicationWindow.height * 0.4
         edge: Qt.BottomEdge
         bottomInset: -20
-
-        background: Rectangle {
-            radius: 20
-        }
+        dragMargin : -1
 
         Column {
             anchors.fill: parent
             anchors.margins: 20
             spacing: 20
-            Label {
+            Comp.Label {
                 text: qsTr("Go to page")
-                font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
                 width: parent.width
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
             }
 
-            SpinBox {
+            Comp.SpinBox {
                 id: spinBox
-//                value: Quran.currentPage
                 from: 1
                 to: Quran.pageCount
-                editable: true
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: 300
-                font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
             }
 
-            Button {
-                text: "OK"
+            Comp.Button {
+                text: qsTr("OK")
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: 300
-                font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
 
                 onClicked: {
                     swipeView.setCurrentIndex(spinBox.value-1)
                     gotoMenu.close()
-                }
-            }
-        }
-    }
-
-    Drawer {
-        id: bookmarkMenu
-
-        property alias text: bookmarkQuranLabel.text
-        property alias translation: bookmarkTranslationLabel.text
-
-        width: applicationWindow.width
-        height: bookmarkColumn.height
-        edge: Qt.BottomEdge
-        bottomInset: -20
-
-        background: Rectangle {
-            radius: 20
-        }
-
-        Column {
-            id: bookmarkColumn
-            height: childrenRect.height + 25
-            anchors {
-                margins: 10
-                left: parent.left
-                right: parent.right
-            }
-            spacing: 20
-
-            Label {
-                id: bookmarkQuranLabel
-                verticalAlignment: Text.AlignVCenter
-//                        horizontalAlignment: Text.AlignRight
-                color: Quran.fontColor
-                height: paintedHeight + constant.paddingLarge
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    leftMargin: constant.paddingMedium
-                    rightMargin: constant.paddingMedium
-                }
-
-                wrapMode: Text.WordWrap
-//                text: model.text + " " + Utils.reverseString(Number(model.aya).toLocaleString(Qt.locale("ar-SA"), 'd', 0))
-                font { pixelSize: Quran.fontSize; family: constant.fontName; }
-                LayoutMirroring.enabled: true
-            }
-            Label {
-                id: bookmarkTranslationLabel
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignJustify
-                color: Quran.fontColor
-                height: visible ? (paintedHeight + constant.paddingMedium) : 0
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    leftMargin: constant.paddingMedium
-                    rightMargin: constant.paddingMedium
-                }
-
-                wrapMode: Text.WordWrap
-//                text: model.translation
-                font.pixelSize: Quran.translationFontSize
-//                  color: highlighted ? constant.colorHighlighted : constant.colorLight
-                visible: (Quran.useTranslation)
-            }
-            Button {
-                text: qsTr("Bookmark")
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: 300
-                font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
-                onClicked: {
                 }
             }
         }
@@ -311,36 +118,25 @@ Page {
         height: applicationWindow.height * 0.4
         edge: Qt.BottomEdge
         bottomInset: -20
-
-        background: Rectangle {
-            radius: 20
-        }
+        dragMargin : -1
 
         Column {
             anchors.fill: parent
             anchors.margins: 20
             spacing: 20
-            Label {
+            Comp.Label {
                 text: qsTr("Search in translations...")
-                font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
                 width: parent.width
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
             }
 
-            TextField {
+            Comp.TextField {
                 id: searchTextField
-                width: 300
                 anchors.horizontalCenter: parent.horizontalCenter
-                font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
-//                placeholderText: "Find in translations..."
             }
 
-            Button {
+            Comp.Button {
                 text: qsTr("OK")
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: 300
-                font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
 
                 onClicked: {
                     Searching.search(searchTextField.text, Quran.quranText, Quran.translation, 0, 10)
@@ -358,25 +154,33 @@ Page {
             right: parent.right
         }
 
-        /*Label {
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            color: Quran.fontColor
-            anchors.centerIn: parent
-
-            wrapMode: Text.WordWrap
+        /*ToolButton {
+            height: parent.height
+            width: parent.height
             text: Number(swipeView.currentIndex+1).toLocaleString(Qt.locale("ar-SA"), 'd', 0)
-            font.pixelSize: Quran.translationFontSize
+            font { pixelSize: constant.fontSizeXLarge; }
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                verticalCenter: parent.verticalCenter
+                leftMargin: 5
+                rightMargin: 5
+            }
+            onClicked: {
+                gotoMenu.open()
+                gotoMenu.value = Quran.currentPage
+            }
         }*/
 
         ToolButton {
-            height: 40
-            width: 40
+            height: parent.height
+            width: parent.height*2
             text: Number(swipeView.currentIndex+1).toLocaleString(Qt.locale("ar-SA"), 'd', 0)
+            font { pixelSize: constant.fontSizeXXLarge; family: constant.largeFontName }
             anchors {
                 horizontalCenter: parent.horizontalCenter
-                margins: 5
                 verticalCenter: parent.verticalCenter
+                leftMargin: 5
+                rightMargin: 5
             }
             onClicked: {
                 gotoMenu.open()
@@ -388,10 +192,11 @@ Page {
             id: searchIcon
             height: 40
             width: 40
-            icon.source: "qrc:/icons/search_icon.svg"
+            icon.source: "qrc:/icons/search_icon.png"
+//            text: "\u02c5"
+//            text: "\u02ec"
             anchors {
                 right: pageIcon.left
-                margins: 5
                 verticalCenter: parent.verticalCenter
             }
             onClicked: {
@@ -406,7 +211,8 @@ Page {
             text: "\u2026"
             anchors {
                 right: parent.right
-                margins: 5
+                leftMargin: 5
+                rightMargin: 5
                 verticalCenter: parent.verticalCenter
             }
 
@@ -436,8 +242,8 @@ Page {
             }
 
             wrapMode: Text.WordWrap
-            text: swipeView.currentItem !== null && swipeView.currentItem.item !== null ? swipeView.currentItem.item.currentItem.suraName : ""
-            font { pixelSize: constant.fontSizeXLarge; family: constant.fontName; }
+            text: swipeView.currentItem !== null && swipeView.currentItem.item !== null  && swipeView.currentItem.item.currentItem !== null ? swipeView.currentItem.item.currentItem.suraName : ""
+            font { pixelSize: Quran.fontSize-8; family: Quran.fontName; }
             LayoutMirroring.enabled: true
         }
     }
@@ -457,6 +263,7 @@ Page {
             if(stackView.currentItem !== root)
                 stackView.pop()
             swipeView.setCurrentIndex(page-1)
+            suraLabel.text = swipeView.currentItem !== null && swipeView.currentItem.item !== null  && swipeView.currentItem.item.currentItem !== null ? swipeView.currentItem.item.currentItem.suraName : ""
         }
     }
 
@@ -489,7 +296,7 @@ Page {
             }
 
             Loader {
-                active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
+                active: (SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem)
 
                 sourceComponent: ListView {
                     id: listView
@@ -497,7 +304,8 @@ Page {
                         if(index === Quran.currentPage-1) {
                             Quran.currentIndex = listView.indexAt(0,contentY)
                             Quran.lastIndex = index
-                            root.header.title = listView.itemAtIndex(Quran.currentIndex).suraName
+                            if(listView.itemAtIndex(Quran.currentIndex) !== null)
+                                root.header.title = listView.itemAtIndex(Quran.currentIndex).suraName
                         }
                     }
                     Component.onCompleted: {
@@ -543,7 +351,7 @@ Page {
                                 right: parent.right
                                 margins: constant.paddingMedium
                             }
-                            font { family: constant.largeFontName; pixelSize: constant.fontSizeHuge; }
+                            font { family: Quran.largeFontName; pixelSize: Quran.fontSize+8; }
                             color: Quran.fontColor
                             wrapMode: Text.WordWrap
                             height: visible ? (paintedHeight + constant.paddingMedium) : 0
@@ -555,38 +363,35 @@ Page {
                                 left: parent.left
                                 right: parent.right
                             }
-                            background: Rectangle {
+                            /*background: Rectangle {
                                 color: parent.pressed ? constant.colorHighlightedBackground : "transparent"
-                            }
-                            Label {
+                            }*/
+                            Comp.Label {
                                 id: textLabel
-                                verticalAlignment: Text.AlignVCenter
-        //                        horizontalAlignment: Text.AlignRight
+                                horizontalAlignment: Text.AlignLeft
                                 color: Quran.fontColor
                                 height: paintedHeight + constant.paddingLarge
                                 anchors {
                                     top: parent.top
                                     left: parent.left
-                                    right: bookmarkLabel.left
+                                    right: bookmarkCheckBox.left
                                     leftMargin: constant.paddingMedium
                                     rightMargin: constant.paddingMedium
                                 }
 
                                 wrapMode: Text.WordWrap
                                 text: model.text + " " + Utils.reverseString(Number(model.aya).toLocaleString(Qt.locale("ar-SA"), 'd', 0))
-                                font { pixelSize: Quran.fontSize; family: constant.fontName; }
+                                font { pixelSize: Quran.fontSize; family: Quran.fontName; }
                                 LayoutMirroring.enabled: true
                             }
-                            Label {
+                            Comp.Label {
                                 id: translationLabel
-                                verticalAlignment: Text.AlignVCenter
                                 horizontalAlignment: Text.AlignJustify
                                 color: Quran.fontColor
                                 height: visible ? (paintedHeight + constant.paddingMedium) : 0
                                 anchors {
                                     top: textLabel.bottom
                                     left: parent.left
-//                                    right: bookmarkLabel.left
                                     right: parent.right
                                     leftMargin: constant.paddingMedium
                                     rightMargin: constant.paddingMedium
@@ -595,36 +400,30 @@ Page {
                                 wrapMode: Text.WordWrap
                                 text: model.translation
                                 font.pixelSize: Quran.translationFontSize
-            //                  color: highlighted ? constant.colorHighlighted : constant.colorLight
                                 visible: (Quran.useTranslation)
                             }
-                            Label {
-                                id: bookmarkLabel
-                                //text: model.marked ? "\u26AB" : "\u26AA"
-                                font { pixelSize: constant.fontSizeXLarge; family: constant.fontName; }
-                                width: 60
-                                height: textLabel.height
-                                verticalAlignment: Text.AlignVCenter
-                                horizontalAlignment: Text.AlignHCenter
+                            Comp.CheckBox {
+                                id: bookmarkCheckBox
+                                enabled: false
                                 anchors {
                                     right: parent.right //hiding
                                     verticalCenter: textLabel.verticalCenter
+                                    rightMargin: constant.paddingMedium
                                 }
 
                                 Component.onCompleted: {
-                                    var status = Bookmarking.getStatus(model.number);
-                                    text = status ? "\u25C9" : "\u25CB";
+                                    checked = Bookmarking.getStatus(model.number);
                                 }
                             }
 
                             onClicked: {
-                                if(bookmarkLabel.text == "\u25CB") {
-                                    Bookmarking.addBookmark(model.number)
-                                    bookmarkLabel.text = "\u25C9"
+                                if(bookmarkCheckBox.checked) {
+                                    Bookmarking.removeBookmark(model.number)
+                                    bookmarkCheckBox.checked = false
                                 }
                                 else {
-                                    Bookmarking.removeBookmark(model.number)
-                                    bookmarkLabel.text = "\u25CB"
+                                    Bookmarking.addBookmark(model.number)
+                                    bookmarkCheckBox.checked = true
                                 }
                             }
                         }

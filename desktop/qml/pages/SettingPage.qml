@@ -125,7 +125,7 @@ Page {
                     right: parent.right
                 }
                 stepSize: 1
-                from: 15
+                from: 10
                 to: 70
                 value: Quran.fontSize
 
@@ -177,7 +177,7 @@ Page {
                 }
                 stepSize: 1
                 visible: Quran.useTranslation
-                from: 15
+                from: 10
                 to: 35
                 value: Quran.translationFontSize
 
@@ -227,7 +227,7 @@ Page {
                 Comp.CheckBox {
                     id: useBackgroundSwitch
                     text: qsTr("Dark Mode")
-                    checked: Setting.universalTheme
+                    checked: Setting.universalTheme === Universal.Dark
                     anchors {
                         left: parent.left
                         right: parent.right
@@ -245,8 +245,6 @@ Page {
                         else if(!checked) {
                             Quran.fontColor = "#000000"
                         }
-
-                        Setting.universalTheme = checked ? Universal.Dark : Universal.Light
                     }
                 }
             }

@@ -1,8 +1,7 @@
 TARGET = sailquran
 TEMPLATE = app
 
-#QT += core gui declarative network sql
-QT += core sql qml quick quickcontrols2 svg
+QT += core sql qml quick quickcontrols2 svg xml
 
 CONFIG += c++11
 
@@ -16,31 +15,20 @@ RCC_DIR=generated_files #Intermediate qrc files directory
 LIBS += -lz
 DEFINES += QUAZIP_STATIC
 
-#include(../3rdparty/3rdparty.pri)
 include(../3rdparty/quazip/quazip.pri)
 include(../src/src.pri)
 
-#include(gui/gui.pri)
-#include(declarative/declarative.pri)
-
 SOURCES += main.cpp
-
-#HEADERS  += \
-#        build.h
 
 RESOURCES += qml.qrc \
     ../db.qrc \
     ../flags.qrc \
     ../fonts.qrc \
-    ../icons.qrc \
+    icons.qrc \
     js.qrc
 #    ../apks.qrc \
 #    resources.qrc \
 #    components.qrc
-
-#lupdate_only {
-#    OTHER_FILES = qml/AboutPopup.qml
-#}
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -66,11 +54,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android-build
 
-DISTFILES += qtquickcontrols2.conf \
-    android-build/AndroidManifest.xml
-#    android-build/gradle/wrapper/gradle-wrapper.jar \
-#    android-build/gradlew \
-#    android-build/res/values/libs.xml \
-#    android-build/build.gradle \
-#    android-build/gradle/wrapper/gradle-wrapper.properties \
-#    android-build/gradlew.bat
+DISTFILES += \
+    android-build/AndroidManifest.xml \
+    android-build/build.gradle \
+    android-build/gradle/wrapper/gradle-wrapper.jar \
+    android-build/gradle/wrapper/gradle-wrapper.properties \
+    android-build/gradlew \
+    android-build/gradlew.bat \
+    android-build/res/values/libs.xml

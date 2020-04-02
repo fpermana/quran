@@ -1,8 +1,9 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
 import id.fpermana.sailquran 1.0
+import "../components" as Comp
 
-Page {
+Comp.Page {
     id: translationsPage
     title: qsTr("Translation")
     property TranslationList translationList
@@ -100,26 +101,6 @@ Page {
                     }
                 }
             }
-
-            /*ContextMenu {
-                id: contextMenu
-                MenuItem {
-                    text: "Download"
-                    onClicked: {
-                        listItem.enabled = false
-                        textLabel.text = "Downloading..."
-                        Controller.downloadTranslation(model.tid);
-                    }
-                    visible: !model.installed
-                }
-                MenuItem {
-                    text: "Remove"
-                    onClicked: {
-                        remorse.execute(listItem, "Removing...", function() { Controller.removeTranslation(model.tid); } )
-                    }
-                    visible: model.installed
-                }
-            }*/
         }
     }
 }

@@ -15,6 +15,7 @@ Page {
         height: applicationWindow.height * 0.40
         edge: Qt.TopEdge
         topInset: -20
+        dragMargin : -1
 
         Grid {
             columns: applicationWindow.orientation === Qt.LandscapeOrientation ? 2 : 1
@@ -69,6 +70,7 @@ Page {
         height: applicationWindow.height * 0.4
         edge: Qt.BottomEdge
         bottomInset: -20
+        dragMargin : -1
 
         Column {
             anchors.fill: parent
@@ -104,6 +106,7 @@ Page {
         height: applicationWindow.height * 0.4
         edge: Qt.BottomEdge
         bottomInset: -20
+        dragMargin : -1
 
         Column {
             anchors.fill: parent
@@ -145,7 +148,6 @@ Page {
             text: Number(swipeView.currentIndex+1).toLocaleString(Qt.locale("ar-SA"), 'd', 0)
             anchors {
                 horizontalCenter: parent.horizontalCenter
-                margins: 5
                 verticalCenter: parent.verticalCenter
             }
             onClicked: {
@@ -161,7 +163,8 @@ Page {
             icon.source: "qrc:/icons/search_icon.svg"
             anchors {
                 right: pageIcon.left
-                margins: 5
+                leftMargin: 5
+                rightMargin: 5
                 verticalCenter: parent.verticalCenter
             }
             onClicked: {
@@ -176,7 +179,8 @@ Page {
             text: "\u2026"
             anchors {
                 right: parent.right
-                margins: 5
+                leftMargin: 5
+                rightMargin: 5
                 verticalCenter: parent.verticalCenter
             }
 
