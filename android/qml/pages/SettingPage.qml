@@ -8,6 +8,15 @@ Comp.Page {
     id: settingPage
 
     property TranslationList translationList
+    menu: Comp.Menu {
+        MenuItem {
+            text: qsTr("Manage Translations")
+//            shortcut: "Ctrl+X"
+            onTriggered: {
+                appStackView.push("qrc:/qml/pages/TranslationPage.qml")
+            }
+        }
+    }
 
     title: qsTr("Setting")
 
@@ -146,6 +155,7 @@ Comp.Page {
 
                 onActivated: {
                     Quran.quranText = model.get(index).value
+                    Quran.saveSettings()
                 }
             }
 
@@ -173,6 +183,7 @@ Comp.Page {
 
                 onValueChanged: {
                     Quran.fontSize = value
+                    Quran.saveSettings()
                 }
             }
 
@@ -198,6 +209,7 @@ Comp.Page {
                     }
                     onCheckedChanged: {
                         Quran.useTranslation = checked
+                        Quran.saveSettings()
                     }
                 }
             }
@@ -228,6 +240,7 @@ Comp.Page {
 
                 onValueChanged: {
                     Quran.translationFontSize = value
+                    Quran.saveSettings()
                 }
             }
 
@@ -282,10 +295,11 @@ Comp.Page {
                 }
                 onActivated: {
                     Quran.translation = model.get(index).tid.replace(".","_")
+                    Quran.saveSettings()
                 }
             }
 
-            Comp.Button {
+            /*Comp.Button {
                 anchors {
                     right: parent.right
                     margins: 15
@@ -293,9 +307,9 @@ Comp.Page {
                 text: qsTr("Manage Translations")
                 visible: Quran.useTranslation
                 onClicked: {
-                    stackView.push("qrc:/qml/pages/TranslationPage.qml")
+                    appStackView.push("qrc:/qml/pages/TranslationPage.qml")
                 }
-            }
+            }*/
 
             ItemDelegate {
                 height: 60
@@ -326,12 +340,15 @@ Comp.Page {
                         else if(!checked) {
                             Quran.fontColor = "#000000"
                         }
+
+                        Quran.saveSettings()
+                        Setting.saveSetting()
                     }
                 }
             }
 
             Comp.Label {
-                text: qsTr("System Font Size") + ": " + systemFontSizeSlider.value
+                text: qsTr("App Font Size") + ": " + appFontSizeSlider.value
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignBottom
                 anchors {
@@ -342,7 +359,7 @@ Comp.Page {
             }
 
             Slider {
-                id: systemFontSizeSlider
+                id: appFontSizeSlider
                 anchors {
                     left: parent.left
                     right: parent.right
@@ -356,6 +373,8 @@ Comp.Page {
                     Setting.fontSize = value
                     Setting.smallFontSize = value - 4
                     Setting.largeFontSize = value + 6
+
+                    Setting.saveSetting()
                 }
             }
 
@@ -369,14 +388,14 @@ Comp.Page {
                 spacing: 15
                 layoutDirection: Qt.RightToLeft
 
-                Comp.Button {
+                /*Comp.Button {
                     text: qsTr("Save Settings")
                     width: parent.width * 0.4
                     onClicked: {
                         Setting.saveSetting()
                         Quran.saveSettings()
                     }
-                }
+                }*/
 
                 Comp.Button {
                     text: qsTr("Reset Settings")

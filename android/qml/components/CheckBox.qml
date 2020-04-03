@@ -7,20 +7,20 @@ CheckBox {
     checked: false
 
     indicator: Rectangle {
-        implicitWidth: 26
-        implicitHeight: 26
+        implicitWidth: 24
+        implicitHeight: 24
         x: root.leftPadding
         y: parent.height / 2 - height / 2
-        radius: 14
+        radius: 12
 //        border.color: root.down ? "#17a81a" : "#21be2b"
         border.color: "black"
 
         Rectangle {
-            width: 14
-            height: 14
+            width: 12
+            height: 12
             x: 6
             y: 6
-            radius: 14
+            radius: 12
 //            color: root.down ? "#17a81a" : "#21be2b"
             color: "black"
             visible: root.checked

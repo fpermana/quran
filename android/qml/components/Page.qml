@@ -4,5 +4,12 @@ import QtQuick.Controls 2.5
 Page {
     id: root
 
-    property Drawer menu
+    function search(keyword) {
+        searching(keyword)
+    }
+
+    property Menu menu
+    property bool searchable: false
+
+    signal searching(string keyword)
 }

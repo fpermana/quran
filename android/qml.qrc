@@ -15,5 +15,6 @@
         <file>qml/components/TextField.qml</file>
         <file>qml/components/CheckBox.qml</file>
         <file>qml/components/Page.qml</file>
+        <file>qml/components/Menu.qml</file>
     </qresource>
 </RCC>

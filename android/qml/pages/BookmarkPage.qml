@@ -73,12 +73,12 @@ Comp.Page {
             Comp.CheckBox {
                 id: bookmarkCheckBox
                 enabled: false
-                height: textLabel.height
-                width: 40
+                height: 30
+                width: 30
                 anchors {
                     left: parent.left
                     leftMargin: constant.paddingMedium
-                    rightMargin: constant.paddingMedium
+                    rightMargin: constant.paddingSmall
                     verticalCenter: textLabel.verticalCenter
                 }
                 LayoutMirroring.enabled: false

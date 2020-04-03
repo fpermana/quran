@@ -59,7 +59,7 @@
 #define MATERIAL_ELEVATION_KEY              "material_elevation"
 #define MATERIAL_PRIMARY_KEY                "material_primary"
 
-#define DEFAULT_MATERIAL_ACCENT             "#E91E63"
+#define DEFAULT_MATERIAL_ACCENT             "#42A5F5"
 #define DEFAULT_MATERIAL_BACKGROUND         ""
 #define DEFAULT_MATERIAL_FOREGROUND         ""
 #define DEFAULT_MATERIAL_THEME              0

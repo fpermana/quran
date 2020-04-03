@@ -7,9 +7,15 @@ import "../components" as Comp
 Comp.Page {
     id: page
     title: qsTr("Search")
+    searchable: true
 
     property string keyword
     property AyaList ayaList
+
+    onSearching: {
+        page.keyword = keyword
+        Searching.searchNew(keyword, Quran.quranText, Quran.translation, 0, 20)
+    }
 
     Connections {
         target: Searching
@@ -22,7 +28,7 @@ Comp.Page {
         }
     }
 
-    footer: Item {
+    /*footer: Item {
         height: constant.footerHeight
 
         anchors {
@@ -44,7 +50,7 @@ Comp.Page {
                 searchMenu.open()
             }
         }
-    }
+    }*/
     header: Item {
         height: constant.headerHeight
         Comp.Label {
@@ -54,7 +60,7 @@ Comp.Page {
         }
     }
 
-    Drawer {
+    /*Drawer {
         id: searchMenu
         property alias keyword: searchTextField.text
 
@@ -88,7 +94,7 @@ Comp.Page {
                 }
             }
         }
-    }
+    }*/
 
     ListView {
         id: listView
@@ -133,12 +139,12 @@ Comp.Page {
             Comp.CheckBox {
                 id: bookmarkCheckBox
                 enabled: false
-                height: textLabel.height
-                width: 40
+                height: 30
+                width: 30
                 anchors {
                     left: parent.left
                     leftMargin: constant.paddingMedium
-                    rightMargin: constant.paddingMedium
+                    rightMargin: constant.paddingSmall
                     verticalCenter: textLabel.verticalCenter
                 }
                 LayoutMirroring.enabled: false

@@ -8,72 +8,63 @@ Comp.Page {
     id: root
 
     title: qsTr("Quran")
+    searchable: true
 
-    menu: Drawer {
-        id: drawer
-        width: applicationWindow.width * 0.6
-        height: applicationWindow.height - applicationWindow.header.height
-        y: applicationWindow.header.height
-        dragMargin : -1
+    onSearching: {
+        Searching.search(keyword, Quran.quranText, Quran.translation, 0, 10)
+    }
 
-        Column {
-            anchors.fill: parent
+    Popup {
+        id: gotoPopup
+        width: root.width/2
+        dim: true
+        x: Math.round((parent.width - width) / 2)
+        y: Math.round((parent.height - height) / 2)
+        modal: true
+        onOpened: {
+            gotoTextField.text = ""
+        }
+        parent: Overlay.overlay
+//        anchors.centerIn: root
+
+//        contentItem:
+        /*Column {
             spacing: 10
-
-            ItemDelegate {
-                text: qsTr("Bookmark")
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-
-                onClicked: {
-                    stackView.push("qrc:/qml/pages/BookmarkPage.qml")
-                    drawer.close()
-                }
+            anchors {
+                left: parent.left
+                right: parent.right
             }
 
-            ItemDelegate {
-                text: qsTr("Translation")
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
+            Comp.Label {
+                text: qsTr("Go to page...")
+                font { pixelSize: constant.fontSizeLarge; }
+            }
+            Comp.SpinBox {
+                from: 1
+                to: Quran.pageCount
+                anchors.horizontalCenter: parent.horizontalCenter
+                value: Quran.currentPage
+            }
+        }*/
+        TextField {
+            id: gotoTextField
+            inputMethodHints: Qt.ImhDigitsOnly
+            validator: IntValidator{bottom: 1; top: Quran.pageCount;}
+            placeholderText: qsTr("Go to page... (1-" + Quran.pageCount + ")")
 
-                onClicked: {
-                    stackView.push("qrc:/qml/pages/TranslationPage.qml")
-                    drawer.close()
-                }
+            anchors {
+                left: parent.left
+                right: parent.right
             }
 
-            ItemDelegate {
-                text: qsTr("Setting")
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-
-                onClicked: {
-                    stackView.push("qrc:/qml/pages/SettingPage.qml")
-                    drawer.close()
-                }
-            }
-            ItemDelegate {
-                text: qsTr("About")
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-
-                onClicked: {
-                    stackView.push("qrc:/qml/pages/AboutPage.qml")
-                    drawer.close()
-                }
+            onAccepted: {
+                swipeView.setCurrentIndex(gotoTextField.text-1)
+                gotoPopup.close()
             }
         }
     }
 
-    Drawer {
+    /*Drawer {
         id: gotoMenu
 
         property alias value: spinBox.value
@@ -110,9 +101,9 @@ Comp.Page {
                 }
             }
         }
-    }
+    }*/
 
-    Drawer {
+    /*Drawer {
         id: searchMenu
         width: applicationWindow.width
         height: applicationWindow.height * 0.4
@@ -144,32 +135,15 @@ Comp.Page {
                 }
             }
         }
-    }
+    }*/
 
-    footer: Item {
+    /*footer: Item {
         height: constant.footerHeight
 
         anchors {
             left: parent.left
             right: parent.right
         }
-
-        /*ToolButton {
-            height: parent.height
-            width: parent.height
-            text: Number(swipeView.currentIndex+1).toLocaleString(Qt.locale("ar-SA"), 'd', 0)
-            font { pixelSize: constant.fontSizeXLarge; }
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                verticalCenter: parent.verticalCenter
-                leftMargin: 5
-                rightMargin: 5
-            }
-            onClicked: {
-                gotoMenu.open()
-                gotoMenu.value = Quran.currentPage
-            }
-        }*/
 
         ToolButton {
             height: parent.height
@@ -217,35 +191,67 @@ Comp.Page {
             }
 
             onClicked: {
-                stackView.push("qrc:/qml/pages/IndexPage.qml", {currentIndex: swipeView.currentItem.item.currentItem.sura-1 })
+                appStackView.push("qrc:/qml/pages/IndexPage.qml", {currentIndex: swipeView.currentItem.item.currentItem.sura-1 })
             }
         }
-    }
+    }*/
+
     header: Item {
         id: headerItem
-        property alias title: suraLabel.text
 
         height: constant.headerHeight
+        width: root.width
 
-        Label {
-            id: suraLabel
-            verticalAlignment: Text.AlignVCenter
-//                        horizontalAlignment: Text.AlignRight
-            color: Quran.fontColor
+        ItemDelegate {
+            height: parent.height
+//            width: parent.height*2
+            text: Number(swipeView.currentIndex+1).toLocaleString(Qt.locale("ar-SA"), 'd', 0)
+            font { pixelSize: constant.fontSizeXXLarge; family: constant.largeFontName }
             anchors {
-                top: parent.top
                 left: parent.left
-                right: parent.right
-                leftMargin: constant.paddingMedium
-                rightMargin: constant.paddingMedium
-                bottom: parent.bottom
+                leftMargin: 5
             }
-
-            wrapMode: Text.WordWrap
-            text: swipeView.currentItem !== null && swipeView.currentItem.item !== null  && swipeView.currentItem.item.currentItem !== null ? swipeView.currentItem.item.currentItem.suraName : ""
-            font { pixelSize: Quran.fontSize-8; family: Quran.fontName; }
-            LayoutMirroring.enabled: true
+            onClicked: {
+                gotoPopup.open()
+//                gotoMenu.open()
+//                gotoMenu.value = Quran.currentPage
+            }
         }
+
+        ItemDelegate {
+            id: suraLabel
+            height: parent.height
+//            width: parent.height*2
+            text: swipeView.currentItem !== null && swipeView.currentItem.item !== null  && swipeView.currentItem.item.currentItem !== null ? swipeView.currentItem.item.currentItem.suraName : ""
+//            LayoutMirroring.enabled: true
+            font { pixelSize: constant.fontSizeXXLarge; family: constant.largeFontName }
+            anchors {
+                right: parent.right
+                rightMargin: 5
+            }
+            onClicked: {
+                appStackView.push("qrc:/qml/pages/IndexPage.qml", {currentIndex: swipeView.currentItem.item.currentItem.sura-1 })
+            }
+        }
+
+//        Label {
+//            id: suraLabel
+//            verticalAlignment: Text.AlignVCenter
+//            color: Quran.fontColor
+//            anchors {
+//                top: parent.top
+//                left: parent.left
+//                right: parent.right
+//                leftMargin: constant.paddingMedium
+//                rightMargin: constant.paddingMedium
+//                bottom: parent.bottom
+//            }
+
+//            wrapMode: Text.WordWrap
+//            text: swipeView.currentItem !== null && swipeView.currentItem.item !== null  && swipeView.currentItem.item.currentItem !== null ? swipeView.currentItem.item.currentItem.suraName : ""
+//            font { pixelSize: Quran.fontSize-8; family: Quran.fontName; }
+//            LayoutMirroring.enabled: true
+//        }
     }
 
     Connections {
@@ -260,17 +266,16 @@ Comp.Page {
             }
         }*/
         onGotoPage: {
-            if(stackView.currentItem !== root)
-                stackView.pop()
+            if(appStackView.currentItem !== root)
+                appStackView.pop()
             swipeView.setCurrentIndex(page-1)
-            suraLabel.text = swipeView.currentItem !== null && swipeView.currentItem.item !== null  && swipeView.currentItem.item.currentItem !== null ? swipeView.currentItem.item.currentItem.suraName : ""
         }
     }
 
     Connections {
         target: Searching
         onFound: {
-            stackView.push("qrc:/qml/pages/SearchPage.qml",{keyword: keyword, ayaList: ayaList})
+            appStackView.push("qrc:/qml/pages/SearchPage.qml",{keyword: keyword, ayaList: ayaList})
         }
     }
 
@@ -282,6 +287,11 @@ Comp.Page {
             if(Quran.currentPage > 0 && Quran.currentPage != currentIndex+1) {
                 Quran.currentPage = currentIndex+1
             }
+        }
+
+        onCurrentItemChanged: {
+            if(currentItem.item !== null && suraLabel.text && currentItem.item.itemAtIndex(0) !== null)
+                suraLabel.text = currentItem.item.itemAtIndex(0).suraName
         }
 
         LayoutMirroring.enabled: true
@@ -297,6 +307,12 @@ Comp.Page {
 
             Loader {
                 active: (SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem)
+                onActiveChanged: {
+                    if(active && SwipeView.isCurrentItem) {
+                        var idx = item.indexAt(0,item.contentY)
+                        suraLabel.text = item.itemAtIndex(idx).suraName
+                    }
+                }
 
                 sourceComponent: ListView {
                     id: listView
@@ -305,7 +321,7 @@ Comp.Page {
                             Quran.currentIndex = listView.indexAt(0,contentY)
                             Quran.lastIndex = index
                             if(listView.itemAtIndex(Quran.currentIndex) !== null)
-                                root.header.title = listView.itemAtIndex(Quran.currentIndex).suraName
+                                suraLabel.text = listView.itemAtIndex(Quran.currentIndex).suraName
                         }
                     }
                     Component.onCompleted: {
@@ -408,7 +424,7 @@ Comp.Page {
                                 anchors {
                                     right: parent.right //hiding
                                     verticalCenter: textLabel.verticalCenter
-                                    rightMargin: constant.paddingMedium
+                                    rightMargin: constant.paddingSmall
                                 }
 
                                 Component.onCompleted: {

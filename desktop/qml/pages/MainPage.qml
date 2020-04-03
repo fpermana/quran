@@ -191,7 +191,6 @@ Page {
     }
     header: Item {
         id: headerItem
-        property alias title: suraLabel.text
 
         height: constant.headerHeight
 
@@ -231,7 +230,6 @@ Page {
             if(stackView.currentItem !== root)
                 stackView.pop()
             swipeView.setCurrentIndex(page-1)
-            suraLabel.text = swipeView.currentItem !== null && swipeView.currentItem.item !== null  && swipeView.currentItem.item.currentItem !== null ? swipeView.currentItem.item.currentItem.suraName : ""
         }
     }
 
@@ -252,6 +250,11 @@ Page {
             }
         }
 
+        onCurrentItemChanged: {
+            if(currentItem.item !== null && suraLabel.text && currentItem.item.itemAtIndex(0) !== null)
+                suraLabel.text = currentItem.item.itemAtIndex(0).suraName
+        }
+
         LayoutMirroring.enabled: true
         LayoutMirroring.childrenInherit: true
         orientation: Qt.Horizontal
@@ -265,6 +268,12 @@ Page {
 
             Loader {
                 active: (SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem)
+                onActiveChanged: {
+                    if(active && SwipeView.isCurrentItem) {
+                        var idx = item.indexAt(0,item.contentY)
+                        suraLabel.text = item.itemAtIndex(idx).suraName
+                    }
+                }
 
                 sourceComponent: ListView {
                     id: listView
@@ -273,7 +282,7 @@ Page {
                             Quran.currentIndex = listView.indexAt(0,contentY)
                             Quran.lastIndex = index
                             if(listView.itemAtIndex(Quran.currentIndex) !== null)
-                                root.header.title = listView.itemAtIndex(Quran.currentIndex).suraName
+                                suraLabel.text = listView.itemAtIndex(Quran.currentIndex).suraName
                         }
                     }
                     Component.onCompleted: {

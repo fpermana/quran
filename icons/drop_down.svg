@@ -1,44 +1,104 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 493.258 493.258" style="enable-background:new 0 0 493.258 493.258;" xml:space="preserve">
-<g id="XMLID_621_">
-	<path id="XMLID_623_" d="M131.564,219.258h230.13c9.314,0,17.857-5.16,22.203-13.389c4.34-8.246,3.769-18.193-1.494-25.895
-		L265.92,9.772C261.75,3.68,254.846,0.033,247.461,0c-7.377-0.018-14.303,3.584-18.507,9.658L110.935,179.863
-		c-5.319,7.668-5.938,17.664-1.607,25.941C113.659,214.067,122.225,219.258,131.564,219.258z"/>
-	<path id="XMLID_622_" d="M361.694,273.998h-230.13c-9.339,0-17.905,5.193-22.236,13.455c-4.331,8.277-3.711,18.273,1.607,25.939
-		l118.019,170.205c4.204,6.074,11.13,9.676,18.507,9.66c7.385-0.031,14.289-3.682,18.459-9.772l116.483-170.205
-		c5.263-7.699,5.834-17.648,1.494-25.895C379.551,279.158,371.008,273.998,361.694,273.998z"/>
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Capa_1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 493.258 493.258"
+   style="enable-background:new 0 0 493.258 493.258;"
+   xml:space="preserve"
+   sodipodi:docname="drop_down.svg"
+   inkscape:export-filename="C:\Users\fpermana\Qt\sailquran\android\icons\drop_down.png"
+   inkscape:export-xdpi="95"
+   inkscape:export-ydpi="95"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"><metadata
+   id="metadata40"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+   id="defs38" /><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1001"
+   id="namedview36"
+   showgrid="false"
+   inkscape:zoom="0.47845144"
+   inkscape:cx="-39.711449"
+   inkscape:cy="246.629"
+   inkscape:window-x="-9"
+   inkscape:window-y="-9"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Capa_1" />
+<g
+   id="XMLID_621_"
+   style="fill:#6c6c6c;fill-opacity:1">
+	<path
+   id="XMLID_623_"
+   d="M131.564,219.258h230.13c9.314,0,17.857-5.16,22.203-13.389c4.34-8.246,3.769-18.193-1.494-25.895   L265.92,9.772C261.75,3.68,254.846,0.033,247.461,0c-7.377-0.018-14.303,3.584-18.507,9.658L110.935,179.863   c-5.319,7.668-5.938,17.664-1.607,25.941C113.659,214.067,122.225,219.258,131.564,219.258z"
+   style="fill:#6c6c6c;fill-opacity:1" />
+	<path
+   id="XMLID_622_"
+   d="M361.694,273.998h-230.13c-9.339,0-17.905,5.193-22.236,13.455c-4.331,8.277-3.711,18.273,1.607,25.939   l118.019,170.205c4.204,6.074,11.13,9.676,18.507,9.66c7.385-0.031,14.289-3.682,18.459-9.772l116.483-170.205   c5.263-7.699,5.834-17.648,1.494-25.895C379.551,279.158,371.008,273.998,361.694,273.998z"
+   style="fill:#6c6c6c;fill-opacity:1" />
 </g>
-<g>
+<g
+   id="g5">
 </g>
-<g>
+<g
+   id="g7">
 </g>
-<g>
+<g
+   id="g9">
 </g>
-<g>
+<g
+   id="g11">
 </g>
-<g>
+<g
+   id="g13">
 </g>
-<g>
+<g
+   id="g15">
 </g>
-<g>
+<g
+   id="g17">
 </g>
-<g>
+<g
+   id="g19">
 </g>
-<g>
+<g
+   id="g21">
 </g>
-<g>
+<g
+   id="g23">
 </g>
-<g>
+<g
+   id="g25">
 </g>
-<g>
+<g
+   id="g27">
 </g>
-<g>
+<g
+   id="g29">
 </g>
-<g>
+<g
+   id="g31">
 </g>
-<g>
+<g
+   id="g33">
 </g>
 </svg>

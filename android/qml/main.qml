@@ -3,6 +3,7 @@ import QtQuick.Controls 2.5
 import QtQuick.Window 2.12
 import QtQuick.Controls.Material 2.12
 //import QtQuick.Controls.Universal 2.12
+import "components" as Comp
 
 ApplicationWindow {
     id: applicationWindow
@@ -14,6 +15,96 @@ ApplicationWindow {
     function changeTheme(theme) {
         Material.theme = theme
         Setting.materialTheme = theme
+    }
+
+    onClosing: {
+        if(searchTextField.visible) {
+            searchTextField.visible = false
+            close.accepted = false
+        }
+
+        if(close.accepted && appDrawer.position === 1) {
+            appDrawer.close()
+            close.accepted = false
+        }
+        if(close.accepted && appStackView.currentItem.menu !== null) {
+            if(appStackView.currentItem.menu.position === 1) {
+                appStackView.currentItem.menu.close()
+                close.accepted = false
+            }
+        }
+        if(close.accepted && appStackView.depth > 1) {
+            appStackView.pop()
+            close.accepted = false
+        }
+    }
+
+    Drawer {
+        id: appDrawer
+        width: applicationWindow.width * 0.6
+        height: applicationWindow.height - applicationWindow.header.height
+        y: applicationWindow.header.height
+        dragMargin : -1
+
+        Column {
+            anchors.fill: parent
+            spacing: 10
+
+            ItemDelegate {
+                text: qsTr("Bookmark")
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                font { pixelSize: constant.fontSizeLarge; }
+
+                onClicked: {
+                    appStackView.push("qrc:/qml/pages/BookmarkPage.qml")
+                    appDrawer.close()
+                }
+            }
+
+            /*ItemDelegate {
+                text: qsTr("Translation")
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                font { pixelSize: constant.fontSizeLarge; }
+
+                onClicked: {
+                    appStackView.push("qrc:/qml/pages/TranslationPage.qml")
+                    appDrawer.close()
+                }
+            }*/
+
+            ItemDelegate {
+                text: qsTr("Setting")
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                font { pixelSize: constant.fontSizeLarge; }
+
+                onClicked: {
+                    appStackView.push("qrc:/qml/pages/SettingPage.qml")
+                    appDrawer.close()
+                }
+            }
+            ItemDelegate {
+                text: qsTr("About")
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                font { pixelSize: constant.fontSizeLarge; }
+
+                onClicked: {
+                    appStackView.push("qrc:/qml/pages/AboutPage.qml")
+                    appDrawer.close()
+                }
+            }
+        }
     }
 
 //    Material.theme: Material.Dark // Material.Light
@@ -68,25 +159,32 @@ ApplicationWindow {
         contentHeight: constant.headerHeight
 
         ToolButton {
-            id: toolButton
-            text: stackView.depth > 1 ? "\u25C0" : "\u2261"
+            id: appMenu
+            text: appStackView.depth > 1 ? "\u25C0" : "\u2261"
             font.pixelSize: constant.fontSizeXXLarge
             width: parent.height
+            visible: !searchTextField.visible
             onClicked: {
-                var closed = true;
-                if(stackView.currentItem.menu !== null && stackView.currentItem.menu !== undefined) {
-                    if(stackView.currentItem.menu.position === 1) {
-                        closed = false
-                        stackView.currentItem.menu.close()
-                    }
-                }
+                var done = false;
+//                if(appStackView.currentItem.menu !== null) {
+//                    console.log(appStackView.currentItem.menu)
+//                    if(appStackView.currentItem.menu.opened) {
+//                        appStackView.currentItem.menu.close()
+//                        done = true
+//                    }
+//                }
 
-                if(closed) {
-                    if (stackView.depth > 1) {
-                        stackView.pop()
-                    } else {
-                        stackView.currentItem.menu.open()
-                    }
+                if(!done && appDrawer.position === 1) {
+                    appDrawer.close()
+                    done = true
+                }
+                if(!done && appStackView.depth > 1) {
+                    appStackView.pop()
+                    done = true
+                }
+                if(!done && appDrawer.position === 0) {
+                    appDrawer.open()
+                    done = true
                 }
             }
             anchors {
@@ -96,17 +194,75 @@ ApplicationWindow {
             }
         }
 
-        visible: stackView.currentItem.menu !== undefined || stackView.depth > 1
-
-        Label {
-            text: stackView.currentItem != null ? stackView.currentItem.title : ""
+        Comp.Label {
+            id: titleLabel
+            text: appStackView.currentItem != null ? appStackView.currentItem.title : ""
             anchors.centerIn: parent
             font { pixelSize: constant.fontSizeXLarge; }
+            visible: !searchTextField.visible
+        }
+
+        TextField {
+            id: searchTextField
+            placeholderText: qsTr("Search in translation...")
+            anchors {
+                right: searchIcon.left
+                left: parent.left
+                verticalCenter: parent.verticalCenter
+                leftMargin: constant.paddingMedium
+                rightMargin: constant.paddingMedium
+            }
+            visible: false
+            onAccepted: {
+                if(searchTextField.text !== "") {
+                    appStackView.currentItem.search(searchTextField.text)
+                    focus = false
+                }
+            }
+        }
+
+        ToolButton {
+            id: searchIcon
+            width: parent.height
+            icon.source: "qrc:/icons/search_icon.png"
+            anchors {
+                right: pageMenu.visible ? pageMenu.left : parent.right
+                verticalCenter: parent.verticalCenter
+            }
+            onClicked: {
+                if(!searchTextField.visible) {
+                    searchTextField.visible = true
+                    searchTextField.forceActiveFocus()
+                }
+                else if(searchTextField.text !== "") {
+                    appStackView.currentItem.search(searchTextField.text)
+                }
+            }
+            visible: appStackView.currentItem !== null && appStackView.currentItem.searchable
+        }
+
+        ToolButton {
+            id: pageMenu
+            text: "\u22EE"
+            font.pixelSize: constant.fontSizeXLarge
+            visible: appStackView.currentItem.menu !== null
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+                right: parent.right
+            }
+            onClicked: {
+//                if(appDrawer.position === 1)
+//                    appDrawer.close()
+//                else if(appStackView.currentItem.menu !== null) {
+                    appStackView.currentItem.menu.popup(applicationWindow.width - appStackView.currentItem.menu.width,0)
+//                }
+            }
         }
     }
 
     StackView {
-        id: stackView
+        id: appStackView
         initialItem: "qrc:/qml/pages/MainPage.qml"
         anchors.fill: parent
     }
