@@ -11,9 +11,17 @@ Comp.Page {
     menu: Comp.Menu {
         MenuItem {
             text: qsTr("Manage Translations")
-//            shortcut: "Ctrl+X"
             onTriggered: {
                 appStackView.push("qrc:/qml/pages/TranslationPage.qml")
+            }
+        }
+        MenuItem {
+            text: qsTr("Reset Settings")
+            onTriggered: {
+                Setting.resetSetting()
+                Quran.resetSettings()
+                Setting.saveSetting()
+                Quran.saveSettings()
             }
         }
     }
@@ -397,7 +405,7 @@ Comp.Page {
                     }
                 }*/
 
-                Comp.Button {
+                /*Comp.Button {
                     text: qsTr("Reset Settings")
                     width: parent.width * 0.45
                     onClicked: {
@@ -406,7 +414,7 @@ Comp.Page {
                         Setting.saveSetting()
                         Quran.saveSettings()
                     }
-                }
+                }*/
             }
         }
     }
