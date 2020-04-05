@@ -20,6 +20,7 @@ public:
 
 public slots:
     TranslationModel* get(const int index) const;
+    int count() const;
 
 private:
     QList<TranslationModel*> m_translationList;

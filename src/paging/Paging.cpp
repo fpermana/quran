@@ -44,7 +44,7 @@ void Paging::setPage(int page)
     emit pageChanged(m_page);
 }
 
-void Paging::setQuranText(QString &quranText)
+void Paging::setQuranText(QString quranText)
 {
     if (m_quranText == quranText)
         return;
@@ -55,7 +55,7 @@ void Paging::setQuranText(QString &quranText)
     emit quranTextChanged(m_quranText);
 }
 
-void Paging::setTranslation(QString &translation)
+void Paging::setTranslation(QString translation)
 {
     if (m_translation == translation)
         return;

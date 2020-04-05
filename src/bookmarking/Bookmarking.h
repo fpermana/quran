@@ -15,6 +15,8 @@ public:
 signals:
     void loaded(AyaListModel* ayaList);
     void loadedMore(QList<AyaModel*> ayas);
+    void bookmarkRemoved(const int ayaId);
+    void bookmarkAdded(const int ayaId);
 
 public slots:
     void dataReady(const bool status);

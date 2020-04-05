@@ -48,7 +48,7 @@ Page {
     header: Item {
         height: constant.headerHeight
         Comp.Label {
-            text: qsTr("Search result for ") + "\"<span style=\"background-color: #FFFF00\">" + page.keyword + "</span>\""
+            text: (listView.count > 0 ? qsTr("Search result for ") : qsTr("No result for ")) + "\"<span style=\"background-color: #FFFF00\">" + page.keyword + "</span>\""
             anchors.centerIn: parent
             textFormat: Text.RichText
         }
@@ -210,11 +210,23 @@ Page {
             onClicked: {
                 if(bookmarkCheckBox.checked) {
                     Bookmarking.removeBookmark(model.number)
-                    bookmarkCheckBox.checked = false
+//                    bookmarkCheckBox.checked = false
                 }
                 else {
                     Bookmarking.addBookmark(model.number)
-                    bookmarkCheckBox.checked = true
+//                    bookmarkCheckBox.checked = true
+                }
+            }
+
+            Connections {
+                target: Bookmarking
+                onBookmarkAdded: {
+                    if(ayaId === model.number)
+                        bookmarkCheckBox.checked = true
+                }
+                onBookmarkRemoved: {
+                    if(ayaId === model.number)
+                        bookmarkCheckBox.checked = false
                 }
             }
         }

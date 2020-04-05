@@ -80,3 +80,8 @@ TranslationModel *TranslationListModel::get(const int index) const
 
     return m_translationList.at(index);
 }
+
+int TranslationListModel::count() const
+{
+    return m_translationList.count();
+}

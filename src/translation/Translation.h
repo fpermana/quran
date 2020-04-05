@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QVariantMap>
+#include "TranslationModel.h"
 #include "TranslationListModel.h"
 
 class Translation : public QObject

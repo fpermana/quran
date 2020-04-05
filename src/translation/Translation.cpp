@@ -13,7 +13,6 @@
 
 Translation::Translation(QObject *parent) : QObject(parent)
 {
-
 }
 
 void Translation::installTranslation(QString tid)
@@ -62,6 +61,7 @@ void Translation::getActiveTranslation()
     TranslationListModel *model = new TranslationListModel;
     model->setTranslationList(translationList);
     emit activeTranslationLoaded(model);
+    tm->deleteLater();
 }
 
 void Translation::getAllTranslation()
@@ -71,6 +71,7 @@ void Translation::getAllTranslation()
     TranslationListModel *model = new TranslationListModel;
     model->setTranslationList(translationList);
     emit translationLoaded(model);
+    tm->deleteLater();
 }
 
 int Translation::getStatus(const QString tid) const

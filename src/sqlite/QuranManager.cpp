@@ -95,46 +95,70 @@ AyaModel *QuranManager::getAya(const int sura, const int aya,const QString quran
     return ayaModel;
 }
 
-QVariantMap QuranManager::getSuraPage(const int sura) const
+int QuranManager::getSuraPage(const int sura) const
 {
-    QVariantMap pageMap;
+    int page = 0;
     QSqlDatabase db = QSqlDatabase::database(DEFAULT_CONNECTION_NAME);
     if(db.isOpen()) {
-        int cnt = 0;
         QSqlQuery query(db);
-        query.prepare("SELECT COUNT(*) FROM pages WHERE sura = :sura");
+        query.prepare("SELECT id,sura,aya FROM pages WHERE sura >= :sura ORDER BY sura ASC LIMIT 1");
         query.bindValue(":sura", sura);
         if (!query.exec()) {
             qDebug() << "Query error:" + query.lastError().text();
         }
         else if (!query.first()) {
             qDebug() << "No data in the database";
+            page = pageCount();
         }
         else {
-            cnt = query.value(0).toInt();
+            page = query.value(0).toInt();
+            int qSura = query.value(1).toInt();
+            int qAya = query.value(2).toInt();
+            if(qSura > sura || (qSura == sura && qAya > 1))
+                page--;
         }
-
-        if(cnt == 0) {
-            query.prepare("SELECT id,sura,aya FROM pages WHERE sura <= :sura ORDER BY sura DESC LIMIT 1");
-        } else {
-            query.prepare("SELECT id,sura,aya FROM pages WHERE sura = :sura ORDER BY sura ASC LIMIT 1");
-        }
-        query.bindValue(":sura", sura);
-
-        if (!query.exec()) {
-            qDebug() << "Query error:" + query.lastError().text();
-        }
-        else if (!query.first()) {
-            qDebug() << "No data in the database";
-        }
-        else {
-            pageMap.insert("page",query.value(0));
-            pageMap.insert("sura",query.value(1));
-            pageMap.insert("aya",query.value(2));
-        }
-        query.clear();
     }
-    return pageMap;
+    return page;
+}
+
+int QuranManager::getSuraAyaPage(const int sura, const int aya) const
+{
+    int page = 0;
+    QSqlDatabase db = QSqlDatabase::database(DEFAULT_CONNECTION_NAME);
+    if(db.isOpen()) {
+        QSqlQuery query(db);
+        query.prepare("SELECT id,aya FROM pages WHERE sura = :sura AND aya >= :aya ORDER BY id ASC LIMIT 1");
+        query.bindValue(":sura", sura);
+        query.bindValue(":aya", aya);
+        if (!query.exec()) {
+            qDebug() << "Query error:" + query.lastError().text();
+        }
+        else if (!query.first()) {
+            qDebug() << "No data in the database";
+        }
+        else {
+            page = query.value(0).toInt();
+            int qAya = query.value(1).toInt();
+            if(qAya > aya)
+                page--;
+        }
+
+        if(page == 0) {
+            query.prepare("SELECT id,sura,aya FROM pages WHERE sura <= :sura ORDER BY sura DESC LIMIT 1");
+            query.bindValue(":sura", sura);
+
+            if (!query.exec()) {
+                qDebug() << "Query error:" + query.lastError().text();
+            }
+            else if (!query.first()) {
+                qDebug() << "No data in the database";
+            }
+            else {
+                page = query.value(0).toInt();
+            }
+        }
+    }
+    return page;
 }
 
 QList<SuraModel *> QuranManager::getSuraList() const

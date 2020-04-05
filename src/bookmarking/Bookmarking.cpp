@@ -24,16 +24,20 @@ bool Bookmarking::getStatus(const int ayaId)
 void Bookmarking::addBookmark(const int ayaId)
 {
     BookmarkManager *bm = new BookmarkManager;
-    if(bm->addBookmark(ayaId))
+    if(bm->addBookmark(ayaId)) {
         m_settings.setValue(QString::number(ayaId), true);
+        emit bookmarkAdded(ayaId);
+    }
     bm->deleteLater();
 }
 
 void Bookmarking::removeBookmark(const int ayaId)
 {
     BookmarkManager *bm = new BookmarkManager;
-    if(bm->removeBookmark(ayaId))
+    if(bm->removeBookmark(ayaId)) {
         m_settings.remove(QString::number(ayaId));
+        emit bookmarkRemoved(ayaId);
+    }
     bm->deleteLater();
 }
 

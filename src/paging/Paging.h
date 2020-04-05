@@ -22,8 +22,8 @@ public:
 
 public slots:
     void setPage(int page);
-    void setQuranText(QString &quranText);
-    void setTranslation(QString &translation);
+    void setQuranText(QString quranText);
+    void setTranslation(QString translation);
 
 signals:
     void pageChanged(int page);

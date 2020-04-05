@@ -32,7 +32,7 @@ Comp.Page {
 
     ListView {
         id: listView
-        snapMode: ListView.SnapOneItem
+//        snapMode: ListView.SnapOneItem
         spacing: 5
 
         anchors.fill: parent
@@ -55,12 +55,15 @@ Comp.Page {
             Comp.Label {
                 id: numberLabel
                 horizontalAlignment: Text.AlignLeft
-                color: Quran.fontColor
+//                color: Quran.fontColor
+                color: "#2779F6"
+                font.underline: true
                 height: suraLabel.height
+                width: paintedWidth
                 anchors {
                     top: parent.top
                     left: parent.left
-                    right: parent.horizontalCenter
+//                    right: parent.horizontalCenter
                     leftMargin: constant.paddingMedium
                     rightMargin: constant.paddingMedium
                 }
@@ -68,6 +71,13 @@ Comp.Page {
                 wrapMode: Text.WordWrap
                 text: "("+(index+1)+")"
                 LayoutMirroring.enabled: false
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        Quran.openSuraAya(model.sura,model.aya)
+                    }
+                }
             }
 
             Comp.CheckBox {
@@ -159,11 +169,23 @@ Comp.Page {
             onClicked: {
                 if(bookmarkCheckBox.checked) {
                     Bookmarking.removeBookmark(model.number)
-                    bookmarkCheckBox.checked = false
+//                    bookmarkCheckBox.checked = false
                 }
                 else {
                     Bookmarking.addBookmark(model.number)
-                    bookmarkCheckBox.checked = true
+//                    bookmarkCheckBox.checked = true
+                }
+            }
+
+            Connections {
+                target: Bookmarking
+                onBookmarkAdded: {
+                    if(ayaId === model.number)
+                        bookmarkCheckBox.checked = true
+                }
+                onBookmarkRemoved: {
+                    if(ayaId === model.number)
+                        bookmarkCheckBox.checked = false
                 }
             }
         }

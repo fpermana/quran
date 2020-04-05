@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
+import QtQuick.Controls.Material 2.12
 import id.fpermana.sailquran 1.0
 import "../js/utils.js" as Utils
 import "../components" as Comp
@@ -198,6 +199,7 @@ Comp.Page {
 
     header: Item {
         id: headerItem
+//        color: Material.color(Material.LightBlue)
 
         height: constant.headerHeight
         width: root.width
@@ -330,7 +332,7 @@ Comp.Page {
                         }
                     }
 
-                    snapMode: ListView.SnapOneItem
+//                    snapMode: ListView.SnapOneItem
                     spacing: 5
                     Paging {
                         id: paging
@@ -435,11 +437,23 @@ Comp.Page {
                             onClicked: {
                                 if(bookmarkCheckBox.checked) {
                                     Bookmarking.removeBookmark(model.number)
-                                    bookmarkCheckBox.checked = false
+//                                    bookmarkCheckBox.checked = false
                                 }
                                 else {
                                     Bookmarking.addBookmark(model.number)
-                                    bookmarkCheckBox.checked = true
+//                                    bookmarkCheckBox.checked = true
+                                }
+                            }
+
+                            Connections {
+                                target: Bookmarking
+                                onBookmarkAdded: {
+                                    if(ayaId === model.number)
+                                        bookmarkCheckBox.checked = true
+                                }
+                                onBookmarkRemoved: {
+                                    if(ayaId === model.number)
+                                        bookmarkCheckBox.checked = false
                                 }
                             }
                         }

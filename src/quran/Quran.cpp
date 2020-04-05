@@ -275,14 +275,21 @@ void Quran::openSura(const int sura)
     }
 
     QuranManager *q = new QuranManager;
-    QVariantMap pageMap = q->getSuraPage(sura);
-    int page = pageMap.value("page",0).toInt();
-    int aSura = pageMap.value("sura",0).toInt();
-    int aya = pageMap.value("aya",0).toInt();
+    int page = q->getSuraPage(sura);
+    qDebug() << page;
+    setCurrentPage(page);
+    emit gotoPage(page);
+}
 
-    if(aSura == sura && aya > 1) {
-        page--;
+void Quran::openSuraAya(const int sura, const int aya)
+{
+    if(sura<1 || aya <1) {
+        return;
     }
+
+    QuranManager *q = new QuranManager;
+    int page = q->getSuraAyaPage(sura,aya);
+    qDebug() << page;
     setCurrentPage(page);
     emit gotoPage(page);
 }

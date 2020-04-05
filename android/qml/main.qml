@@ -16,6 +16,10 @@ ApplicationWindow {
         Material.theme = theme
         Setting.materialTheme = theme
     }
+//    Material.accent: "#03a9f4"
+//    Material.foreground: Material.LightBlue
+//    Material.primary: Material.LightBlue
+//    Material.elevation: 4
 
     onClosing: {
         if(searchTextField.visible) {
@@ -111,6 +115,8 @@ ApplicationWindow {
 //    Universal.theme: Universal.Light // Universal.Dark
 //    Universal.theme: Setting.universalTheme
     Material.theme: Setting.materialTheme
+    Material.foreground: Setting.materialForeground
+    Material.primary: Material.color(Material.Blue)
 
     property int orientation: width > height ? Qt.LandscapeOrientation : Qt.PortraitOrientation
 

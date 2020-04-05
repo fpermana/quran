@@ -159,11 +159,23 @@ Page {
             onClicked: {
                 if(bookmarkCheckBox.checked) {
                     Bookmarking.removeBookmark(model.number)
-                    bookmarkCheckBox.checked = false
+//                    bookmarkCheckBox.checked = false
                 }
                 else {
                     Bookmarking.addBookmark(model.number)
-                    bookmarkCheckBox.checked = true
+//                    bookmarkCheckBox.checked = true
+                }
+            }
+
+            Connections {
+                target: Bookmarking
+                onBookmarkAdded: {
+                    if(ayaId === model.number)
+                        bookmarkCheckBox.checked = true
+                }
+                onBookmarkRemoved: {
+                    if(ayaId === model.number)
+                        bookmarkCheckBox.checked = false
                 }
             }
         }

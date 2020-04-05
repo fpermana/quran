@@ -88,6 +88,7 @@ public slots:
     void setTranslationLocale(QString translationLocale);
     void dataReady(const bool status);
     void openSura(const int sura);
+    void openSuraAya(const int sura, const int aya);
     void refreshPreview(QString quranText, QString translation);
     void resetSettings();
     void saveSettings();

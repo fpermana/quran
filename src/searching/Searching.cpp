@@ -12,7 +12,7 @@ void Searching::search(const QString keyword, const QString quranText, const QSt
 {
     SearchingManager *sm = new SearchingManager;
     QList<AyaModel *> result = sm->search(keyword, quranText, translation, from, limit, lastId);
-    if(!result.isEmpty()) {
+//    if(!result.isEmpty()) {
         foreach (AyaModel *a, result) {
             QString originalTranslation = a->translation();
             originalTranslation = this->highlightMatching(originalTranslation, keyword);
@@ -23,7 +23,7 @@ void Searching::search(const QString keyword, const QString quranText, const QSt
         model->setAyaList(result);
 
         emit found(keyword, model);
-    }
+//    }
     sm->deleteLater();
 }
 
@@ -44,7 +44,7 @@ void Searching::searchNew(const QString keyword, const QString quranText, const 
 {
     SearchingManager *sm = new SearchingManager;
     QList<AyaModel *> result = sm->search(keyword, quranText, translation, from, limit, lastId);
-    if(!result.isEmpty()) {
+//    if(!result.isEmpty()) {
         foreach (AyaModel *a, result) {
             QString originalTranslation = a->translation();
             originalTranslation = this->highlightMatching(originalTranslation, keyword);
@@ -55,7 +55,7 @@ void Searching::searchNew(const QString keyword, const QString quranText, const 
         model->setAyaList(result);
 
         emit foundNew(keyword, model);
-    }
+//    }
     sm->deleteLater();
 }
 

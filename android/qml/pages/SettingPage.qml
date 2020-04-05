@@ -7,7 +7,7 @@ import "../components" as Comp
 Comp.Page {
     id: settingPage
 
-    property TranslationList translationList
+//    property TranslationList translationList
     menu: Comp.Menu {
         MenuItem {
             text: qsTr("Manage Translations")
@@ -32,27 +32,85 @@ Comp.Page {
         Translation.getActiveTranslation()
     }
 
+    ListModel {
+        id: listModel
+    }
+
     Connections {
         target: Translation
         onActiveTranslationLoaded: {
-            translationList = translation
-
-            var itemCount = translationDropdown.count
-            for(var i=0; i<itemCount; i++) {
-                var model = translationList.get(i);
-                var tid = model.tid;
-                tid = tid.replace(".", "_");
-                if(tid === Quran.translation) {
-                    translationDropdown.currentIndex = i;
-                    break;
-                }
+//            translationDropdown.model = translation
+            var count = translation.count()
+            var ci = -1
+            listModel.clear()
+            for(var i=0; i<count; i++){
+                var name = translation.get(i).name
+                var tid = translation.get(i).tid
+                tid = tid.replace(".","_")
+                if(tid === Quran.translation)
+                    ci = i
+                listModel.append({"name":name,"value":tid})
             }
+            translationDropdown.model = listModel
+            translationDropdown.currentIndex = ci
+        }
+    }
+
+    Item {
+        id: header
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+        }
+
+        height: childrenRect.height
+        Comp.Label {
+            id: textLabel
+            horizontalAlignment: Text.AlignRight
+            color: Quran.fontColor
+            height: paintedHeight + constant.paddingLarge
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+                leftMargin: constant.paddingMedium
+                rightMargin: constant.paddingMedium
+            }
+
+            wrapMode: Text.WordWrap
+            text: Quran.preview !== null ? Quran.preview.text : ""
+            font { pixelSize: Quran.fontSize; family: Quran.fontName }
+        }
+        Comp.Label {
+            id: translationLabel
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignJustify
+            color: Quran.fontColor
+            visible: Quran.useTranslation
+            height: visible ? (paintedHeight + constant.paddingMedium) : 0
+            anchors {
+                top: textLabel.bottom
+                left: parent.left
+                right: parent.right
+                leftMargin: constant.paddingMedium
+                rightMargin: constant.paddingMedium
+            }
+
+            wrapMode: Text.WordWrap
+            text: Quran.preview !== null ? Quran.preview.translation : ""
+            font { pixelSize: Quran.translationFontSize; }
         }
     }
 
     Flickable {
-        anchors.fill: parent
+        id: flickable
+        anchors {
+            fill: parent
+            topMargin: header.height
+        }
         contentHeight: contentColumn.height + 30
+        clip: true
 
         Column {
             id: contentColumn
@@ -63,11 +121,12 @@ Comp.Page {
                 right: parent.right
             }
 
-            Item {
+            /*Item {
                 anchors {
                     left: parent.left
                     right: parent.right
                 }
+                height: header.height
 
                 height: childrenRect.height
                 Comp.Label {
@@ -106,7 +165,7 @@ Comp.Page {
                     text: Quran.preview !== null ? Quran.preview.translation : ""
                     font { pixelSize: Quran.translationFontSize; }
                 }
-            }
+            }*/
 
             /*Comp.Dropdown {
                 id: textStyleDropdown
@@ -289,21 +348,43 @@ Comp.Page {
                 }
 
                 visible: Quran.useTranslation
-                model: translationList
+//                model: translationList
+                model: Translation.activeTranslationList
                 textRole: "name"
 
-                Component.onCompleted: {
+                /*Component.onCompleted: {
                     for(var i=0; i<count; i++) {
+                        if(model.get(i) === null)
+                            continue
+                        console.log(model.get(i))
                         var t = model.get(i).tid.replace(".","_")
                         if(t === Quran.translation) {
                             currentIndex = i
                             break
                         }
                     }
-                }
+                }*/
+                /*onModelChanged: {
+                    for(var i=0; i<count; i++) {
+                        var m = model.get(i);
+                        var tid = m.tid;
+                        tid = tid.replace(".", "_");
+                        if(tid === Quran.translation) {
+                            currentIndex = i;
+                            break;
+                        }
+                    }
+                }*/
+
                 onActivated: {
-                    Quran.translation = model.get(index).tid.replace(".","_")
-                    Quran.saveSettings()
+//                    console.log(index)
+//                    if(model.get(index) !== null) {
+//                        var tid = model.get(index).value
+//                        console.log(tid)
+//                        tid = tid.replace(".","_")
+                        Quran.translation = model.get(index).value
+                        Quran.saveSettings()
+//                    }
                 }
             }
 
