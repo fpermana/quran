@@ -23,6 +23,7 @@ DEFINES += QUAZIP_STATIC
 
 DEFINES += "DEFAULT_FONT_COLOR=\"\\\"white\\\"\""
 DEFINES += "DEFAULT_BACKGROUND_COLOR=\"\\\"black\\\"\""
+DEFINES += "SETTINGS_ORGANIZATION=\"\\\"harbour-sailquran\\\"\""
 
 include(../3rdparty/3rdparty.pri)
 include(../src/src.pri)

@@ -165,7 +165,7 @@ Page {
                 }
 
                 onPressAndHold: {
-                    contextMenu.show(listItem)
+                    contextMenu.open(listItem)
                 }
 
                 RemorseItem { id: remorse }

@@ -216,9 +216,10 @@ bool TranslationManager::insertTranslationList(const QString &tableName, QString
     bool success = false;
     QSqlDatabase db = m_threaded ? createDb() : QSqlDatabase::database(DEFAULT_CONNECTION_NAME);
     if(db.isOpen()) {
-        db.transaction();
+//        db.exec("PRAGMA locking_mode = EXCLUSIVE");
+//        db.transaction();
         QSqlQuery query(db);
-        QString queryString = QString("INSERT OR IGNORE INTO %1 (id, sura, aya, text) values (?, ?, ?, ?)").arg(tableName);
+        QString queryString = QString("INSERT INTO %1 (id, sura, aya, text) values (?, ?, ?, ?)").arg(tableName);
         query.prepare(queryString);
         query.addBindValue(idList);
         query.addBindValue(suraList);
@@ -228,7 +229,7 @@ bool TranslationManager::insertTranslationList(const QString &tableName, QString
         if (!query.execBatch()) {
             qDebug() << query.lastError().text();
         }
-        db.commit();
+//        db.commit();
         query.clear();
     }
 

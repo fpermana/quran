@@ -2,7 +2,9 @@
 #define GLOBALCONSTANTS_H
 
 // SETTINGS
+#ifndef SETTINGS_ORGANIZATION
 #define SETTINGS_ORGANIZATION               "fpermana"
+#endif
 #define SETTINGS_DOMAIN                     "fpermana.id"
 #define SETTINGS_APPLICATION                "sailquran"
 #define DB_NAME                             "quran.db"

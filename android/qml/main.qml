@@ -16,10 +16,12 @@ ApplicationWindow {
         Material.theme = theme
         Setting.materialTheme = theme
     }
-//    Material.accent: "#03a9f4"
-//    Material.foreground: Material.LightBlue
-//    Material.primary: Material.LightBlue
-//    Material.elevation: 4
+
+    Material.theme: Setting.materialTheme
+    Material.accent: Material.color(Material.Red)
+    Material.primary: "#005ee2"
+
+    property int orientation: width > height ? Qt.LandscapeOrientation : Qt.PortraitOrientation
 
     onClosing: {
         if(appSearchTextField.visible) {
@@ -110,17 +112,6 @@ ApplicationWindow {
             }
         }
     }
-
-//    Material.theme: Material.Dark // Material.Light
-//    Universal.theme: Universal.Light // Universal.Dark
-//    Universal.theme: Setting.universalTheme
-    Material.theme: Setting.materialTheme
-    Material.accent: Material.color(Material.Red)
-//    Material.foreground: Setting.materialForeground
-//    Material.primary: Material.color(Material.Blue)
-    Material.primary: "#005ee2"
-
-    property int orientation: width > height ? Qt.LandscapeOrientation : Qt.PortraitOrientation
 
     FontLoader { id: pdms; source: "qrc:/fonts/PDMS_Saleem_QuranFont-signed.ttf" }
     FontLoader { id: almushaf; source: "qrc:/fonts/Al_Mushaf.ttf" }

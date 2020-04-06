@@ -56,6 +56,8 @@ Page {
         delegate: BackgroundItem {
             id: listItem
 
+            enabled: !model.isDefault
+
             property bool menuOpen: contextMenu != null && contextMenu.parent === listItem
             height: (menuOpen ? contextMenu.height : 0) + textLabel.height
 
@@ -100,13 +102,21 @@ Page {
 
             Component.onCompleted: {
                 var status = Translation.getStatus(model.tid);
-                if(status === 2) {
+                if(status === 1) {
+                    listItem.enabled = false
+                    textLabel.text = "Waiting..."
+                }
+                else if(status === 2) {
                     listItem.enabled = false
                     textLabel.text = "Downloading..."
                 }
                 else if(status === 3) {
                     listItem.enabled = false
                     textLabel.text = "Installing..."
+                }
+                else if(status === 4) {
+                    listItem.enabled = false
+                    textLabel.text = "Uninstalling..."
                 }
             }
 
@@ -117,18 +127,36 @@ Page {
 
             Connections {
                 target: Translation
-                onTranslationInstalled: {
+                onStatusChanged: {
                     if(model.tid === tid) {
-                        textLabel.text = model.name
-                        listItem.enabled = true
-                        downloadMenu.visible = false
-                        removeMenu.visible = true
-                    }
-                }
-                onTranslationUninstalled: {
-                    if(model.tid === tid) {
-                        downloadMenu.visible = true
-                        removeMenu.visible = false
+                        if(status === 1) {
+                            listItem.enabled = false
+                            textLabel.text = "Waiting..."
+                        }
+                        else if(status === 2) {
+                            listItem.enabled = false
+                            textLabel.text = "Downloading..."
+                        }
+                        else if(status === 3) {
+                            listItem.enabled = false
+                            textLabel.text = "Installing..."
+                        }
+                        else if(status === 4) {
+                            listItem.enabled = false
+                            textLabel.text = "Uninstalling..."
+                        }
+                        else if(status === 5) {
+                            removeMenu.visible = true
+                            downloadMenu.visible = false
+                            listItem.enabled = true
+                            textLabel.text = model.name
+                        }
+                        else if(status === 6) {
+                            removeMenu.visible = false
+                            downloadMenu.visible = true
+                            listItem.enabled = true
+                            textLabel.text = model.name
+                        }
                     }
                 }
             }
@@ -139,8 +167,6 @@ Page {
                     id: downloadMenu
                     text: qsTr("Download")
                     onClicked: {
-                        listItem.enabled = false
-                        textLabel.text = "Downloading..."
                         Translation.installTranslation(model.tid);
                     }
                     visible: !model.installed && !model.isDefault
@@ -152,9 +178,9 @@ Page {
                         var tid = model.tid;
                         tid = tid.replace(".", "_");
                         if(tid !== Quran.translation) {
-                            remorse.execute(listItem, "Removing...", function() {
+//                            remorse.execute(listItem, "Removing...", function() {
                                 Translation.uninstallTranslation(model.tid);
-                            })
+//                            })
                         }
                     }
                     visible: model.installed && !model.isDefault

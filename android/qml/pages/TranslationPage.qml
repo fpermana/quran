@@ -149,8 +149,12 @@ Comp.Page {
                     Translation.installTranslation(model.tid)
                 }
                 else if(!model.isDefault){
-                    uninstallDialog.tid = model.tid
-                    uninstallDialog.open()
+                    var tid = model.tid;
+                    tid = tid.replace(".", "_");
+                    if(tid !== Quran.translation) {
+                        uninstallDialog.tid = model.tid
+                        uninstallDialog.open()
+                    }
                 }
             }
 

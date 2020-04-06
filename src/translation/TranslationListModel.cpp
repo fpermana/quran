@@ -10,7 +10,7 @@ TranslationListModel::TranslationListModel(QObject *parent) : QAbstractListModel
     m_roles.insert(translator, "translator");
     m_roles.insert(tid, "tid");
     m_roles.insert(installed, "installed");
-    m_roles.insert(is_default, "is_default");
+    m_roles.insert(is_default, "isDefault");
     m_roles.insert(visible, "visible");
     m_roles.insert(iso6391, "iso6391");
 

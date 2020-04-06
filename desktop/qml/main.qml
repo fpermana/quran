@@ -16,9 +16,8 @@ ApplicationWindow {
         Setting.universalTheme = theme
     }
 
-//    Material.theme: Material.Dark // Material.Light
-//    Universal.theme: Universal.Light // Universal.Dark
     Universal.theme: Setting.universalTheme
+    Universal.accent: Universal.color(Universal.Red)
 
     property int orientation: width > height ? Qt.LandscapeOrientation : Qt.PortraitOrientation
 
@@ -64,7 +63,14 @@ ApplicationWindow {
     }
 
     header: ToolBar {
+        Universal.foreground: "#ffffff"
+//        Universal.background: "#005ee2"
+
         contentHeight: constant.headerHeight
+
+        background: Rectangle {
+            color: "#005ee2"
+        }
 
         ToolButton {
             id: toolButton
