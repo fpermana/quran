@@ -1,70 +1,128 @@
-import QtQuick 2.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import "." as Comp
 
-Item {
-    Rectangle {
-        id: rectangle
-        color: "#ffffff"
-        anchors.fill: parent
+ItemDelegate {
+    id: root
+    implicitHeight: 90
+    implicitWidth: 150
 
-        Image {
-            id: image
-            x: 392
-            width: 100
-            anchors.right: parent.right
-            anchors.rightMargin: 10
-            anchors.top: parent.top
-            anchors.topMargin: 10
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 10
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:/icons/drop_down.svg"
-        }
+    property string title: ""
+    property alias model: listView.model
+    property string initValue: ""
+    property string nameRole: "name"
+    property string valueRole: "value"
 
-        Row {
-            id: row
-            anchors.right: image.left
-            anchors.rightMargin: 10
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 10
-            anchors.top: parent.top
-            anchors.topMargin: 10
-            anchors.left: parent.left
-            anchors.leftMargin: 10
+    signal valueChanged(string value)
 
-            Text {
-                id: element
-                text: qsTr("Text")
-                anchors.right: parent.right
-                anchors.rightMargin: 10
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-                wrapMode: Text.WordWrap
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignLeft
-                font.pixelSize: 12
-            }
-
-            Text {
-                id: element1
-                text: qsTr("Text")
-                opacity: 1
-                anchors.right: parent.right
-                anchors.rightMargin: 10
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-                wrapMode: Text.WordWrap
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignLeft
-                font.pixelSize: 12
+    Component.onCompleted: {
+        var count = listView.count
+        for(var i=0; i<count; i++) {
+            if(model.get(i)[valueRole] === initValue) {
+                nameLabel.text = model.get(i)[nameRole]
+                break
             }
         }
     }
 
-}
+    Image {
+        id: image
+        anchors {
+            right: parent.right
+            verticalCenter: parent.verticalCenter
+            margins: 10
+        }
+        height: root.height*0.3
 
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:100;width:500}D{i:2;anchors_height:100;anchors_y:0}D{i:3;anchors_height:400;anchors_width:200;anchors_x:76;anchors_y:15}
-D{i:1;anchors_height:200;anchors_width:200;anchors_x:186;anchors_y:163}
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:/icons/drop_down.png"
+    }
+
+    Comp.Label {
+        id: titleLabel
+        text: root.title
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            bottom: parent.verticalCenter
+            leftMargin: 15
+            rightMargin: 15
+            bottomMargin: 2
+        }
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignBottom
+        font.pixelSize: constant.fontSizeLarge
+    }
+
+    Comp.Label {
+        id: nameLabel
+        text: "Value"
+        color: "gray"
+        anchors {
+            top: parent.verticalCenter
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+            leftMargin: 15
+            rightMargin: 15
+            topMargin: 2
+        }
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignTop
+    }
+
+
+    Drawer {
+        id: options
+        width: applicationWindow.width
+        height: applicationWindow.height * 0.4
+        edge: Qt.BottomEdge
+        bottomInset: -20
+        dragMargin: -1
+
+        ListView {
+            id: listView
+            anchors.fill: parent
+            anchors.margins: 20
+
+            header: Comp.Label {
+                text: root.title
+                width: listView.width
+                height: 60
+                font.pixelSize: constant.fontSizeLarge
+            }
+
+            delegate: ItemDelegate {
+                width: listView.width
+                height: 60
+                Comp.Label {
+                    text: model[nameRole]
+                    anchors.fill: parent
+                }
+
+                onClicked: {
+                    nameLabel.text = model[nameRole]
+                    valueChanged(model[valueRole])
+                    options.close()
+                }
+            }
+        }
+    }
+
+    onClicked: {
+        if(listView.count > 3) {
+            options.width = applicationWindow.width * 0.4
+            options.height = applicationWindow.height
+            options.edge = Qt.LeftEdge
+            options.leftInset = -20
+        } else {
+            options.width = applicationWindow.width
+            options.height = applicationWindow.height * 0.4
+            options.edge = Qt.BottomEdge
+            options.bottomInset = -20
+        }
+
+        options.open()
+    }
 }
-##^##*/

@@ -23,6 +23,7 @@ public slots:
     void removeAya(const int number);
     void addAya(AyaModel *value);
     AyaModel* get(const int index) const;
+    void remove(const int index);
 
 private:
     QList<AyaModel*> m_ayaList;

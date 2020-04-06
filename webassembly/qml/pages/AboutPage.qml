@@ -1,7 +1,8 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
+import "../components" as Comp
 
-Page {
+Comp.Page {
     id: aboutPage
     title: qsTr("About")
 
@@ -45,7 +46,7 @@ Page {
 
                 Image {
                     id: iconImage
-                    source: "qrc:/icons/quran.svg"
+                    source: "qrc:/icons/quran.png"
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     sourceSize.width: parent.width/5
@@ -53,16 +54,21 @@ Page {
                     fillMode: Image.PreserveAspectFit
                 }
 
-                Label {
+                Comp.Label {
                     text: "SailQuran Version 0.3"
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    font { pixelSize: constant.fontSizeMedium; bold: true }
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
+                    font { pixelSize: constant.fontSizeXLarge; bold: true }
                 }
 
-                Label {
+                Comp.Label {
                     text: "Copyright © Fandy Permana 2020"
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    font { pixelSize: constant.fontSizeMedium; }
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
                 }
 
                 Component.onCompleted: {
@@ -84,26 +90,31 @@ Page {
                     margins: 20
                 }
 
-                Component.onCompleted: {
+                /*Component.onCompleted: {
                     anchors.verticalCenter = parent.verticalCenter
-                }
+                }*/
 
-                Label {
+                Comp.Label {
                     text: qsTr(model.title)
-                    font { pixelSize: constant.fontSizeMedium; bold: true }
-                    width: parent.width
+                    font { pixelSize: constant.fontSizeLarge; bold: true }
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
                     wrapMode: Text.WordWrap
-                    horizontalAlignment: Text.AlignJustify
-                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignLeft
                     height: paintedHeight + 15
                 }
-                Label {
+                Comp.Label {
                     text: qsTr(model.detail)
-                    font { pixelSize: constant.fontSizeSmall; }
-                    width: parent.width
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
                     wrapMode: Text.WordWrap
                     horizontalAlignment: Text.AlignJustify
-                    textFormat: Text.RichText
+                    height: paintedHeight + 15
+//                    textFormat: Text.RichText
                 }
             }
         }

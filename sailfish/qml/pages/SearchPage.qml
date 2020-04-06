@@ -46,7 +46,7 @@ Page {
                 }
             }
         }
-        snapMode: ListView.SnapOneItem
+//        snapMode: ListView.SnapOneItem
         spacing: 5
 
         anchors.fill: parent
@@ -182,6 +182,24 @@ Page {
                         text = text.replace("\u26AB","\u26AA")
                     }
                     textLabel.text = text
+                }
+
+                Connections {
+                    target: Bookmarking
+                    onBookmarkAdded: {
+                        if(ayaId === model.number) {
+                            var text = textLabel.text
+                            text = text.replace("\u26AA","\u26AB")
+                            textLabel.text = text
+                        }
+                    }
+                    onBookmarkRemoved: {
+                        if(ayaId === model.number) {
+                            var text = textLabel.text
+                            text = text.replace("\u26AB","\u26AA")
+                            textLabel.text = text
+                        }
+                    }
                 }
 
                 /*onPressAndHold: {

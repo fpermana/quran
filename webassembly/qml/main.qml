@@ -1,6 +1,9 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
 import QtQuick.Window 2.12
+import QtQuick.Controls.Material 2.12
+//import QtQuick.Controls.Universal 2.12
+import "components" as Comp
 
 ApplicationWindow {
     id: applicationWindow
@@ -9,7 +12,106 @@ ApplicationWindow {
     minimumHeight: 640
     title: qsTr("SailQuran")
 
+    function changeTheme(theme) {
+        Material.theme = theme
+        Setting.materialTheme = theme
+    }
+
+    Material.theme: Setting.materialTheme
+    Material.accent: Material.color(Material.Red)
+    Material.primary: "#005ee2"
+
     property int orientation: width > height ? Qt.LandscapeOrientation : Qt.PortraitOrientation
+
+    onClosing: {
+        if(appSearchTextField.visible) {
+            appSearchTextField.visible = false
+            close.accepted = false
+        }
+
+        if(close.accepted && appDrawer.position === 1) {
+            appDrawer.close()
+            close.accepted = false
+        }
+        if(close.accepted && appStackView.currentItem.menu !== null) {
+            if(appStackView.currentItem.menu.position === 1) {
+                appStackView.currentItem.menu.close()
+                close.accepted = false
+            }
+        }
+        if(close.accepted && appStackView.depth > 1) {
+            appStackView.pop()
+            close.accepted = false
+        }
+    }
+
+    Drawer {
+        id: appDrawer
+        width: applicationWindow.width * 0.6
+        height: applicationWindow.height - applicationWindow.header.height
+        y: applicationWindow.header.height
+        dragMargin : -1
+
+        Column {
+            anchors.fill: parent
+            spacing: 10
+
+            ItemDelegate {
+                text: qsTr("Bookmark")
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                font { pixelSize: constant.fontSizeLarge; }
+
+                onClicked: {
+                    appStackView.push("qrc:/qml/pages/BookmarkPage.qml")
+                    appDrawer.close()
+                }
+            }
+
+            /*ItemDelegate {
+                text: qsTr("Translation")
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                font { pixelSize: constant.fontSizeLarge; }
+
+                onClicked: {
+                    appStackView.push("qrc:/qml/pages/TranslationPage.qml")
+                    appDrawer.close()
+                }
+            }*/
+
+            ItemDelegate {
+                text: qsTr("Setting")
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                font { pixelSize: constant.fontSizeLarge; }
+
+                onClicked: {
+                    appStackView.push("qrc:/qml/pages/SettingPage.qml")
+                    appDrawer.close()
+                }
+            }
+            ItemDelegate {
+                text: qsTr("About")
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                font { pixelSize: constant.fontSizeLarge; }
+
+                onClicked: {
+                    appStackView.push("qrc:/qml/pages/AboutPage.qml")
+                    appDrawer.close()
+                }
+            }
+        }
+    }
 
     FontLoader { id: pdms; source: "qrc:/fonts/PDMS_Saleem_QuranFont-signed.ttf" }
     FontLoader { id: almushaf; source: "qrc:/fonts/Al_Mushaf.ttf" }
@@ -20,31 +122,20 @@ ApplicationWindow {
     QtObject {
         id: constant
 
-        // color
-        property color colorHighlighted: "#01bcf9"
-        property color colorLight: "#ffffff"
-        property color colorDark: "#000000"
-        property color colorMid: "#b0ffffff"
-        property color colorTextSelection: "#b001bcf9"
-        property color colorDisabled: "#b0ffffff"
-		property color colorHighlightBackground: "#00ade6"
-        property color colorHighlightedBackground: "#4c00ade6"
-        property color colorHighlightBackgroundOpacity: "#000000"
-
         // padding size
         property int paddingSmall: 8
         property int paddingMedium: 16
         property int paddingLarge: 32
-        property int paddingXLarge: 32
+        property int paddingXLarge: 48
 
         // font size
-        property int fontSizeXSmall: 16
-        property int fontSizeSmall: 20
-        property int fontSizeMedium: 24
-        property int fontSizeLarge: 30
-        property int fontSizeXLarge: 36
-        property int fontSizeXXLarge: 40
-        property int fontSizeHuge: 50
+        property int fontSizeXSmall: Setting.smallFontSize - 4
+        property int fontSizeSmall: Setting.smallFontSize
+        property int fontSizeMedium: Setting.fontSize
+        property int fontSizeLarge: Setting.largeFontSize
+        property int fontSizeXLarge: Setting.largeFontSize + 4
+        property int fontSizeXXLarge: Setting.largeFontSize + 11
+        property int fontSizeHuge: Setting.largeFontSize + 16
 
         // graphic size
         property int graphicSizeTiny: 24
@@ -56,32 +147,45 @@ ApplicationWindow {
         property int thumbnailSize: 120
 
         property int bannerHeight: 250
-        property int headerHeight: 60
+        property int headerHeight: 56
         property int footerHeight: 50
-
-       /*// other
-       // property int headerHeight: inPortrait ? 65 : 55
-        property int headerHeight: 85
-
-        property int charReservedPerMedia: 23*/
 
         property string fontName: uthmanic.name
         property string largeFontName: almushaf.name
     }
 
     header: ToolBar {
+        Material.foreground: "#ffffff"
+
         contentHeight: constant.headerHeight
 
         ToolButton {
-            id: toolButton
-            text: stackView.depth > 1 ? "\u25C0" : "\u268F"
-            font.pixelSize: Qt.application.font.pixelSize * 1.6
+            id: appMenu
+            text: appStackView.depth > 1 ? "\u25C0" : "\u2261"
+            font.pixelSize: constant.fontSizeXXLarge
             width: parent.height
+            visible: !appSearchTextField.visible
             onClicked: {
-                if (stackView.depth > 1) {
-                    stackView.pop()
-                } else {
-                    stackView.currentItem.menu.open()
+                var done = false;
+//                if(appStackView.currentItem.menu !== null) {
+//                    console.log(appStackView.currentItem.menu)
+//                    if(appStackView.currentItem.menu.opened) {
+//                        appStackView.currentItem.menu.close()
+//                        done = true
+//                    }
+//                }
+
+                if(!done && appDrawer.position === 1) {
+                    appDrawer.close()
+                    done = true
+                }
+                if(!done && appStackView.depth > 1) {
+                    appStackView.pop()
+                    done = true
+                }
+                if(!done && appDrawer.position === 0) {
+                    appDrawer.open()
+                    done = true
                 }
             }
             anchors {
@@ -91,17 +195,75 @@ ApplicationWindow {
             }
         }
 
-        visible: stackView.currentItem.menu !== undefined || stackView.depth > 1
-
-        Label {
-            text: stackView.currentItem != null ? stackView.currentItem.title : ""
+        Comp.Label {
+            id: titleLabel
+            text: appStackView.currentItem != null ? appStackView.currentItem.title : ""
             anchors.centerIn: parent
-            font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
+            font { pixelSize: constant.fontSizeXLarge; }
+            visible: !appSearchTextField.visible
+        }
+
+        TextField {
+            id: appSearchTextField
+            placeholderText: qsTr("Search in translation...")
+            anchors {
+                right: searchIcon.left
+                left: parent.left
+                verticalCenter: parent.verticalCenter
+                leftMargin: constant.paddingMedium
+                rightMargin: constant.paddingMedium
+            }
+            visible: false
+            onAccepted: {
+                if(appSearchTextField.text !== "") {
+                    appStackView.currentItem.search(appSearchTextField.text)
+                    focus = false
+                }
+            }
+        }
+
+        ToolButton {
+            id: searchIcon
+            width: parent.height
+            icon.source: "qrc:/icons/search_icon.png"
+            anchors {
+                right: pageMenu.visible ? pageMenu.left : parent.right
+                verticalCenter: parent.verticalCenter
+            }
+            onClicked: {
+                if(!appSearchTextField.visible) {
+                    appSearchTextField.visible = true
+                    appSearchTextField.forceActiveFocus()
+                }
+                else if(appSearchTextField.text !== "") {
+                    appStackView.currentItem.search(appSearchTextField.text)
+                }
+            }
+            visible: appStackView.currentItem !== null && appStackView.currentItem.searchable
+        }
+
+        ToolButton {
+            id: pageMenu
+            text: "\u22EE"
+            font.pixelSize: constant.fontSizeXLarge
+            visible: appStackView.currentItem.menu !== null
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+                right: parent.right
+            }
+            onClicked: {
+//                if(appDrawer.position === 1)
+//                    appDrawer.close()
+//                else if(appStackView.currentItem.menu !== null) {
+                    appStackView.currentItem.menu.popup(applicationWindow.width - appStackView.currentItem.menu.width,0)
+//                }
+            }
         }
     }
 
     StackView {
-        id: stackView
+        id: appStackView
         initialItem: "qrc:/qml/pages/MainPage.qml"
         anchors.fill: parent
     }

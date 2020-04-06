@@ -105,3 +105,13 @@ AyaModel *AyaListModel::get(const int index) const
 
     return m_ayaList.at(index);
 }
+
+void AyaListModel::remove(const int index)
+{
+    if(index<0 || index >= m_ayaList.length())
+        return;
+
+    emit beginRemoveRows(QModelIndex(), index,index);
+    m_ayaList.removeAt(index);
+    emit endRemoveRows();
+}

@@ -142,6 +142,11 @@ Page {
                     text: model.text + " " + Utils.reverseString(Number(model.aya).toLocaleString(Qt.locale("ar-SA"), 'd', 0))
                     font { pixelSize: Quran.fontSize; family: constant.fontName; }
                     LayoutMirroring.enabled: true
+
+                    Component.onCompleted: {
+                        var status = Bookmarking.getStatus(model.number);
+                        text = text + (status ? " \u26AB" : " \u26AA");
+                    }
                 }
                 Label {
                     id: translationLabel
@@ -163,21 +168,56 @@ Page {
 //                  color: highlighted ? constant.colorHighlighted : constant.colorLight
                     visible: (Quran.useTranslation)
                 }
+                onReleased: {
+                    var text = textLabel.text
+                    var length = text.length
+                    var lastChar = textLabel.text.charAt(length-1)
 
-                onPressAndHold: {
-                    contextMenu.open(listItem)
+                    if(lastChar === "\u26AA") {
+                        Bookmarking.addBookmark(model.number)
+//                                text = text.replace("\u26AA","\u26AB")
+                    }
+                    else if(lastChar === "\u26AB") {
+                        Bookmarking.removeBookmark(model.number)
+//                                text = text.replace("\u26AB","\u26AA")
+                    }
+//                            textLabel.text = text
                 }
+
+                Connections {
+                    target: Bookmarking
+                    onBookmarkAdded: {
+                        if(ayaId === model.number) {
+                            var text = textLabel.text
+                            text = text.replace("\u26AA","\u26AB")
+                            textLabel.text = text
+                        }
+                    }
+                    onBookmarkRemoved: {
+                        if(ayaId === model.number) {
+                            var text = textLabel.text
+                            text = text.replace("\u26AB","\u26AA")
+                            textLabel.text = text
+                        }
+                    }
+                }
+
+                /*onPressAndHold: {
+                    contextMenu.open(listItem)
+                }*/
 
                 RemorseItem { id: remorse }
 
                 ContextMenu {
                     id: contextMenu
-                    MenuItem {
+                    /*MenuItem {
                         text: qsTr("Delete Bookmark")
                         onClicked: {
-                            remorse.execute(listItem, "Deleting", function() { Controller.removeBookmark(model.id) } )
+                            remorse.execute(listItem, "Deleting", function() {
+                                Bookmarking.removeBookmark(model.number)
+                            })
                         }
-                    }
+                    }*/
                 }
             }
         }

@@ -7,10 +7,6 @@
         <source>Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Delete Bookmark</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>IndexPage</name>

@@ -1,11 +1,30 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
+import QtQuick.Controls.Material 2.12
 import id.fpermana.sailquran 1.0
+import "../components" as Comp
 
-Page {
+Comp.Page {
     id: settingPage
 
-    property TranslationList translationList
+//    property TranslationList translationList
+    menu: Comp.Menu {
+        MenuItem {
+            text: qsTr("Manage Translations")
+            onTriggered: {
+                appStackView.push("qrc:/qml/pages/TranslationPage.qml")
+            }
+        }
+        MenuItem {
+            text: qsTr("Reset Settings")
+            onTriggered: {
+                Setting.resetSetting()
+                Quran.resetSettings()
+                Setting.saveSetting()
+                Quran.saveSettings()
+            }
+        }
+    }
 
     title: qsTr("Setting")
 
@@ -13,105 +32,105 @@ Page {
         Translation.getActiveTranslation()
     }
 
+    ListModel {
+        id: listModel
+    }
+
     Connections {
         target: Translation
         onActiveTranslationLoaded: {
-            translationList = translation
-
-            var itemCount = translationCombobox.count
-            for(var i=0; i<itemCount; i++) {
-                var model = translationList.get(i);
-                var tid = model.tid;
-                tid = tid.replace(".", "_");
-                if(tid === Quran.translation) {
-                    translationCombobox.currentIndex = i;
-                    break;
-                }
+//            translationDropdown.model = translation
+            var count = translation.count()
+            var ci = -1
+            listModel.clear()
+            for(var i=0; i<count; i++){
+                var name = translation.get(i).name
+                var tid = translation.get(i).tid
+                tid = tid.replace(".","_")
+                if(tid === Quran.translation)
+                    ci = i
+                listModel.append({"name":name,"value":tid})
             }
+            translationDropdown.model = listModel
+            translationDropdown.currentIndex = ci
         }
     }
 
-    /*property Drawer menu: Drawer {
-        id: drawer
-        width: applicationWindow.width * 0.66
-        height: applicationWindow.height
-
-        Column {
-            anchors.fill: parent
-
-            ItemDelegate {
-                width: parent.width
-//                height: childrenRect.height
-                background: Rectangle {
-                    color: parent.pressed ? constant.colorHighlightedBackground : "transparent"
-                }
-
-                Label {
-                    verticalAlignment: Text.AlignVCenter
-//                        horizontalAlignment: Text.AlignRight
-                    color: constant.colorDark
-                    height: paintedHeight + constant.paddingLarge
-                    anchors {
-                        top: parent.top
-                        left: parent.left
-                        right: parent.right
-                        leftMargin: constant.paddingMedium
-                        rightMargin: constant.paddingMedium
-                    }
-
-                    wrapMode: Text.WordWrap
-                    text: qsTr("Translation")
-                    font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
-                }
-
-                Component.onCompleted: {
-                    height = childrenRect.height
-                }
-
-                onClicked: {
-                    stackView.push("qrc:/qml/pages/TranslationPage.qml")
-                    drawer.close()
-                }
-            }
+    Item {
+        id: header
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
         }
-    }*/
-//    allowedOrientations: Orientation.All
-    /*property string textType
-    property string translation
 
-    onStatusChanged: {
-        if(settingPage.status === PageStatus.Deactivating) {
-            if(settingPage.textType !== Settings.textType || settingPage.translation !== Settings.translation) {
-                Settings.textType = settingPage.textType;
-                Settings.translation = settingPage.translation;
-
-                Settings.saveSettings();
+        height: childrenRect.height
+        Comp.Label {
+            id: textLabel
+            horizontalAlignment: Text.AlignRight
+            color: Quran.fontColor
+            height: paintedHeight + constant.paddingLarge
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+                leftMargin: constant.paddingMedium
+                rightMargin: constant.paddingMedium
             }
+
+            wrapMode: Text.WordWrap
+            text: Quran.preview !== null ? Quran.preview.text : ""
+            font { pixelSize: Quran.fontSize; family: Quran.fontName }
         }
-    }*/
+        Comp.Label {
+            id: translationLabel
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignJustify
+            color: Quran.fontColor
+            visible: Quran.useTranslation
+            height: visible ? (paintedHeight + constant.paddingMedium) : 0
+            anchors {
+                top: textLabel.bottom
+                left: parent.left
+                right: parent.right
+                leftMargin: constant.paddingMedium
+                rightMargin: constant.paddingMedium
+            }
+
+            wrapMode: Text.WordWrap
+            text: Quran.preview !== null ? Quran.preview.translation : ""
+            font { pixelSize: Quran.translationFontSize; }
+        }
+    }
 
     Flickable {
-        anchors.fill: parent
-        contentHeight: contentColumn.height
+        id: flickable
+        anchors {
+            fill: parent
+            topMargin: header.height
+        }
+        contentHeight: contentColumn.height + 30
+        clip: true
 
         Column {
             id: contentColumn
             height: childrenRect.height
+            spacing: 10
             anchors {
                 left: parent.left
                 right: parent.right
             }
 
-            Item {
+            /*Item {
                 anchors {
                     left: parent.left
                     right: parent.right
                 }
+                height: header.height
 
                 height: childrenRect.height
-                Label {
+                Comp.Label {
                     id: textLabel
-                    verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignRight
                     color: Quran.fontColor
                     height: paintedHeight + constant.paddingLarge
@@ -125,9 +144,9 @@ Page {
 
                     wrapMode: Text.WordWrap
                     text: Quran.preview !== null ? Quran.preview.text : ""
-                    font { pixelSize: Quran.fontSize; family: constant.fontName }
+                    font { pixelSize: Quran.fontSize; family: Quran.fontName }
                 }
-                Label {
+                Comp.Label {
                     id: translationLabel
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignJustify
@@ -146,79 +165,130 @@ Page {
                     text: Quran.preview !== null ? Quran.preview.translation : ""
                     font { pixelSize: Quran.translationFontSize; }
                 }
-            }
+            }*/
 
-            ComboBox {
-                id: textStyleCombobox
+            /*Comp.Dropdown {
+                id: textStyleDropdown
+                title: qsTr("Quran Text")
                 anchors {
                     left: parent.left
                     right: parent.right
                 }
+                initValue: Quran.quranText
 
-                textRole: "key"
                 model: ListModel {
-                    id: quranTextModel
-                    ListElement { key: "Original"; value: "quran_text_original" }
-                    ListElement { key: "Enhanced"; value: "quran_text_enhanced" }
-                    ListElement { key: "Uthmani"; value: "quran_text_uthmani" }
+                    ListElement { name: "Original"; value: "quran_text_original" }
+                    ListElement { name: "Enhanced"; value: "quran_text_enhanced" }
+                    ListElement { name: "Uthmani"; value: "quran_text_uthmani" }
                 }
-                onActivated: {
-                    console.log(quranTextModel.get(index))
 
+                onValueChanged: {
+                    Quran.quranText = value
+                }
+            }*/
+
+            Comp.Label {
+                text: qsTr("Quran Text")
+                verticalAlignment: Text.AlignBottom
+                horizontalAlignment: Text.AlignLeft
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: 15
                 }
             }
 
-            /*Slider {
+            ComboBox {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                model: ListModel {
+                    ListElement { name: "Original"; value: "quran_text_original" }
+                    ListElement { name: "Enhanced"; value: "quran_text_enhanced" }
+                    ListElement { name: "Uthmani"; value: "quran_text_uthmani" }
+                }
+                textRole: "name"
+
+                Component.onCompleted: {
+                    for(var i=0; i<count; i++) {
+                        var c = model.get(i).value
+                        if(c === Quran.quranText) {
+                            currentIndex = i
+                            break
+                        }
+                    }
+                }
+
+                onActivated: {
+                    Quran.quranText = model.get(index).value
+                    Quran.saveSettings()
+                }
+            }
+
+            Comp.Label {
+                text: qsTr("Font Size") + ": " + fontSizeSlider.value
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignBottom
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: 15
+                }
+            }
+
+            Slider {
                 id: fontSizeSlider
                 anchors {
                     left: parent.left
                     right: parent.right
                 }
-                label: "Font Size"
-                minimumValue: 25
-                maximumValue: 50
-    //            value: 32
-                valueText: Math.round(value)
+                stepSize: 1
+                from: 10
+                to: 70
+                value: Quran.fontSize
 
-                onValueChanged: Settings.fontSize = Math.round(value)
-
-                Component.onCompleted: value = Settings.fontSize
-            }*/
-            Switch {
-                id: useTranslationSwitch
-                text: qsTr("Use Translation")
-                checked: Quran.useTranslation
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-                onCheckedChanged: {
-                    Quran.useTranslation = checked
+                onValueChanged: {
+                    Quran.fontSize = value
+                    Quran.saveSettings()
                 }
             }
 
-            ComboBox {
-                id: translationCombobox
+            ItemDelegate {
+                height: 60
                 anchors {
                     left: parent.left
                     right: parent.right
+//                    leftMargin: constant.paddingMedium
+//                    rightMargin: constant.paddingMedium
                 }
-                visible: Quran.useTranslation
-                model: translationList
-                textRole: "name"
-            }
-            Button {
-                anchors.right: parent.right
-                text: qsTr("Manage Translations")
-                onClicked: {
-                    stackView.push("qrc:/qml/pages/TranslationPage.qml")
+
+                Comp.CheckBox {
+                    id: useTranslationSwitch
+                    text: qsTr("Use Translation")
+                    checked: Quran.useTranslation
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: constant.paddingMedium
+                        rightMargin: constant.paddingMedium
+                        verticalCenter: parent.verticalCenter
+                    }
+                    onCheckedChanged: {
+                        Quran.useTranslation = checked
+                        Quran.saveSettings()
+                    }
                 }
             }
-            Label {
-                text: qsTr("Translation Font Size")
+
+            Comp.Label {
+                text: qsTr("Translation Font Size") + ": " + translationFontSizeSlider.value
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignBottom
                 anchors {
                     left: parent.left
                     right: parent.right
+                    leftMargin: 15
                 }
                 visible: Quran.useTranslation
             }
@@ -229,65 +299,204 @@ Page {
                     left: parent.left
                     right: parent.right
                 }
+                stepSize: 1
                 visible: Quran.useTranslation
-                from: 15
+                from: 10
                 to: 35
-    //            value: 20
-//                valueText: Math.round(value)
+                value: Quran.translationFontSize
 
-//                onValueChanged: Settings.translationFontSize = Math.round(value)
-
-//                Component.onCompleted: {
-//                    value = Settings.translationFontSize
-//                }
+                onValueChanged: {
+                    Quran.translationFontSize = value
+                    Quran.saveSettings()
+                }
             }
 
-            Switch {
-                id: useBackgroundSwitch
-                text: qsTr("Use Background")
-                checked: Quran.useBackground
+            /*Comp.Dropdown {
+                id: translationDropdown
+                title: qsTr("Translation")
                 anchors {
                     left: parent.left
                     right: parent.right
                 }
-                onCheckedChanged: {
-                    Quran.useBackground = checked
-                    if(checked && Quran.fontColor === "#ffffff") {
-                        Quran.fontColor = "#000000"
-                    }
-                    else if(!checked) {
-                        Quran.fontColor = "#ffffff"
-                    }
-                }
-            }
+                initValue: Quran.translation.replace("_",".")
 
-            /*Label {
-                id: fontColorLabel
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                color: Theme.primaryColor
-                wrapMode: Text.WordWrap
-                text: "Font Color"
-                visible: Settings.useBackground
-            }
+                visible: Quran.useTranslation
+                model: translationList
+                valueRole: "tid"
 
-            ColorPicker {
-                id: fontColorPicker
-                anchors {
-                    left: parent.left
-                    right: parent.right
+                onValueChanged: {
+                    Quran.translation = value.replace(".","_")
                 }
-                columns: 5
-                height: width/5
-                colors: Settings.useBackground ? ["black", "darkblue", "darkred", "darkgreen", "gray"] : ["white", "darkblue", "darkred", "darkgreen", "gray"]
-
-                onColorChanged: Settings.fontColor = color
-                visible: Settings.useBackground
             }*/
+
+            Comp.Label {
+                text: qsTr("Translation")
+                verticalAlignment: Text.AlignBottom
+                horizontalAlignment: Text.AlignLeft
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: 15
+                }
+            }
+
+            ComboBox {
+                id: translationDropdown
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+
+                visible: Quran.useTranslation
+//                model: translationList
+                model: Translation.activeTranslationList
+                textRole: "name"
+
+                /*Component.onCompleted: {
+                    for(var i=0; i<count; i++) {
+                        if(model.get(i) === null)
+                            continue
+                        console.log(model.get(i))
+                        var t = model.get(i).tid.replace(".","_")
+                        if(t === Quran.translation) {
+                            currentIndex = i
+                            break
+                        }
+                    }
+                }*/
+                /*onModelChanged: {
+                    for(var i=0; i<count; i++) {
+                        var m = model.get(i);
+                        var tid = m.tid;
+                        tid = tid.replace(".", "_");
+                        if(tid === Quran.translation) {
+                            currentIndex = i;
+                            break;
+                        }
+                    }
+                }*/
+
+                onActivated: {
+//                    console.log(index)
+//                    if(model.get(index) !== null) {
+//                        var tid = model.get(index).value
+//                        console.log(tid)
+//                        tid = tid.replace(".","_")
+                        Quran.translation = model.get(index).value
+                        Quran.saveSettings()
+//                    }
+                }
+            }
+
+            /*Comp.Button {
+                anchors {
+                    right: parent.right
+                    margins: 15
+                }
+                text: qsTr("Manage Translations")
+                visible: Quran.useTranslation
+                onClicked: {
+                    appStackView.push("qrc:/qml/pages/TranslationPage.qml")
+                }
+            }*/
+
+            ItemDelegate {
+                height: 60
+                anchors {
+                    left: parent.left
+                    right: parent.right
+//                    leftMargin: constant.paddingMedium
+//                    rightMargin: constant.paddingMedium
+                }
+                Comp.CheckBox {
+                    id: useBackgroundSwitch
+                    text: qsTr("Dark Mode")
+                    checked: Setting.materialTheme == Material.Dark
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: constant.paddingMedium
+                        rightMargin: constant.paddingMedium
+                        verticalCenter: parent.verticalCenter
+                    }
+                    onCheckedChanged: {
+//                        Quran.useBackground = checked
+//                        Universal.theme = checked ? Universal.Dark : Universal.Light
+                        applicationWindow.changeTheme(checked ? Material.Dark : Material.Light)
+                        if(checked) {
+                            Quran.fontColor = "#ffffff"
+                        }
+                        else if(!checked) {
+                            Quran.fontColor = "#000000"
+                        }
+
+                        Quran.saveSettings()
+                        Setting.saveSetting()
+                    }
+                }
+            }
+
+            Comp.Label {
+                text: qsTr("App Font Size") + ": " + appFontSizeSlider.value
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignBottom
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: 15
+                }
+            }
+
+            Slider {
+                id: appFontSizeSlider
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                stepSize: 1
+                from: 10
+                to: 35
+                value: Setting.fontSize
+
+                onValueChanged: {
+                    Setting.fontSize = value
+                    Setting.smallFontSize = value - 4
+                    Setting.largeFontSize = value + 6
+
+                    Setting.saveSetting()
+                }
+            }
+
+            Row {
+                height: 60
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: 15
+                }
+                spacing: 15
+                layoutDirection: Qt.RightToLeft
+
+                /*Comp.Button {
+                    text: qsTr("Save Settings")
+                    width: parent.width * 0.4
+                    onClicked: {
+                        Setting.saveSetting()
+                        Quran.saveSettings()
+                    }
+                }*/
+
+                /*Comp.Button {
+                    text: qsTr("Reset Settings")
+                    width: parent.width * 0.45
+                    onClicked: {
+                        Setting.resetSetting()
+                        Quran.resetSettings()
+                        Setting.saveSetting()
+                        Quran.saveSettings()
+                    }
+                }*/
+            }
         }
     }
 }
