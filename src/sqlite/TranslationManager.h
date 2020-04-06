@@ -23,6 +23,7 @@ public:
     bool uninstallTranslation(const QString &tid);
 
     bool createTranslationTable(const QString &tableName);
+    bool deleteTranslationTable(const QString &tableName);
 
     bool insertTranslationList(const QString &tableName, QStringList idList, QStringList suraList, QStringList ayaList, QStringList textList);
 signals:

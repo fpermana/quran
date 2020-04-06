@@ -183,7 +183,24 @@ bool TranslationManager::createTranslationTable(const QString &tableName)
     if(db.isOpen()) {
         QSqlQuery query(db);
         QString createTableString = QString("CREATE TABLE IF NOT EXISTS %1 (`id` int(4) NOT NULL PRIMARY KEY, `sura` int(3) NOT NULL default '0', `aya` int(3) NOT NULL default '0', `text` text NOT NULL, UNIQUE (sura, aya));").arg(tableName);
-        success = query.exec(createTableString);
+        query.exec(createTableString);
+        success = true;
+
+        query.clear();
+    }
+
+    return success;
+}
+
+bool TranslationManager::deleteTranslationTable(const QString &tableName)
+{
+    bool success = false;
+    QSqlDatabase db = m_threaded ? createDb() : QSqlDatabase::database(DEFAULT_CONNECTION_NAME);
+    if(db.isOpen()) {
+        QSqlQuery query(db);
+        QString createTableString = QString("DROP TABLE IF EXISTS %1;").arg(tableName);
+        query.exec(createTableString);
+        success = true;
 
         query.clear();
     }

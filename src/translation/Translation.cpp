@@ -18,34 +18,22 @@ Translation::Translation(QObject *parent) : QObject(parent)
 void Translation::installTranslation(QString tid)
 {
     int oldValue = m_downloadMap.value(tid,NotInstalled).toInt();
-    if(oldValue < Queued)
+    if(oldValue == NotInstalled || oldValue == Uninstalled) {
         m_downloadMap.insert(tid, Queued);
-
-    QString current = "";
-
-    for(QVariantMap::const_iterator iter = m_downloadMap.begin(); iter != m_downloadMap.end(); ++iter) {
-        qDebug() << iter.key() << iter.value();
-        QString key = iter.key();
-        int value = iter.value().toInt();
-
-        if((key == tid && value > Downloading) || value == Downloading) {
-            current = key;
-            break;
-        }
-    }
-
-    if(current.isEmpty()) {
-//        qDebug() << "downloading " << tid;
-        downloadTranslation(tid);
+//        downloadTranslation(tid);
+        emit statusChanged(tid, Queued);
+        processNextQueue();
     }
 }
 
 void Translation::uninstallTranslation(QString tid)
 {
-    TranslationManager *tm = new TranslationManager;
-    if(tm->uninstallTranslation(tid)) {
-        m_downloadMap.insert(tid, Removed);
-        emit translationUninstalled(tid);
+    int oldValue = m_downloadMap.value(tid,NotInstalled).toInt();
+    if(oldValue == NotInstalled || oldValue == Installed) {
+        m_downloadMap.insert(tid, Uninstalling);
+//        downloadTranslation(tid);
+        emit statusChanged(tid, Uninstalling);
+        processNextQueue();
     }
 }
 
@@ -91,7 +79,21 @@ void Translation::downloadTranslation(QString tid)
     dm->download();
 
     m_downloadMap.insert(tid, Downloading);
+    emit statusChanged(tid, Downloading);
 #endif
+}
+
+void Translation::removeTranslation(QString tid)
+{
+    TranslationManager *tm = new TranslationManager;
+    QString tableName(tid);
+    tableName.replace(".","_");
+    if(tm->deleteTranslationTable(tableName) && tm->uninstallTranslation(tid)) {
+        m_downloadMap.insert(tid, Uninstalled);
+//        emit translationUninstalled(tid);
+        emit statusChanged(tid, Uninstalled);
+        processNextQueue();
+    }
 }
 
 void Translation::translationDownloaded()
@@ -108,7 +110,7 @@ void Translation::translationDownloaded()
     QString current = "";
 
     for(QVariantMap::const_iterator iter = m_downloadMap.begin(); iter != m_downloadMap.end(); ++iter) {
-        qDebug() << iter.key() << iter.value();
+//        qDebug() << iter.key() << iter.value();
 //        QString key = iter.key();
         int value = iter.value().toInt();
 
@@ -125,10 +127,14 @@ void Translation::translationDownloaded()
 void Translation::parseTranslation(QString tid)
 {
 #ifndef USE_API
+//    qDebug() << tid;
+    m_downloadMap.insert(tid, Installing);
+//    emit translationInstalling(tid);
+    emit statusChanged(tid, Installing);
     QString filepath = QString("%1%2.txt").arg(GlobalFunctions::translationLocation()).arg(tid);
     QString tableName = tid.replace(".","_");
 
-    qDebug() << filepath << tableName;
+//    qDebug() << filepath << tableName;
 
     QThread* thread = new QThread;
     TranslationParser *tp = new TranslationParser();
@@ -142,48 +148,59 @@ void Translation::parseTranslation(QString tid)
     connect(tp, SIGNAL(parsingFinished()), tp, SLOT(deleteLater()));
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
     thread->start();
-    m_downloadMap.insert(tid, Installing);
 #endif
 }
 
 void Translation::translationParsed()
 {
-    QString current = "";
+    QString tid = "";
 
     for(QVariantMap::const_iterator iter = m_downloadMap.begin(); iter != m_downloadMap.end(); ++iter) {
         int value = iter.value().toInt();
 
         if(value == Installing) {
-            current = iter.key();
+            tid = iter.key();
             break;
         }
     }
 
-    if(!current.isEmpty()) {
-        current = current.replace("_",".");
+    if(!tid.isEmpty()) {
+        tid = tid.replace("_",".");
         TranslationManager *tm = new TranslationManager;
-        if(tm->installTranslation(current)) {
-            m_downloadMap.insert(current, Installed);
-            emit translationInstalled(current);
+        if(tm->installTranslation(tid)) {
+            m_downloadMap.insert(tid, Installed);
+//            emit translationInstalled(current);
+            emit statusChanged(tid, Installed);
+            processNextQueue();
         }
     }
 }
 
 void Translation::processNextQueue()
 {
-    QString current = "";
+    QString inProgressTid = "";
+    QString queuingTid = "";
+    QString uninstallingTid = "";
 
     for(QVariantMap::const_iterator iter = m_downloadMap.begin(); iter != m_downloadMap.end(); ++iter) {
 //        QString key = iter.key();
         int value = iter.value().toInt();
 
-        if(value == Queued) {
-            current = iter.key();
-            break;
+        if(value == Queued && queuingTid.isEmpty()) {
+            queuingTid = iter.key();
+        }
+        else if(value == Uninstalling && uninstallingTid.isEmpty()) {
+            uninstallingTid = iter.key();
+        }
+        else if(value ==  Downloading || value == Installing) {
+            inProgressTid = iter.key();
         }
     }
 
-    if(!current.isEmpty()) {
-        downloadTranslation(current);
+    if(inProgressTid.isEmpty()) {
+        if(!uninstallingTid.isEmpty())
+            removeTranslation(uninstallingTid);
+        else if(!queuingTid.isEmpty())
+            downloadTranslation(queuingTid);
     }
 }

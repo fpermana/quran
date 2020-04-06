@@ -14,19 +14,23 @@ public:
     explicit Translation(QObject *parent = nullptr);
 
     enum Status {
-        Removed = -1,
         NotInstalled,
         Queued,
         Downloading,
         Installing,
-        Installed
+        Uninstalling,
+        Installed,
+        Uninstalled
     };
 
 signals:
     void activeTranslationLoaded(TranslationListModel *translation);
     void translationLoaded(TranslationListModel *translation);
     void translationInstalled(QString tid);
+    void translationInstalling(QString tid);
     void translationUninstalled(QString tid);
+
+    void statusChanged(QString tid, int status);
 
 public slots:
     void installTranslation(QString tid);
@@ -44,6 +48,7 @@ private slots:
 
 private:
     void downloadTranslation(QString tid);
+    void removeTranslation(QString tid);
     void parseTranslation(QString tid);
     void processNextQueue();
 

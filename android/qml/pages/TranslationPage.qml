@@ -1,10 +1,11 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
+import QtQuick.Controls.Material 2.12
 import id.fpermana.sailquran 1.0
 import "../components" as Comp
 
 Comp.Page {
-    id: translationsPage
+    id: root
     title: qsTr("Translation")
     property TranslationList translationList
 
@@ -16,6 +17,56 @@ Comp.Page {
         target: Translation
         onTranslationLoaded: {
             translationList = translation
+        }
+    }
+
+    Popup {
+        id: uninstallDialog
+
+        property string tid
+
+        width: Math.min(220, root.width/2)
+        dim: true
+        x: Math.round((parent.width - width) / 2)
+        y: Math.round((parent.height - height) / 2)
+        modal: true
+        parent: Overlay.overlay
+
+        Column {
+            height: childrenRect.height
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+
+            Comp.Label {
+                text: "Uninstall Translation?"
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+            }
+            Row {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+
+                ToolButton {
+                    text: "Yes"
+                    width: parent.width/2
+                    onClicked: {
+                        Translation.uninstallTranslation(uninstallDialog.tid)
+                        uninstallDialog.close()
+                    }
+                }
+
+                ToolButton {
+                    text: "No"
+                    width: parent.width/2
+                    onClicked: uninstallDialog.close()
+                }
+            }
         }
     }
 
@@ -31,9 +82,7 @@ Comp.Page {
             height: textLabel.height
             width: indexView.width
 
-            background: Rectangle {
-                color: parent.pressed ? constant.colorHighlightedBackground : "transparent"
-            }
+            property bool isInstalled: model.installed
 
             Item {
                 id: flagImage
@@ -55,9 +104,8 @@ Comp.Page {
                 }
             }
 
-            Label {
+            Comp.Label {
                 id: textLabel
-                verticalAlignment: Text.AlignVCenter
                 height: 80
                 anchors {
                     top: parent.top
@@ -69,35 +117,79 @@ Comp.Page {
 
                 wrapMode: Text.WordWrap
                 text: model.name
-                font { pixelSize: constant.fontSizeMedium; family: constant.fontName; }
+                color: model.isDefault ? Material.color(Material.LightGreen) : (isInstalled ? Material.color(Material.Green) : (listItem.enabled ? Material.foreground : Material.color(Material.BlueGrey)))
             }
 
             Component.onCompleted: {
                 var status = Translation.getStatus(model.tid);
-                if(status === 2) {
+                if(status === 1) {
+                    listItem.enabled = false
+                    textLabel.text = "Waiting..."
+                    textLabel.color = Material.color(Material.BlueGrey)
+                }
+                else if(status === 2) {
                     listItem.enabled = false
                     textLabel.text = "Downloading..."
+                    textLabel.color = Material.color(Material.BlueGrey)
                 }
                 else if(status === 3) {
                     listItem.enabled = false
                     textLabel.text = "Installing..."
+                    textLabel.color = Material.color(Material.BlueGrey)
+                }
+                else if(status === 4) {
+                    listItem.enabled = false
+                    textLabel.text = "Uninstalling..."
+                    textLabel.color = Material.color(Material.BlueGrey)
                 }
             }
 
             onClicked: {
-//                contextMenu.show(listItem)
-                if(!model.installed) {
-                    textLabel.text = "Downloading..."
+                if(!isInstalled) {
                     Translation.installTranslation(model.tid)
+                }
+                else if(!model.isDefault){
+                    uninstallDialog.tid = model.tid
+                    uninstallDialog.open()
                 }
             }
 
             Connections {
                 target: Translation
-                onTranslationInstalled: {
+                onStatusChanged: {
                     if(model.tid === tid) {
-                        textLabel.text = model.name
-                        listItem.enabled = true
+                        if(status === 1) {
+                            listItem.enabled = false
+                            textLabel.text = "Waiting..."
+                            textLabel.color = Material.color(Material.BlueGrey)
+                        }
+                        else if(status === 2) {
+                            listItem.enabled = false
+                            textLabel.text = "Downloading..."
+                            textLabel.color = Material.color(Material.BlueGrey)
+                        }
+                        else if(status === 3) {
+                            listItem.enabled = false
+                            textLabel.text = "Installing..."
+                            textLabel.color = Material.color(Material.BlueGrey)
+                        }
+                        else if(status === 4) {
+                            listItem.enabled = false
+                            textLabel.text = "Uninstalling..."
+                            textLabel.color = Material.color(Material.BlueGrey)
+                        }
+                        else if(status === 5) {
+                            listItem.isInstalled = true
+                            listItem.enabled = true
+                            textLabel.text = model.name
+                            textLabel.color = Material.color(Material.Green)
+                        }
+                        else if(status === 6) {
+                            listItem.isInstalled = false
+                            listItem.enabled = true
+                            textLabel.text = model.name
+                            textLabel.color = Material.foreground
+                        }
                     }
                 }
             }

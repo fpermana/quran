@@ -22,8 +22,8 @@ ApplicationWindow {
 //    Material.elevation: 4
 
     onClosing: {
-        if(searchTextField.visible) {
-            searchTextField.visible = false
+        if(appSearchTextField.visible) {
+            appSearchTextField.visible = false
             close.accepted = false
         }
 
@@ -115,8 +115,10 @@ ApplicationWindow {
 //    Universal.theme: Universal.Light // Universal.Dark
 //    Universal.theme: Setting.universalTheme
     Material.theme: Setting.materialTheme
-    Material.foreground: Setting.materialForeground
-    Material.primary: Material.color(Material.Blue)
+    Material.accent: Material.color(Material.Red)
+//    Material.foreground: Setting.materialForeground
+//    Material.primary: Material.color(Material.Blue)
+    Material.primary: "#005ee2"
 
     property int orientation: width > height ? Qt.LandscapeOrientation : Qt.PortraitOrientation
 
@@ -154,7 +156,7 @@ ApplicationWindow {
         property int thumbnailSize: 120
 
         property int bannerHeight: 250
-        property int headerHeight: 60
+        property int headerHeight: 56
         property int footerHeight: 50
 
         property string fontName: uthmanic.name
@@ -162,6 +164,8 @@ ApplicationWindow {
     }
 
     header: ToolBar {
+        Material.foreground: "#ffffff"
+
         contentHeight: constant.headerHeight
 
         ToolButton {
@@ -169,7 +173,7 @@ ApplicationWindow {
             text: appStackView.depth > 1 ? "\u25C0" : "\u2261"
             font.pixelSize: constant.fontSizeXXLarge
             width: parent.height
-            visible: !searchTextField.visible
+            visible: !appSearchTextField.visible
             onClicked: {
                 var done = false;
 //                if(appStackView.currentItem.menu !== null) {
@@ -205,11 +209,11 @@ ApplicationWindow {
             text: appStackView.currentItem != null ? appStackView.currentItem.title : ""
             anchors.centerIn: parent
             font { pixelSize: constant.fontSizeXLarge; }
-            visible: !searchTextField.visible
+            visible: !appSearchTextField.visible
         }
 
         TextField {
-            id: searchTextField
+            id: appSearchTextField
             placeholderText: qsTr("Search in translation...")
             anchors {
                 right: searchIcon.left
@@ -220,8 +224,8 @@ ApplicationWindow {
             }
             visible: false
             onAccepted: {
-                if(searchTextField.text !== "") {
-                    appStackView.currentItem.search(searchTextField.text)
+                if(appSearchTextField.text !== "") {
+                    appStackView.currentItem.search(appSearchTextField.text)
                     focus = false
                 }
             }
@@ -236,12 +240,12 @@ ApplicationWindow {
                 verticalCenter: parent.verticalCenter
             }
             onClicked: {
-                if(!searchTextField.visible) {
-                    searchTextField.visible = true
-                    searchTextField.forceActiveFocus()
+                if(!appSearchTextField.visible) {
+                    appSearchTextField.visible = true
+                    appSearchTextField.forceActiveFocus()
                 }
-                else if(searchTextField.text !== "") {
-                    appStackView.currentItem.search(searchTextField.text)
+                else if(appSearchTextField.text !== "") {
+                    appStackView.currentItem.search(appSearchTextField.text)
                 }
             }
             visible: appStackView.currentItem !== null && appStackView.currentItem.searchable

@@ -53,6 +53,9 @@ void TranslationParser::parse()
         if(tm->rowCount(m_tableName) == tm->rowCount(DEFAULT_QURAN_TEXT)) {
             processFile = false;
         }
+        else {
+            tm->deleteTranslationTable(m_tableName);
+        }
     }
 
     if(tm->createTranslationTable(m_tableName) && processFile) {
@@ -90,6 +93,7 @@ void TranslationParser::parse()
 
             if(!idList.isEmpty()) {
                 if(tm->insertTranslationList(m_tableName, idList, suraList, ayaList, textList)) {
+                    qDebug() << lineCounter;
                     idList.clear();
                     suraList.clear();
                     ayaList.clear();

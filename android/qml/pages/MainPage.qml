@@ -17,14 +17,19 @@ Comp.Page {
 
     Popup {
         id: gotoPopup
-        width: root.width/2
+        width: Math.min(200, root.width/2)
         dim: true
         x: Math.round((parent.width - width) / 2)
         y: Math.round((parent.height - height) / 2)
         modal: true
         onOpened: {
             gotoTextField.text = ""
+            gotoTextField.forceActiveFocus()
         }
+        onClosed: {
+            gotoTextField.focus = false
+        }
+
         parent: Overlay.overlay
 //        anchors.centerIn: root
 
@@ -268,8 +273,14 @@ Comp.Page {
             }
         }*/
         onGotoPage: {
-            if(appStackView.currentItem !== root)
+            if(appStackView.currentItem !== root) {
                 appStackView.pop()
+            }
+            if(appSearchTextField.visible) {
+                appSearchTextField.focus = false
+                appSearchTextField.visible = false
+            }
+
             swipeView.setCurrentIndex(page-1)
         }
     }
