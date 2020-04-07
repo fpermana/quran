@@ -7,9 +7,9 @@ CONFIG += c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-OBJECTS_DIR=generated_files #Intermediate object files directory
-MOC_DIR=generated_files #Intermediate moc files directory
-RCC_DIR=generated_files #Intermediate qrc files directory
+#OBJECTS_DIR=generated_files #Intermediate object files directory
+#MOC_DIR=generated_files #Intermediate moc files directory
+#RCC_DIR=generated_files #Intermediate qrc files directory
 
 # mandatory if we want to include quazip's source code to project
 LIBS += -lz
