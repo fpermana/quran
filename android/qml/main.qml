@@ -25,6 +25,7 @@ ApplicationWindow {
 
     onClosing: {
         if(appSearchTextField.visible) {
+            appSearchTextField.focus = false
             appSearchTextField.visible = false
             close.accepted = false
         }
