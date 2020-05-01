@@ -1,14 +1,13 @@
 #include "Translation.h"
 #include <QDebug>
-#include <QThread>
-
-#include "translation/TranslationParser.h"
 #ifdef USE_API
 #include "api/TranslationManager.h"
 #else
+#include <QThread>
 #include "GlobalFunctions.h"
 #include "downloader/DownloadManager.h"
 #include "sqlite/TranslationManager.h"
+#include "translation/TranslationParser.h"
 #endif
 
 Translation::Translation(QObject *parent) : QObject(parent)
@@ -85,6 +84,7 @@ void Translation::downloadTranslation(QString tid)
 
 void Translation::removeTranslation(QString tid)
 {
+#ifndef USE_API
     TranslationManager *tm = new TranslationManager;
     QString tableName(tid);
     tableName.replace(".","_");
@@ -94,6 +94,7 @@ void Translation::removeTranslation(QString tid)
         emit statusChanged(tid, Uninstalled);
         processNextQueue();
     }
+#endif
 }
 
 void Translation::translationDownloaded()

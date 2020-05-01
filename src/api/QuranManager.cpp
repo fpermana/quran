@@ -28,11 +28,17 @@ AyaModel *QuranManager::getAya(const int sura, const int aya,const QString quran
     return ayaModel;
 }
 
-QVariantMap QuranManager::getSuraPage(const int sura) const
+int QuranManager::getSuraPage(const int sura) const
 {
-    QVariantMap pageMap;
+    int page = 0;
+    return page;
+}
 
-    return pageMap;
+int QuranManager::getSuraAyaPage(const int sura, const int aya) const
+{
+    int page = 0;
+
+    return page;
 }
 
 QList<SuraModel *> QuranManager::getSuraList() const
